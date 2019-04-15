@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="32dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogTitle"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Title"
+        android:gravity="center"
+
+        android:textSize="24sp"
+        android:fontFamily="@font/sfprotext_bold"
+        android:textColor="@color/colortext"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogContent"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="CONTENT"
+        android:gravity="center"
+
+        android:lineSpacingExtra="5sp"
+        android:textSize="22sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:textColor="@color/colortext"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:weightSum="2"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/negativeButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:background="@android:color/transparent"
+            android:text="CANCEL"
+            android:layout_marginHorizontal="8dp"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="@color/redPrimary"/>
+
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/button_red_rounded"
+            android:text="YES"
+
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</LinearLayout>

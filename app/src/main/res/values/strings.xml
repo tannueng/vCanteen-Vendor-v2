@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">vCanteen-Admin</string>
+    <string name="app_name">vCanteenVendor</string>
+    <string name="vendor_name_label">Vendor\nName</string>
+    <string name="unlink"><u>unlink</u></string>
+
+    <string name="closing_vendor">
+        \u2022 Awaiting orders will be cancelled.
+        \n\u2022 New order won’t be received.
+        \n\nAre you sure?
+    </string>
+    <string name="facebook_app_id">2656902984339212</string>
+    <string name="fb_login_protocol_scheme">fb2656902984339212</string>
+    <string name="back_recover"><u>Back</u></string>
+    <string name="bold_email"><b>Email</b></string>
+    <string name="text_confirm_recover"><b>Do you wish to \n send a temporary password your email?</b></string>
+    <string name="emptyr_recover"><b>"Please fill in an Email "</b></string>
+    <string name="for_vendor"><b>FOR VENDOR/SHOP</b></string>
 </resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:padding="65dp"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogTitle"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:text="Cancel Order?"
+        android:gravity="center"
+
+        android:textSize="24sp"
+        android:fontFamily="@font/sfprotext_bold"
+        android:textColor="@color/colortext"
+        />
+
+
+
+    <CheckBox
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogCheckbox"
+        android:layout_gravity="center"
+        android:layout_marginTop="42dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="14dp"
+        android:button="@android:color/transparent"
+        android:text="Ran out of ingredients."
+        android:textSize="18sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:textColor="@color/colortext"
+        android:background="@drawable/button_gradient_rounded_unchecked"
+        android:visibility="gone"
+        />
+
+    <EditText
+        android:id="@+id/reasonInput"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="text"
+        android:layout_gravity="center"
+        android:hint="Other reason ..."
+        android:textColorHint="#E0E0E0"
+        android:textColor="#333333"
+        android:fontFamily="@font/sfprotext_regular"
+        android:textSize="18sp"
+        android:background="@drawable/bg_input"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="14dp"
+        android:maxLength="10"
+        android:visibility="gone"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:textSize="14sp"
+        android:text="*This can’t be undone"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:weightSum="2"
+        android:layout_gravity="center"
+
+        >
+
+        <Button
+            android:id="@+id/negativeButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:background="@android:color/transparent"
+            android:text="BACK"
+            android:layout_marginHorizontal="18dp"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="@color/redPrimary"/>
+
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:layout_marginHorizontal="18dp"
+            android:background="@drawable/button_red_rounded"
+            android:text="YES"
+
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</LinearLayout>

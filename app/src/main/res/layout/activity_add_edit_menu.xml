@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddEditMenuActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:weightSum="4"
+        >
+
+        <Button
+
+            android:id="@+id/orderStatusButton"
+
+            style="@style/MyButtonStyle"
+            android:drawableStart="@drawable/ic_order"
+            android:drawablePadding="12dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ORDER STATUS"
+            android:textSize="18sp"
+            android:fontFamily="@font/sfprotext_semibold"
+
+            android:textColor="#828282"
+            android:background="#FFFFFF"
+
+            />
+
+        <Button
+
+            android:id="@+id/menuButton"
+            style="@style/MyButtonStyle"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+
+            android:drawableStart="@drawable/ic_menu_red"
+            android:drawablePadding="12dp"
+            android:paddingLeft="110dp"
+            android:paddingRight="120dp"
+            android:text="MENU"
+            android:fontFamily="@font/sfprotext_semibold"
+
+            android:textAlignment="textEnd"
+            android:textColor="#FF4141"
+            android:background="#FFF5F4"
+
+            android:textSize="18sp" />
+
+
+        <Button
+
+            android:id="@+id/salesRecordButton"
+            style="@style/MyButtonStyle"
+
+            android:drawableLeft="@drawable/ic_chart"
+            android:drawablePadding="12dp"
+            android:paddingLeft="65dp"
+            android:paddingRight="65dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="SALES RECORD"
+            android:textSize="18sp"
+
+            android:textColor="#828282"
+            android:background="#FFFFFF"
+            android:fontFamily="@font/sfprotext_semibold"
+
+            />
+
+        <Button
+
+            android:id="@+id/settingsButton"
+            style="@style/MyButtonStyle"
+
+            android:drawableLeft="@drawable/ic_set"
+            android:drawablePadding="12dp"
+            android:paddingLeft="95dp"
+            android:paddingRight="95dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="SETTINGS"
+            android:textSize="18sp"
+            android:fontFamily="@font/sfprotext_semibold"
+
+            android:textColor="#828282"
+            android:background="#FFFFFF"
+
+            />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="#FAFAFA">
+
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/button_white_rounded"
+            android:fontFamily="@font/sfprotext_bold"
+            android:text="back"
+            android:textColor="@color/pinkPrimary"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/deleteMenuButton"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="32dp"
+            android:layout_toStartOf="@+id/saveMenuButton"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_white_rounded"
+            android:fontFamily="@font/sfprotext_bold"
+            android:text="delete Menu"
+            android:textColor="@color/redPrimary"
+            android:textSize="16sp"
+            android:visibility="invisible"/>
+
+
+        <Button
+            android:id="@+id/saveMenuButton"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:layout_centerVertical="true"
+            android:text="save"
+            android:background="@drawable/pink_round_btn"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textColor="#ffffff"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/ic_uploadimage"
+            android:text="" />
+
+
+        <TextView
+            android:id="@+id/menuAvailabilityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="64dp"
+
+            android:layout_toEndOf="@id/uploadImage"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Menu Availability"
+            android:textColor="#4F4F4F"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/availabilityToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/uploadImage"
+            android:layout_below="@id/menuAvailabilityLabel"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="16dp"
+            android:text=""
+            android:checked="true"
+            android:textOff="SOLD_OUT"
+            android:textOn="AVAILABLE"
+
+            android:scaleX="1.5"
+            android:scaleY="1.5"/>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:id="@+id/radioButtons"
+            android:layout_below="@id/uploadImage"
+            android:layout_centerHorizontal="true">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/foodTypeRadioGroup">
+
+                <RadioButton
+                    android:id="@+id/combiMainRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Main"
+                    android:layout_marginStart="8dp"
+                    android:buttonTint="@color/pinkPrimary"
+                    android:checked="true"
+
+
+                    android:textColor="@color/colortext"
+                    android:fontFamily="@font/sfprotext_regular"
+                    android:textSize="18sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/combiBaseRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Base"
+                    android:layout_marginStart="26dp"
+                    android:buttonTint="@color/pinkPrimary"
+
+                    android:textColor="@color/colortext"
+                    android:fontFamily="@font/sfprotext_regular"
+                    android:textSize="18sp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/alacarteRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="A La Carte"
+                    android:layout_marginStart="26dp"
+                    android:buttonTint="@color/pinkPrimary"
+
+                    android:textColor="@color/colortext"
+                    android:fontFamily="@font/sfprotext_regular"
+                    android:textSize="18sp"
+                    />
+            </RadioGroup>
+        </RelativeLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="540dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioButtons"
+            android:layout_marginTop="24dp"
+            android:id="@+id/nameInputLayout"
+            android:layout_centerHorizontal="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusDown="@id/priceInput"
+            android:textColorHint="#E0E0E0"
+
+            app:counterEnabled="true"
+            app:counterMaxLength="40"
+            app:errorEnabled="true"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/nameInputLayout"
+                android:textColorHint="#E0E0E0"
+                android:hint="Give your dish a name"
+                android:id="@+id/nameInput"
+                android:maxLines="1"
+                android:inputType="text"
+                android:scrollHorizontally="true"
+
+
+                android:textColor="#333333"
+                android:fontFamily="@font/sfprotext_regular"
+                android:textSize="18sp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp"/>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+        <EditText
+            android:id="@+id/priceInput"
+            android:layout_width="540dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameInputLayout"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:inputType="numberSigned"
+            android:layout_centerHorizontal="true"
+            android:hint="Baht"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+
+            android:textColorHint="#E0E0E0"
+            android:textColor="#333333"
+            android:fontFamily="@font/sfprotext_regular"
+            android:textSize="18sp"
+            android:background="@drawable/bg_input"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="14dp"
+            android:maxLength="10"/>
+
+
+        <TextView
+            android:id="@+id/typeInputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uploadImage"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="50dp"
+            android:layout_toStartOf="@+id/nameInputLayout"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Type"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/nameInputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radioButtons"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="43dp"
+            android:layout_toStartOf="@+id/nameInputLayout"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Name"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/priceInputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameInputLayout"
+            android:layout_marginTop="41dp"
+            android:layout_marginEnd="48dp"
+            android:layout_toStartOf="@+id/nameInputLayout"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Price"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

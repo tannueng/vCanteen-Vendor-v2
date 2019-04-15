@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="65dp"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot_title"
+        android:layout_marginTop="0dp"
+        android:text="Forgot Password?"
+        android:gravity="center"
+
+        android:textSize="24sp"
+        android:fontFamily="@font/sfprotext_bold"
+        android:textColor="@color/colortext"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgot_descript"
+        android:textColor="#000000"
+        android:text="The new password will be sent to your email."/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/bold_email" />
+
+        <TextView
+            android:id="@+id/error_email_notfound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/emptyr_recover"
+            android:textColor="@color/redPrimary"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recover_email"
+        android:hint="Enter your email..."
+        />
+
+    <TextView
+        android:id="@+id/error_recover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:text="Email is incorrect."
+        android:visibility="gone"/>
+
+
+
+    <Button
+        android:id="@+id/send_recover_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="70dp"
+        android:layout_marginVertical="30dp"
+        android:background="@drawable/button_pink_fill_rounded"
+        android:text="SEND"
+
+        android:fontFamily="@font/sfprotext_bold"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/back_recover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back_recover"
+        android:textColor="@color/com_facebook_messenger_blue"
+        android:layout_marginTop="50dp"
+        />
+
+</LinearLayout>
