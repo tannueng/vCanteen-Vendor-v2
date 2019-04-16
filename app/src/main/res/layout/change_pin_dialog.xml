@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="460dp">
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_close"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/changePinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:padding="15dp"
+        android:text="Change PIN"
+        android:fontFamily="@font/sfprotext_bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="#333333"/>
+
+    <TextView
+        android:id="@+id/currentPinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="Current PIN"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@id/currentPinBox"
+        android:layout_below="@id/changePinTitle"/>
+
+    <EditText
+        android:id="@+id/currentPinBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:inputType="numberPassword"
+        android:layout_below="@id/currentPinTitle"
+        />
+    <TextView
+        android:id="@+id/currentPinError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:layout_below="@id/currentPinBox"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:layout_alignLeft="@id/currentPinTitle"
+        android:text="error"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/currentPinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="0/4"
+        android:layout_alignRight="@id/currentPinBox"
+        android:layout_below="@id/currentPinBox"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/newPinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="New PIN"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@id/newPinBox"
+        android:layout_below="@id/currentPinError"/>
+
+    <EditText
+        android:id="@+id/newPinBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:inputType="numberPassword"
+        android:layout_below="@id/newPinTitle"
+        />
+    <TextView
+        android:id="@+id/newPinError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:layout_below="@id/newPinBox"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:layout_alignLeft="@id/currentPinTitle"
+        android:text="error"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/newPinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="0/4"
+        android:layout_alignRight="@id/newPinBox"
+        android:layout_below="@id/newPinBox"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/confirmNewPinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="Confirm New PIN"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@id/newPinBox"
+        android:layout_below="@id/newPinError"/>
+
+    <EditText
+        android:id="@+id/confirmNewPinBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:inputType="numberPassword"
+        android:layout_below="@id/confirmNewPinTitle"
+        />
+    <TextView
+        android:id="@+id/confirmNewPinError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:layout_below="@id/confirmNewPinBox"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:layout_alignLeft="@id/currentPinTitle"
+        android:text="error"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/confirmNewPinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="0/4"
+        android:layout_alignRight="@id/newPinBox"
+        android:layout_below="@id/confirmNewPinBox"
+        android:layout_marginTop="-8dp"/>
+    
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONFIRM"
+        android:background="@drawable/button_gradient_rounded"
+        android:layout_below="@id/confirmNewPinError"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
+
+
+
+
+</RelativeLayout>

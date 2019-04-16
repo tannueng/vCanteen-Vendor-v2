@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FourDigitPage">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:id="@+id/vendorSignUpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="Vendor Sign Up"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/pleaseEnterPinTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:text="Please enter 4-digit pin for viewing your sales record."
+            android:textColor="#333333"
+            android:layout_below="@id/vendorSignUpTitle"
+            />
+
+        <TextView
+            android:id="@+id/fourDigitTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="4-digit Pin"
+            android:layout_below="@id/pleaseEnterPinTitle"/>
+
+        <EditText
+            android:id="@+id/fourDigitBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_below="@id/fourDigitTitle"
+            android:layout_marginTop="20dp"
+            android:inputType="number"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:textColor="#333333"
+            android:hint="Enter your 4-digit pin"/>
+
+        <TextView
+            android:id="@+id/pinError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fourDigitBox"
+            android:layout_alignLeft="@id/fourDigitBox"
+            android:textColor="@color/redPrimary"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="14sp"
+            android:text="error" />
+
+        <TextView
+            android:id="@+id/confirmPinTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="Confirm your pin"
+            android:layout_below="@id/pinError"/>
+
+        <EditText
+            android:id="@+id/confirmPinBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_below="@id/confirmPinTitle"
+            android:inputType="number"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="#333333"
+            android:hint="Confirm your 4-digit pin"/>
+
+        <TextView
+            android:id="@+id/confirmPinError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/confirmPinBox"
+            android:layout_alignLeft="@id/confirmPinBox"
+            android:textColor="@color/redPrimary"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="14sp"
+            android:text="error" />
+
+
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="230dp"
+            android:layout_height="60dp"
+            android:text="NEXT"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_alignRight="@id/fourDigitBox"
+            android:textSize="28dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/pink_round_btn"
+            android:layout_below="@id/confirmPinError"
+            android:elevation="2dp"/>
+    </RelativeLayout>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/chefpic"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:src="@drawable/heroimage"
+        android:scaleType="fitXY"/>
+
+</LinearLayout>

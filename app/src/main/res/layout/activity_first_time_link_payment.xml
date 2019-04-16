@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstTimeLinkPayment">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:id="@+id/vendorSignUpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="Congratulations!, your account has been created"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/linkPaymentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="Link Payment"
+            android:textColor="#333333"
+            android:layout_below="@id/vendorSignUpTitle"
+            />
+
+        <TextView
+            android:id="@+id/linkPaymentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select your preferred account before continuing."
+            android:fontFamily="@font/sfprotext_medium"
+            android:textSize="18sp"
+            android:layout_below="@id/linkPaymentTitle"
+            android:layout_marginTop="25dp"
+            android:layout_alignLeft="@id/linkPaymentTitle"
+            android:layout_marginRight="50dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/paymentDropdown"
+            android:layout_below="@id/linkPaymentDescription"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/dropdownbg"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:spinnerMode="dropdown"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_angle_down_arrow" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/accountNumberTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/linkPaymentTitle"
+            android:layout_below="@id/paymentDropdown"
+            android:textSize="20sp"
+            android:text="Account Number"
+            android:fontFamily="@font/sfprotext_semibold"/>
+
+        <EditText
+            android:id="@+id/accountNumberBox"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/accountNumberTitle"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:layout_alignLeft="@id/linkPaymentTitle"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/outline_rect"
+            />
+
+        <TextView
+            android:id="@+id/accountNumberError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accountNumberBox"
+            android:layout_alignLeft="@id/accountNumberBox"
+            android:textColor="@color/redPrimary"
+            android:textSize="14sp"
+            android:text="Error"
+            android:fontFamily="@font/sfprotext_semibold"
+            />
+
+        <Button
+            android:id="@+id/linkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accountNumberError"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textColor="#ffffff"
+            android:background="@drawable/button_gradient_rounded"
+            android:textSize="18sp"
+            android:text="LINK"
+            android:layout_marginTop="30dp"
+            />
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/chefpic"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:src="@drawable/heroimage"
+        android:scaleType="fitXY"/>
+
+</LinearLayout>
