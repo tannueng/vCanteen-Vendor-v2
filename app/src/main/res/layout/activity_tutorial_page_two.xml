@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TutorialPageTwo"
+    android:background="#FFEEED">
+
+    <ImageView
+        android:id="@+id/vcanteenlogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_vcanteen_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"/>
+
+    <ImageView
+        android:id="@+id/firstphoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_tutorialpagetow"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+    
+    <TextView
+        android:id="@+id/onlineOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:text="• Full control of your restaurant"
+        android:layout_below="@id/firstphoto"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@id/lessHassle"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:textAlignment="viewStart"/>
+
+    <TextView
+        android:id="@+id/lessHassle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:text="• Daily sales summary in seconds"
+        android:layout_below="@id/onlineOrder"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:textAlignment="viewStart"/>
+
+    <TextView
+        android:id="@+id/startToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:text="• Start Today!"
+        android:layout_below="@id/lessHassle"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@id/lessHassle"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:textAlignment="viewStart"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageButton
+            android:id="@+id/next_button"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/next_button"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:translationY="1dp"
+            android:translationZ="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/right_arrow"
+            android:elevation="2dp"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</RelativeLayout>

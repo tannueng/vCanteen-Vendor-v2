@@ -3,9 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#222222</color>
     <color name="colorAccent">#D81B60</color>
-
     <color name="colortext">#333333</color>
     <color name="redPrimary">#FF4141</color>
     <color name="pinkPrimary">#FF9C9C</color>
     <color name="lightgrey">#BDBDBD</color>
+
 </resources>

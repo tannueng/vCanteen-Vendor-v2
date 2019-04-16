@@ -12,6 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TutorialPageTwo"></activity>
+        <activity android:name=".TutorialPageOne" />
+        <activity android:name=".FirstTimeLinkPayment" />
+        <activity android:name=".FourDigitPage" />
+        <activity android:name=".SignupInfoPage" />
+        <activity android:name=".SignupPasswordPage" />
+        <activity android:name=".SignupPage" />
         <activity
             android:name=".Splash"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -25,8 +32,7 @@
         <activity
             android:name=".LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".AddEditMenuActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -46,7 +52,7 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="340dp">
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_close"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/editProfileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="24sp"
+        android:padding="15dp"
+        android:text="Edit Profile"
+        android:fontFamily="@font/sfprotext_bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="#333333"
+        />
+
+    <TextView
+        android:id="@+id/vendorNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="Vendor Name"
+        android:layout_marginTop="15dp"
+        android:layout_alignLeft="@id/vendorNameBox"
+        android:layout_below="@id/editProfileTitle"/>
+
+    <EditText
+        android:id="@+id/vendorNameBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/vendorNameTitle"
+        />
+    <TextView
+        android:id="@+id/vendorNameError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:layout_below="@id/vendorNameBox"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:layout_alignLeft="@id/emailTitle"
+        android:text="error"
+        android:layout_marginTop="-8dp"/>
+
+    <TextView
+        android:id="@+id/emailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="E-MAIL"
+        android:layout_marginTop="10dp"
+        android:layout_alignLeft="@id/vendorNameBox"
+        android:layout_below="@id/vendorNameError" />
+
+    <EditText
+        android:id="@+id/emailBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/emailTitle"
+        />
+
+    <TextView
+        android:id="@+id/emailError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/redPrimary"
+        android:layout_below="@id/emailBox"
+        android:textSize="14sp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:layout_alignLeft="@id/emailTitle"
+        android:text="error"
+        android:layout_marginTop="-8dp"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE"
+        android:background="@drawable/button_gradient_rounded"
+        android:layout_below="@id/emailError"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
+
+
+</RelativeLayout>

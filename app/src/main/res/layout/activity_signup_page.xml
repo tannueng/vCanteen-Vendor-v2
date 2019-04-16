@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupPage">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5">
+
+        <TextView
+            android:id="@+id/vendorSignUpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="Vendor Sign Up"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/pleaseEnterEmailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:text="Please enter your email"
+            android:textColor="#333333"
+            android:layout_below="@id/vendorSignUpTitle"
+            />
+
+        <TextView
+            android:id="@+id/emailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="50dp"
+            android:text="E-mail"
+            android:layout_below="@id/pleaseEnterEmailTitle"/>
+
+        <EditText
+            android:id="@+id/emailBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_marginLeft="50dp"
+            android:layout_below="@id/emailTitle"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="#333333"
+            android:hint="Enter your email"/>
+        <TextView
+            android:id="@+id/emailError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailBox"
+            android:layout_alignLeft="@id/emailBox"
+            android:textColor="@color/redPrimary"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="14sp"
+            android:text="error"/>
+
+        <TextView
+            android:id="@+id/or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="or"
+            android:layout_below="@id/emailError"
+            android:layout_marginTop="30dp"
+            android:textSize="18sp"
+            android:layout_marginRight="20dp"
+            android:layout_alignLeft="@id/emailBox"/>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:text="Facebook"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_toRightOf="@id/or"
+            android:layout_below="@id/emailError"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="230dp"
+            android:layout_height="60dp"
+            android:text="NEXT"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_alignRight="@id/emailBox"
+            android:textSize="28dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/pink_round_btn"
+            android:layout_below="@id/emailError"
+            android:layout_alignBaseline="@id/or"
+            android:elevation="2dp"/>
+    </RelativeLayout>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/chefpic"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:src="@drawable/heroimage"
+        android:scaleType="fitXY"/>
+
+</LinearLayout>
