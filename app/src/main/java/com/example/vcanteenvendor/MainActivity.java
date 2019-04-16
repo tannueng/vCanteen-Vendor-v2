@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button doneButton;
     Button cancelButton;
-    TextView orderNo;
+    TextView orderId;
     TextView foodName;
     TextView foodExtra;
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         doneButton = (Button) findViewById(R.id.doneButton) ;
         cancelButton = (Button) findViewById(R.id.cancelButton);
-        orderNo = (TextView) findViewById(R.id.orderNo);
+        orderId = (TextView) findViewById(R.id.orderId);
         foodName = (TextView) findViewById(R.id.foodName);
         foodExtra = (TextView) findViewById(R.id.foodExtra);
 
