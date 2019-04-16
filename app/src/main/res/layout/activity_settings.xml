@@ -203,20 +203,21 @@
                 android:layout_below="@+id/vendorProfile"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/img_loading"
-                 />
+                android:background="@drawable/img_loading" />
+
             <Button
                 android:id="@+id/changePictureButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pinkPrimary"
                 android:layout_below="@id/vendorProfilePicture"
-                android:text="Change picture"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="@font/sfprotext_semibold"
-                android:textSize="16sp"
                 android:background="@android:color/transparent"
-                android:layout_centerHorizontal="true"/>
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Edit Profile Picture"
+                android:textAllCaps="false"
+                android:textColor="@color/pinkPrimary"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/vendorNameInput"
@@ -309,14 +310,13 @@
                 android:id="@+id/reviewValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loading... ✭"
-                android:fontFamily="@font/sfprotext_semibold"
-                android:layout_toRightOf="@id/reviewInputLabel"
-                android:textSize="16sp"
-                android:textColor="@color/pinkPrimary"
                 android:layout_below="@+id/vendorEmailInput"
-                android:layout_marginTop="24dp"
-                />
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@id/reviewInputLabel"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Loading... ✭"
+                android:textColor="@color/pinkPrimary"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/viewReviewsButton"
@@ -380,17 +380,17 @@
                 android:id="@+id/editProfileButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_edit"
+                android:layout_above="@id/typeInputLabel"
+                android:layout_alignRight="@id/signOutButton"
+                android:layout_marginBottom="-65dp"
                 android:background="@android:color/transparent"
+                android:drawableRight="@drawable/ic_edit"
                 android:fontFamily="@font/sfprotext_semibold"
                 android:paddingHorizontal="8dp"
-                android:layout_marginBottom="-65dp"
-                android:text="edit profile  "
+                android:text="EDIT"
+                android:textAllCaps="false"
                 android:textColor="@color/pinkPrimary"
-                android:textSize="14sp"
-                android:layout_alignRight="@id/signOutButton"
-                android:layout_above="@id/typeInputLabel"
-                />
+                android:textSize="14sp" />
 
 
 
@@ -408,20 +408,6 @@
             android:paddingVertical="12dp">
 
 
-            <Button
-                android:id="@+id/reportButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/reportText"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/sfprotext_bold"
-                android:paddingHorizontal="8dp"
-                android:text="REPORT"
-                android:textColor="@color/pinkPrimary"
-                android:textSize="16sp" />
-
             <View
                 android:id="@+id/divider6"
                 android:layout_width="1dp"
@@ -432,7 +418,7 @@
 
             <TextView
                 android:id="@+id/paymentMethod"
-                android:layout_width="wrap_content"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
@@ -441,51 +427,6 @@
                 android:textColor="@color/colortext"
                 android:textSize="24sp" />
 
-
-            <TextView
-                android:id="@+id/bugReportTitle"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/trueMoneyRow"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp"
-                android:fontFamily="@font/sfprotext_bold"
-                android:text="Bug Report"
-                android:textColor="@color/colortext"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/textCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/reportText"
-                android:layout_alignEnd="@+id/bugReportTitle"
-                android:layout_marginEnd="7dp"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="@font/sfprotext_medium"
-                android:text="0/300"
-                android:textAlignment="textEnd"
-                android:textSize="14sp" />
-            <EditText
-                android:id="@+id/reportText"
-                android:layout_width="400dp"
-                android:layout_height="221dp"
-                android:layout_below="@+id/bugReportTitle"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/bug_report_bg_border"
-                android:elevation="4dp"
-                android:ems="10"
-                android:gravity="top"
-                android:hint="Report any bug here, every little things will improve your experiences with the app :)"
-                android:inputType="textLongMessage|textMultiLine"
-                android:lineSpacingMultiplier="1.25"
-                android:lines="8"
-                android:maxLength="300"
-                android:padding="16dp"
-                android:textSize="14sp" />
 
             <RelativeLayout
                 android:id="@+id/cuNexRow"
@@ -683,13 +624,13 @@
                 android:id="@+id/bugReportTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:text="BUG REPORT"
-                android:textSize="24sp"
-                android:fontFamily="@font/sfprotext_bold"
                 android:layout_below="@id/trueMoneyRow"
                 android:layout_alignLeft="@id/trueMoneyRow"
-                android:layout_marginTop="50dp"/>
+                android:layout_marginTop="75dp"
+                android:fontFamily="@font/sfprotext_bold"
+                android:text="Bug Report"
+                android:textColor="#333333"
+                android:textSize="24sp" />
             <TextView
                 android:id="@+id/wordCountReportBox"
                 android:layout_width="wrap_content"
@@ -706,12 +647,12 @@
                 android:layout_width="400dp"
                 android:layout_height="200dp"
                 android:layout_below="@id/bugReportTitle"
-                android:background="@drawable/outline_rect"
                 android:layout_alignLeft="@id/bugReportTitle"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/outline_rect"
+                android:gravity="top"
                 android:hint="Report any bug here, every little things will improve your experiences with the app :)"
-                android:padding="10dp"
-                />
+                android:padding="10dp" />
 
             <Button
                 android:id="@+id/reportButton"
