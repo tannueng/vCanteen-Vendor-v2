@@ -42,6 +42,7 @@
         android:layout_centerHorizontal="true"
         android:inputType="numberPassword"
         android:layout_below="@id/currentPinTitle"
+        android:maxLength="4"
         />
     <TextView
         android:id="@+id/currentPinError"
@@ -83,6 +84,7 @@
         android:layout_centerHorizontal="true"
         android:inputType="numberPassword"
         android:layout_below="@id/newPinTitle"
+        android:maxLength="4"
         />
     <TextView
         android:id="@+id/newPinError"
@@ -124,6 +126,7 @@
         android:layout_centerHorizontal="true"
         android:inputType="numberPassword"
         android:layout_below="@id/confirmNewPinTitle"
+        android:maxLength="4"
         />
     <TextView
         android:id="@+id/confirmNewPinError"
