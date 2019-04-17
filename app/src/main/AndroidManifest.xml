@@ -39,6 +39,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".SettingsActivity"
+            android:windowSoftInputMode="stateHidden"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
         <activity
