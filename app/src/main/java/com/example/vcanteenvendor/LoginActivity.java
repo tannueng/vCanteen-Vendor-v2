@@ -6,7 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -160,9 +162,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                         }
                                     });
-                                    System.out.println("FIREBASE TOKEN : "+firebaseToken);
-                                    sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
-                                    sendJSON(email, passwd, firebaseToken);
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            System.out.println("FIREBASE TOKEN : "+firebaseToken);
+                                            sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
+                                            sendJSON(email, passwd, firebaseToken);
+
+                                        }
+                                    }, 3500);
+
+
                                 } else {
                                     errorMessage.setText("Email or Password is Incorrect");
                                     errorMessage.setVisibility(View.VISIBLE);
@@ -398,9 +410,18 @@ public class LoginActivity extends AppCompatActivity {
 
                                                                     }
                                                                 });
-                                                                sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
-                                                                passwd = null;
-                                                                sendJSON(email, passwd, firebaseToken);
+
+                                                                new Handler().postDelayed(new Runnable() {
+                                                                    @Override
+                                                                    public void run() {
+                                                                        sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
+                                                                        passwd = null;
+                                                                        sendJSON(email, passwd, firebaseToken);
+
+                                                                    }
+                                                                }, 3500);
+
+
                                                             } else {
                                                                 errorMessage.setText("Email or Password is Incorrect");
                                                                 errorMessage.setVisibility(View.VISIBLE);
