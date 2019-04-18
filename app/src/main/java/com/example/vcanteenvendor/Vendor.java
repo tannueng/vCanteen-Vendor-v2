@@ -33,8 +33,21 @@ public class Vendor {
     @SerializedName("vendorEmail")
     private String vendorEmail;
 
+    @SerializedName("score")
+    private double score;
 
-    public Vendor(int vendorId, String adminPermission, int vendorNo, String vendorName, String vendorStatus, String vendorImage, String vendorPassword, String vendorAccountType, String vendorEmail) {
+
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+
+    public Vendor(int vendorId, String adminPermission, int vendorNo, String vendorName, String vendorStatus, String vendorImage, String vendorPassword, String vendorAccountType, String vendorEmail, double score) {
         this.vendorId = vendorId;
         this.adminPermission = adminPermission;
         this.vendorNo = vendorNo;
@@ -44,6 +57,7 @@ public class Vendor {
         this.vendorPassword = vendorPassword;
         this.vendorAccountType = vendorAccountType;
         this.vendorEmail = vendorEmail;
+        this.score = score;
     }
 
     public Vendor() {

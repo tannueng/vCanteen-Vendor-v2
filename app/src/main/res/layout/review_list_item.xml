@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/bg_review_item"
+    >
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        android:fontFamily="@font/sfprotext_regular"
+
+        android:textColor="@color/pinkPrimary"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/ratingScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.0"
+        android:fontFamily="@font/sfprotext_regular"
+
+        android:textColor="@color/pinkPrimary"
+        android:textSize="14sp"
+        android:layout_toEndOf="@id/rating"
+        android:layout_marginStart="4dp"/>
+
+    <TextView
+        android:id="@+id/scoreStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✭"
+        android:fontFamily="@font/sfprotext_regular"
+
+        android:textColor="@color/pinkPrimary"
+        android:textSize="14sp"
+        android:layout_toEndOf="@id/ratingScore"
+        android:layout_marginStart="4dp"/>
+
+    <TextView
+        android:id="@+id/commentText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="comment"
+        android:fontFamily="@font/sfprotext_regular"
+
+        android:textColor="#828282"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@id/rating"
+        />
+
+    <TextView
+        android:id="@+id/reviewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="September 18, 2018"
+        android:fontFamily="@font/sfprotext_regular"
+        android:layout_alignParentEnd="true"
+        android:textColor="#BDBDBD"
+        android:textSize="12sp"
+
+        />
+
+</RelativeLayout>

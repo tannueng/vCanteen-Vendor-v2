@@ -116,6 +116,9 @@ public class SettingsActivity extends AppCompatActivity {
     RequestOptions option = new RequestOptions().centerCrop();
     int vendor_id;
 
+    Button viewReviewsButton;
+    TextView reviewValue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +148,9 @@ public class SettingsActivity extends AppCompatActivity {
         vendorProfilePicture = findViewById(R.id.vendorProfilePicture);
 
         changePass = findViewById(R.id.changePasswordButton);
+
+        viewReviewsButton = findViewById(R.id.viewReviewsButton);
+        reviewValue = findViewById(R.id.reviewValue);
 
         //////////////////////////////////////////   JSON START UP   //////////////////////////////////////
 
@@ -488,6 +494,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+
+        viewReviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, VendorReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void cancelAllCookingOrders() {
@@ -508,7 +523,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (!response.isSuccessful()) {
-                    vendorNameInput.setText("Code: " + response.code());
+                    //vendorNameInput.setText("Code: " + response.code());
                     System.out.println("\n\n\n\n********************" + "Code: " + response.code() + "********************\n\n\n\n");
                     return;
                 }
@@ -518,7 +533,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                vendorProfile.setText(t.getMessage());
+                //vendorProfile.setText(t.getMessage());
                 System.out.println("\n\n\n\n********************" + t.getMessage() + "********************\n\n\n\n");
 
 
@@ -545,7 +560,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
 
                 if (!response.isSuccessful()) {
-                    vendorNameInput.setText("Code: " + response.code());
+                    //vendorNameInput.setText("Code: " + response.code());
                     return;
                 }
 
@@ -554,7 +569,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                vendorProfile.setText(t.getMessage());
+                //vendorProfile.setText(t.getMessage());
 
 
             }
@@ -592,8 +607,8 @@ public class SettingsActivity extends AppCompatActivity {
             public void onResponse(Call<VendorInfoArray> call, Response<VendorInfoArray> response) {
 
                 if (!response.isSuccessful()) {
-                    vendorNameInput.setText("Code: " + response.code());
-                    vendorNameInput.setText("");
+                    //vendorNameInput.setText("Code: " + response.code());
+                    //vendorNameInput.setText("");
                     return;
                 }
 
@@ -607,6 +622,11 @@ public class SettingsActivity extends AppCompatActivity {
                     email = vendor.getVendorEmail();
                     System.out.println(email);
                     vendorEmailInput.setText(vendor.getVendorEmail());
+
+                    if(vendor.getScore() != 0.0){
+                        reviewValue.setText(String.valueOf(vendor.getScore())+" ✭");
+                    }
+
 
                     if (vendor.getVendorImage() != null)
                         Glide.with(SettingsActivity.this).load(vendor.getVendorImage()).apply(option).into(vendorProfilePicture);
@@ -649,7 +669,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<VendorInfoArray> call, Throwable t) {
-                vendorProfile.setText(t.getMessage());
+                //vendorProfile.setText(t.getMessage());
 
                 progressDialog.dismiss();
             }

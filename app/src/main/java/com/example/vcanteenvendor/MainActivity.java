@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<OrderList> call, Throwable t) {
                 //vendorProfile.setText(t.getMessage());
                 System.out.println("\n\n\n\n********************"+ t.getMessage() +"********************\n\n\n\n");
-
+                progressDialog.dismiss();
             }
         });
 

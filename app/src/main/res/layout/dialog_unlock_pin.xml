@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="48dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogTitle"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Enter PIN"
+        android:gravity="center"
+
+        android:textSize="24sp"
+        android:fontFamily="@font/sfprotext_bold"
+        android:textColor="@color/colortext"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogContent"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Please enter the 4-digit PIN
+to reveal the Sales Record Page"
+        android:gravity="center"
+
+        android:lineSpacingExtra="5sp"
+        android:textSize="22sp"
+        android:fontFamily="@font/sfprotext_regular"
+        android:textColor="@color/colortext"
+        />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
+        app:errorEnabled="true"
+        android:id="@+id/pinInputLayout"
+
+        >
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="4-digit PIN"
+            android:textColorHint="#E0E0E0"
+
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="14dp"
+            android:id="@+id/pinInput"
+            android:singleLine="true"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:weightSum="2"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/negativeButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:background="@android:color/transparent"
+            android:text="CANCEL"
+            android:layout_marginHorizontal="8dp"
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="#BDBDBD"/>
+
+        <Button
+            android:id="@+id/positiveButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="16dp"
+
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/button_gradient_rounded"
+            android:text="CONFIRM"
+
+            android:fontFamily="@font/sfprotext_bold"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -652,7 +652,9 @@
                 android:background="@drawable/outline_rect"
                 android:gravity="top"
                 android:hint="Report any bug here, every little things will improve your experiences with the app :)"
-                android:padding="10dp" />
+                android:padding="10dp"
+
+                android:focusableInTouchMode="true"/>
 
             <Button
                 android:id="@+id/reportButton"

@@ -334,6 +334,20 @@
             android:paddingVertical="14dp"
             android:maxLength="10"/>
 
+        <TextView
+            android:id="@+id/editMenuPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uploadImage"
+            android:layout_marginTop="12dp"
+
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/sfprotext_bold"
+            android:text="Edit Menu Picture"
+            android:textColor="@color/pinkPrimary"
+            android:textSize="16sp"
+            android:clickable="true"/>
+
 
         <TextView
             android:id="@+id/typeInputLabel"
@@ -374,7 +388,27 @@
             android:textColor="#828282"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/categoryInputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/priceInput"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="48dp"
+            android:layout_toStartOf="@+id/nameInputLayout"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Category"
+            android:textColor="#828282"
+            android:textSize="16sp" />
 
+        <Spinner
+            android:id="@+id/categoryInput"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/priceInput"
+
+            android:layout_marginTop="32dp"
+            android:layout_toEndOf="@+id/categoryInputLabel" />
 
 
     </RelativeLayout>

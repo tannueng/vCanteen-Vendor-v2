@@ -16,4 +16,13 @@
     <string name="emptyr_recover"><b>"Please fill in an Email "</b></string>
     <string name="for_vendor"><b>FOR VENDOR/SHOP</b></string>
     <string name="order_id">ID</string>
+
+    <string-array name="category_array">
+        <item></item>
+        <item>Vegan</item>
+        <item>Spicy</item>
+        <item>Meat</item>
+        <item>Noodles</item>
+        <item>Soup</item>
+    </string-array>
 </resources>

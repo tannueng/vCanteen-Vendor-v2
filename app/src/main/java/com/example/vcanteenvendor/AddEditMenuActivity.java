@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
     TextInputEditText nameInput;
     ImageView uploadImage;
     EditText priceInput;
+    Spinner categoryInput;
 
     RequestOptions option = new RequestOptions().centerCrop();
 
@@ -78,6 +81,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.nameInput);
         uploadImage = findViewById(R.id.uploadImage);
         priceInput= findViewById(R.id.priceInput);
+        categoryInput = findViewById(R.id.categoryInput);
 
 
 
@@ -358,6 +362,13 @@ public class AddEditMenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.category_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoryInput.setAdapter(adapter);
 
 
 

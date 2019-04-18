@@ -75,4 +75,10 @@ interface JsonPlaceHolderApi {
     @FormUrlEncoded
     @PUT("v1/settings/vendor/orders/cancel-all")
     Call<Void> cancelAllOrder(@Field("vendorId") int vendorId);
+
+    @GET("v2/settings/{vendorId}/info/reviews")
+    Call<ReviewList> getReviews(@Path("vendorId") int vendorId);
+
+    @GET("v2/settings/{vendorId}/info")
+    Call<VendorInfoArray> getVendorInfoV2(@Path("vendorId") int vendorId);
 }

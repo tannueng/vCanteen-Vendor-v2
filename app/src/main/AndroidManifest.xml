@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TutorialPageTwo"></activity>
+        <activity android:name=".VendorReviewActivity"></activity>
+        <activity android:name=".TutorialPageTwo" />
         <activity android:name=".TutorialPageOne" />
         <activity android:name=".FirstTimeLinkPayment" />
         <activity android:name=".FourDigitPage" />

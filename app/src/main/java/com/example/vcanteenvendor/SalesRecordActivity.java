@@ -1,9 +1,11 @@
 package com.example.vcanteenvendor;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -143,7 +145,42 @@ public class SalesRecordActivity extends AppCompatActivity {
         //////////////////////////////////////////  SalesRecordAdapter   //////////////////////////////////////
 
        //error List = new SalesRecordList(order);
-        getSalesRecordArrayList();
+        //getSalesRecordArrayList();
+
+
+        //////////////////////////////////////////  Dialog   //////////////////////////////////////
+
+        final Dialog dialog = new Dialog(SalesRecordActivity.this);
+
+        dialog.setContentView(R.layout.dialog_unlock_pin);
+
+        final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
+        final TextView content = (TextView) dialog.findViewById(R.id.dialogContent);
+        Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
+        Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+
+
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getSalesRecordArrayList();
+
+                Toast.makeText(getApplicationContext(), "UNLOCKED!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
 
     }
 
