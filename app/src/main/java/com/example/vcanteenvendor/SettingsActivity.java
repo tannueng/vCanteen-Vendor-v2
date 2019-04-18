@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.vcanteenvendor.POJO.BugReport;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -122,6 +125,11 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText vendorNameBox, emailBox;
     private TextView vendorNameError, emailError;
     VendorSingleton vendorSingleton;
+
+    private Button report;
+    private EditText reportText;
+    private TextView counter;
+    private TextView bugInline;
 
     private Button closeDialog;
     private SharedPreferences sharedPref;
@@ -687,16 +695,101 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        ///////////////BUG REPORT//////////
+        report = findViewById(R.id.reportButton);
+        reportText = findViewById(R.id.bugReportBox);
+        bugInline = findViewById(R.id.bugInline);
+        counter = findViewById(R.id.wordCountReportBox);
 
-        viewReviewsButton.setOnClickListener(new View.OnClickListener() {
+        report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, VendorReviewActivity.class);
-                startActivity(intent);
+                System.out.println(reportText.getText());
+
+                if (reportText.getText().toString().trim().isEmpty()) {
+                    bugInline.setText("This field cannot be blank.");
+                    bugInline.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                //TODO Check Emoji
+                sharedPref = SettingsActivity.this.getSharedPreferences("myPref", MODE_PRIVATE);
+                BugReport report = new BugReport();
+                report.setVendorId(sharedPref.getInt("vendor_id", 0));
+                report.setMessage(reportText.getText().toString().trim());
+
+                //TODO Include retrofit here for sending
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://vcanteen.herokuapp.com/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                Call<Void> call = jsonPlaceHolderApi.postBugReport(report);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(SettingsActivity.this, "CODE: " + response.code(), Toast.LENGTH_LONG).show();
+                            return;
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+
+                reportText.setText("");
+                Toast.makeText(SettingsActivity.this, "Bug report successfully submitted", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        reportText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                counter.setText(s.toString().length()+"/300");
+
+                if(s.toString().length()>0) {
+                    bugInline.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        reportText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                reportText.setCursorVisible(true);
+                reportText.setFocusable(true);
+            }
+        });
+        findViewById(R.id.linearLayout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                }catch (Exception e){
+                    return false;
+                }
+                reportText.setCursorVisible(false);
+//                reportText.setFocusable(false);
+                return true;
+
+
+
             }
         });
 
     }
+
 
     private void cancelAllCookingOrders() {
 

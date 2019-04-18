@@ -4,38 +4,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SettingsActivity"
-    >
+    tools:context=".SettingsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
         android:padding="0dp"
-        android:weightSum="4"
-        >
+        android:weightSum="4">
 
         <Button
 
             android:id="@+id/orderStatusButton"
 
             style="@style/MyButtonStyle"
-            android:drawableStart="@drawable/ic_order"
-            android:drawablePadding="12dp"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ORDER STATUS"
-            android:textSize="18sp"
+            android:background="#FFFFFF"
+            android:drawableStart="@drawable/ic_order"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/sfprotext_semibold"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp"
+            android:text="ORDER STATUS"
 
             android:textColor="#828282"
-            android:background="#FFFFFF"
+            android:textSize="18sp"
 
             />
 
@@ -49,16 +48,16 @@
 
             android:layout_weight="1"
 
+            android:background="#FFFFFF"
             android:drawableStart="@drawable/ic_menu"
             android:drawablePadding="12dp"
+            android:fontFamily="@font/sfprotext_semibold"
             android:paddingLeft="110dp"
             android:paddingRight="120dp"
-            android:text="MENU"
-            android:fontFamily="@font/sfprotext_semibold"
 
+            android:text="MENU"
             android:textAlignment="textEnd"
             android:textColor="#828282"
-            android:background="#FFFFFF"
 
             android:textSize="18sp" />
 
@@ -68,20 +67,20 @@
             android:id="@+id/salesRecordButton"
             style="@style/MyButtonStyle"
 
-            android:drawableLeft="@drawable/ic_chart"
-            android:drawablePadding="12dp"
-            android:paddingLeft="65dp"
-            android:paddingRight="65dp"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SALES RECORD"
-            android:textSize="18sp"
-
-            android:textColor="#828282"
             android:background="#FFFFFF"
+
+            android:drawableLeft="@drawable/ic_chart"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/sfprotext_semibold"
+            android:paddingLeft="65dp"
+            android:paddingRight="65dp"
+
+            android:text="SALES RECORD"
+            android:textColor="#828282"
+            android:textSize="18sp"
 
             />
 
@@ -90,21 +89,21 @@
             android:id="@+id/settingsButton"
             style="@style/MyButtonStyle"
 
-            android:drawableLeft="@drawable/ic_set_red"
-            android:drawablePadding="12dp"
-            android:paddingLeft="95dp"
-            android:paddingRight="95dp"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SETTINGS"
-            android:textSize="18sp"
+            android:background="#FFF5F4"
+
+            android:drawableLeft="@drawable/ic_set_red"
+            android:drawablePadding="12dp"
             android:fontFamily="@font/sfprotext_semibold"
+            android:paddingLeft="95dp"
+            android:paddingRight="95dp"
+            android:text="SETTINGS"
 
 
             android:textColor="#FF4141"
-            android:background="#FFF5F4"
+            android:textSize="18sp"
 
             />
     </LinearLayout>
@@ -122,43 +121,42 @@
 
 
         <TextView
+            android:id="@+id/statusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/statusText"
-            android:text="OPEN"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="32dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="32dp"
             android:fontFamily="@font/sfprotext_bold"
-            android:textSize="20sp"
+            android:gravity="right"
+            android:text="OPEN"
             android:textColor="@color/pinkPrimary"
-            android:gravity="right"/>
+            android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/vendorStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="180dp"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="180dp"
             android:fontFamily="@font/sfprotext_regular"
             android:text="Vendor Status:"
             android:textColor="#828282"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"/>
+            android:textSize="20sp" />
 
         <Switch
+            android:id="@+id/vendorStatusToggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/vendorStatusToggle"
 
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="120dp"
-            android:layout_alignParentEnd="true"
-            android:scaleY="1.5"
-            android:scaleX="1.5"
             android:checked="true"
-            />
+            android:scaleX="1.5"
+            android:scaleY="1.5" />
 
     </RelativeLayout>
 
@@ -264,7 +262,6 @@
                 android:textSize="18sp" />
 
 
-
             <!--LABELS-->
 
             <TextView
@@ -298,13 +295,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameInputLabel"
+                android:layout_alignLeft="@id/nameInputLabel"
                 android:layout_marginTop="38dp"
                 android:layout_marginEnd="33dp"
                 android:text="Reviews"
                 android:textColor="#828282"
-                android:textSize="16sp"
-                android:layout_alignLeft="@id/nameInputLabel"
-                />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/reviewValue"
@@ -322,14 +318,14 @@
                 android:id="@+id/viewReviewsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pinkPrimary"
-                android:layout_toRightOf="@id/reviewValue"
-                android:text="see all reviews"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/sfprotext_semibold"
-                android:textSize="16sp"
                 android:layout_alignBaseline="@id/reviewValue"
-                android:background="@android:color/transparent"/>
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/reviewValue"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="see all reviews"
+                android:textColor="@color/pinkPrimary"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/changePinButton"
@@ -338,13 +334,13 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="48dp"
                 android:layout_marginBottom="30dp"
+                android:layout_toStartOf="@id/changePasswordButton"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/sfprotext_bold"
                 android:paddingHorizontal="8dp"
                 android:text="change pin"
                 android:textColor="@color/pinkPrimary"
-                android:layout_toStartOf="@id/changePasswordButton"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/changePasswordButton"
@@ -393,8 +389,6 @@
                 android:textSize="14sp" />
 
 
-
-
         </RelativeLayout>
 
 
@@ -440,14 +434,13 @@
                     android:id="@+id/checkCUNex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LINKED"
+                    android:layout_alignBaseline="@+id/cuNex"
                     android:drawableStart="@drawable/ic_check"
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/sfprotext_regular"
+                    android:text="LINKED"
                     android:textSize="12sp"
-                    android:layout_alignBaseline="@+id/cuNex"
-                    android:visibility="invisible"
-                    />
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/cuNex"
@@ -470,7 +463,7 @@
                     android:text="@string/unlink"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -495,7 +488,7 @@
                     android:text="LINKED"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="12sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/scbEasy"
@@ -518,7 +511,7 @@
                     android:text="@string/unlink"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -544,7 +537,7 @@
                     android:text="LINKED"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="12sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/kPlus"
@@ -567,7 +560,7 @@
                     android:text="@string/unlink"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -616,7 +609,7 @@
                     android:text="LINK"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 
@@ -626,21 +619,22 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/trueMoneyRow"
                 android:layout_alignLeft="@id/trueMoneyRow"
-                android:layout_marginTop="75dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/sfprotext_bold"
                 android:text="Bug Report"
                 android:textColor="#333333"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/wordCountReportBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="@font/sfprotext_mediumitalic"
-                android:textColor="#828282"
-                android:text="0/300"
+                android:layout_alignBaseline="@id/bugReportTitle"
                 android:layout_alignRight="@id/bugReportBox"
-                android:layout_alignBaseline="@id/bugReportTitle"/>
+                android:fontFamily="@font/sfprotext_medium"
+                android:text="0/300"
+                android:textColor="#828282"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/bugReportBox"
@@ -651,6 +645,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/outline_rect"
                 android:gravity="top"
+                android:cursorVisible="false"
+                android:focusable="auto"
                 android:hint="Report any bug here, every little things will improve your experiences with the app :)"
                 android:padding="10dp"
 
@@ -660,16 +656,27 @@
                 android:id="@+id/reportButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pinkPrimary"
-                android:text="REPORT"
-                android:textSize="16sp"
-                android:fontFamily="@font/sfprotext_semibold"
-                android:background="@android:color/transparent"
                 android:layout_alignRight="@id/bugReportBox"
-                android:layout_below="@id/bugReportBox"
-                android:layout_marginTop="10dp"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="30dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="REPORT"
+                android:textColor="@color/pinkPrimary"
+                android:textSize="16sp" />
 
-
+            <TextView
+                android:id="@+id/bugInline"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bugReportBox"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="This field cannot be blank."
+                android:textColor="@color/redPrimary"
+                android:visibility="invisible"
+                android:textSize="14sp" />
 
 
         </RelativeLayout>
