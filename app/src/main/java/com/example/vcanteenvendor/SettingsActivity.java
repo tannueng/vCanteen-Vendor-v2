@@ -463,6 +463,12 @@ public class SettingsActivity extends AppCompatActivity {
                             callToEditProfile.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if(!response.isSuccessful()){
+                                        Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                        System.out.println("CODE: "+response.code());
+                                        return;
+                                    }
+
                                     if(response.code()==200) {
 
                                         vendorSingleton.setVendorName(vendorName);
@@ -1043,6 +1049,13 @@ public class SettingsActivity extends AppCompatActivity {
                     call.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
+                            if(!response.isSuccessful()){
+                                Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                newPinBox.setText("CODE: "+response.code());
+                                currentPinBox.setText("CODE: "+response.code());
+                                confirmNewPinBox.setText("CODE: "+response.code());
+                                return;
+                            }
                             int code = response.code();
                             if(code==200) { // If current PIN match with BE PIN
 
@@ -1057,7 +1070,16 @@ public class SettingsActivity extends AppCompatActivity {
                                 call2.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
+                                        if(!response.isSuccessful()){
+                                            Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                            newPinBox.setText("CODE: "+response.code());
+                                            confirmNewPinBox.setText("CODE: "+response.code());
+                                            return;
+                                        }
                                         if(response.code()==200) {
+                                            newPinBox.setText("");
+                                            currentPinBox.setText("");
+                                            confirmNewPinBox.setText("");
                                             changePinDialog.dismiss();
                                             Toast.makeText(SettingsActivity.this, "Your 4-digit pin is changed.", Toast.LENGTH_LONG).show();
                                         }
