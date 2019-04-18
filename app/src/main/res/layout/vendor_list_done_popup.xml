@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="480dp"
+    android:layout_height="250dp">
+
+    <Button
+        android:id="@+id/close_dialog"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:padding="3dp"
+        android:background="@drawable/ic_close"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Order"
+        android:fontFamily="@font/sfprotext_bold"
+        android:textSize="24sp"
+        android:textColor="#333333"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="30dp"
+        android:text="Confirm order"
+        android:fontFamily="@font/sfprotext_regular"
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/orderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_marginTop="5dp"
+        android:text="Ordernamehere"
+        android:fontFamily="@font/sfprotext_medium"
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:layout_centerHorizontal="true"
+        />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/orderName">
+
+        <Button
+            android:id="@+id/dissmissButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:paddingHorizontal="30dp"
+            android:text="DISSMISS"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textColor="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:text="CONFIRM"
+            android:layout_marginHorizontal="10dp"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:background="@drawable/pink_rect"
+            android:elevation="1dp"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</RelativeLayout>
