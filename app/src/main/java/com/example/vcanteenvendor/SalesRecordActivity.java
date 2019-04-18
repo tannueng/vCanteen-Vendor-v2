@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -70,6 +74,8 @@ public class SalesRecordActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     int vendor_id;
 
+    TextInputEditText pinInput;
+    TextView errorText;
 
     ListView salesRecordListListView;
 
@@ -154,12 +160,18 @@ public class SalesRecordActivity extends AppCompatActivity {
 
         dialog.setContentView(R.layout.dialog_unlock_pin);
 
+
+        //dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        //dialog.getWindow().setDimAmount(20); //to mask background
+
         final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
         final TextView content = (TextView) dialog.findViewById(R.id.dialogContent);
         Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
         Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
 
-
+        pinInput = dialog.findViewById(R.id.pinInput);
+        errorText = dialog.findViewById(R.id.errorText);
+        errorText.setText("");
 
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,11 +183,53 @@ public class SalesRecordActivity extends AppCompatActivity {
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Case if blank
+                if(pinInput.getText().toString().length()==0){
+                    errorText.setText("Please fill in your 4-digit pin.");
+                }
+                // Case less than 4
+                else if(pinInput.getText().toString().length()<4){
+                    errorText.setText("Please fill in all 4 digits of your pin.");
+                }
+                // If all condition are met
+                else{
+                    String pin = pinInput.getText().toString();
+                    url = "https://vcanteen.herokuapp.com/";
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(url)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                    Call<Void> callCheckPin = jsonPlaceHolderApi.checkPin(vendor_id, pin);
 
-                getSalesRecordArrayList();
+                    callCheckPin.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if(!response.isSuccessful()){
+                                Toast.makeText(getApplicationContext(), "CODE: "+response.code(), Toast.LENGTH_SHORT).show();
+                                if(response.code()==404){
+                                    errorText.setText("Incorrect Pin");
+                                }
+                                return;
+                            }
+                            if(response.code()==200) {
+                                getSalesRecordArrayList();
+                                errorText.setText("");
+                                Toast.makeText(getApplicationContext(), "UNLOCKED!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            } else if(response.code()==404){
+                                errorText.setText("Incorrect Pin");
+                            }
 
-                Toast.makeText(getApplicationContext(), "UNLOCKED!", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            System.out.println("Error verify pin");
+                        }
+                    });
+
+                }
 
             }
         });
