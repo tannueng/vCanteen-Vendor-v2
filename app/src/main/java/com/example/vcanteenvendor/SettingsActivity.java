@@ -598,7 +598,7 @@ public class SettingsActivity extends AppCompatActivity {
         String token = sharedPref.getString("token", "empty token");
         int vendor_id = sharedPref.getInt("vendor_id", 0);
         System.out.println(vendor_id);
-        Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfo(vendor_id);
+        Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfoV2(vendor_id);
 
         progressDialog.dismiss();
 
