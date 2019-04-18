@@ -11,9 +11,13 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -29,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.vcanteenvendor.POJO.BugReport;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,6 +58,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^[a-zA-Z0-9@!#$%^&+-=](?=\\S+$).{7,}$");
+
+    private static final Pattern VENDOR_NAME_PATTERN =
+            Pattern.compile("[a-zA-Z][a-zA-Z ]+[a-zA-Z]$");
+
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^\\w+@\\w+\\..{2,3}(.{1,})?$");
+
+    private static final Pattern EMAIL_CHARACTER_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\\..{2,3}(.{2,3})?$");
 
     Button orderStatusButton; //ORDER STATUS
     Button menuButton; //MENU
@@ -96,6 +110,26 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView errorCurrPass;
     private TextView errorNewPass;
     private TextView errorConfirmPass;
+
+    // FOR CHANGE 4 DIGIT PIN //
+    Button changePinButton;
+    private Dialog changePinDialog;
+    private EditText currentPinBox, newPinBox, confirmNewPinBox;
+    private Button closeChangePinButton, confirmChangePinButton;
+    private TextView currentPinError, newPinError, confirmNewPinError;
+    private TextView currentPinCount, newPinCount, confirmNewPinCount;
+
+    // FOR EDIT PROFILE //
+    private Button editProfileButton, closeEditProfileButton, saveEditProfileButton;
+    private Dialog editProfileDialog;
+    private EditText vendorNameBox, emailBox;
+    private TextView vendorNameError, emailError;
+    VendorSingleton vendorSingleton;
+
+    private Button report;
+    private EditText reportText;
+    private TextView counter;
+    private TextView bugInline;
 
     private Button closeDialog;
     private SharedPreferences sharedPref;
@@ -151,6 +185,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         viewReviewsButton = findViewById(R.id.viewReviewsButton);
         reviewValue = findViewById(R.id.reviewValue);
+
+        changePinButton = findViewById(R.id.changePinButton);
+
+        editProfileButton = findViewById(R.id.editProfileButton);
+        vendorSingleton = com.example.vcanteenvendor.VendorSingleton.getInstance();
 
         //////////////////////////////////////////   JSON START UP   //////////////////////////////////////
 
@@ -308,6 +347,168 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+        ///////////////////// CHANGE 4 DIGIT PIN ////////////////////////
+        changePinDialog = new Dialog(SettingsActivity.this);
+        changePinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangePinDialog();
+            }
+        });
+
+        ///////////////////// EDIT PROFILE PAGE ////////////////////////
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editProfileDialog = new Dialog(SettingsActivity.this);
+                editProfileDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                editProfileDialog.setContentView(R.layout.edit_profile_pop_up);
+
+                closeEditProfileButton = editProfileDialog.findViewById(R.id.closeButton);
+                saveEditProfileButton = editProfileDialog.findViewById(R.id.saveButton);
+
+                vendorNameBox = editProfileDialog.findViewById(R.id.vendorNameBox);
+                emailBox = editProfileDialog.findViewById(R.id.emailBox);
+                vendorNameError = editProfileDialog.findViewById(R.id.vendorNameError);
+                emailError = editProfileDialog.findViewById(R.id.emailError);
+
+                vendorNameBox.setText(vendorSingleton.getVendorName());
+                emailBox.setText(vendorSingleton.getEmail());
+
+                vendorNameError.setText("");
+                emailError.setText("");
+
+                System.out.println(vendorSingleton.getVendorName());
+                System.out.println(vendorSingleton.getEmail());
+
+                saveEditProfileButton.setEnabled(false);
+                saveEditProfileButton.setAlpha(0.4f);
+
+                editProfileDialog.show();
+
+                vendorNameBox.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if(!(vendorNameBox.getText().toString().equals(vendorSingleton.getVendorName()))){
+                            saveEditProfileButton.setEnabled(true);
+                            saveEditProfileButton.setAlpha(1f);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                emailBox.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if(!(emailBox.getText().toString().equals(vendorSingleton.getEmail()))){
+                            saveEditProfileButton.setEnabled(true);
+                            saveEditProfileButton.setAlpha(1f);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                closeEditProfileButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editProfileDialog.dismiss();
+                    }
+                });
+
+                saveEditProfileButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Case 1 : If either field is blank
+                        if(vendorNameBox.getText().toString().length() == 0 || emailBox.getText().toString().length() == 0){
+                            if(vendorNameBox.getText().toString().length() == 0){ vendorNameError.setText("This field cannot be blank."); }
+                            if(emailBox.getText().toString().length() == 0){ emailError.setText("This field cannot be blank."); }
+                        }
+                        // Case 2 : Wrong name format (a-z, A-Z) for vendor name
+                        else if(!(VENDOR_NAME_PATTERN.matcher(vendorNameBox.getText().toString()).matches())){
+                            vendorNameError.setText("Only a-z and A-Z is allowed.");
+                            emailError.setText("");
+                        }
+                        // Case 3 : Wrong email format
+                        else if(!(EMAIL_PATTERN.matcher(emailBox.getText().toString()).matches())){
+                            emailError.setText("Invalid email. Please try again.");
+                            vendorNameError.setText("");
+                        }
+                        // Case 4 : Contains other characters than a-z, A-Z, 0-9, or a period in email
+                        else if(!(EMAIL_CHARACTER_PATTERN.matcher(emailBox.getText().toString()).matches())){
+                            emailError.setText("Only a-z, A-Z, 0-9, or a period is allowed.");
+                            vendorNameError.setText("");
+                        }
+                        // If the above condition are met
+                        else{
+                            System.out.println("the above condition are met!!!");
+                            vendorNameError.setText("");
+                            emailError.setText("");
+
+                            final String vendorName = vendorNameBox.getText().toString();
+                            final String email = emailBox.getText().toString();
+
+                            url = "https://vcanteen.herokuapp.com/";
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(url)
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build();
+                            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                            Call<Void> callToEditProfile = jsonPlaceHolderApi.changeNameAndEmail(vendor_id, vendorName, email);
+
+                            callToEditProfile.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if(!response.isSuccessful()){
+                                        Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                        System.out.println("CODE: "+response.code());
+                                        return;
+                                    }
+
+                                    if(response.code()==200) {
+
+                                        vendorSingleton.setVendorName(vendorName);
+                                        vendorSingleton.setEmail(email);
+
+                                        vendorNameInput.setText(vendorSingleton.getVendorName());
+                                        vendorEmailInput.setText(vendorSingleton.getEmail());
+
+                                        editProfileDialog.dismiss();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    System.out.println("Error to edit profile");
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+            }
+        });
+
 
         ///////////////////// CHANGE PASSWORD ////////////////////////
         changePass.setOnClickListener(new View.OnClickListener() {
@@ -494,16 +695,101 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        ///////////////BUG REPORT//////////
+        report = findViewById(R.id.reportButton);
+        reportText = findViewById(R.id.bugReportBox);
+        bugInline = findViewById(R.id.bugInline);
+        counter = findViewById(R.id.wordCountReportBox);
 
-        viewReviewsButton.setOnClickListener(new View.OnClickListener() {
+        report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, VendorReviewActivity.class);
-                startActivity(intent);
+                System.out.println(reportText.getText());
+
+                if (reportText.getText().toString().trim().isEmpty()) {
+                    bugInline.setText("This field cannot be blank.");
+                    bugInline.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                //TODO Check Emoji
+                sharedPref = SettingsActivity.this.getSharedPreferences("myPref", MODE_PRIVATE);
+                BugReport report = new BugReport();
+                report.setVendorId(sharedPref.getInt("vendor_id", 0));
+                report.setMessage(reportText.getText().toString().trim());
+
+                //TODO Include retrofit here for sending
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://vcanteen.herokuapp.com/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                Call<Void> call = jsonPlaceHolderApi.postBugReport(report);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(SettingsActivity.this, "CODE: " + response.code(), Toast.LENGTH_LONG).show();
+                            return;
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+
+                reportText.setText("");
+                Toast.makeText(SettingsActivity.this, "Bug report successfully submitted", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        reportText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                counter.setText(s.toString().length()+"/300");
+
+                if(s.toString().length()>0) {
+                    bugInline.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        reportText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                reportText.setCursorVisible(true);
+                reportText.setFocusable(true);
+            }
+        });
+        findViewById(R.id.linearLayout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                }catch (Exception e){
+                    return false;
+                }
+                reportText.setCursorVisible(false);
+//                reportText.setFocusable(false);
+                return true;
+
+
+
             }
         });
 
     }
+
 
     private void cancelAllCookingOrders() {
 
@@ -622,6 +908,10 @@ public class SettingsActivity extends AppCompatActivity {
                     email = vendor.getVendorEmail();
                     System.out.println(email);
                     vendorEmailInput.setText(vendor.getVendorEmail());
+
+                    // FOR EDIT PROFILE //
+                    vendorSingleton.setVendorName(vendor.getVendorName());
+                    vendorSingleton.setEmail(vendor.getVendorEmail());
 
                     if(vendor.getScore() != 0.0){
                         reviewValue.setText(String.valueOf(vendor.getScore())+" ✭");
@@ -745,6 +1035,197 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void showChangePinDialog(){
+        changePinDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        changePinDialog.setContentView(R.layout.change_pin_dialog);
+        currentPinBox = changePinDialog.findViewById(R.id.currentPinBox);
+        newPinBox=changePinDialog.findViewById(R.id.newPinBox);
+        confirmNewPinBox = changePinDialog.findViewById(R.id.confirmNewPinBox);
+
+        closeChangePinButton = (Button) changePinDialog.findViewById(R.id.closeButton);
+        confirmChangePinButton = (Button) changePinDialog.findViewById(R.id.confirmButton);
+
+        currentPinError = (TextView) changePinDialog.findViewById(R.id.currentPinError);
+        newPinError= (TextView) changePinDialog.findViewById(R.id.newPinError);
+        confirmNewPinError = (TextView) changePinDialog.findViewById(R.id.confirmNewPinError);
+
+        currentPinError.setText("");
+        newPinError.setText("");
+        confirmNewPinError.setText("");
+
+        currentPinCount = changePinDialog.findViewById(R.id.currentPinCount);
+        newPinCount = changePinDialog.findViewById(R.id.newPinCount);
+        confirmNewPinCount = changePinDialog.findViewById(R.id.confirmNewPinCount);
+
+        changePinDialog.show();
+
+        final String currentPin = currentPinBox.getText().toString();
+        final String newPin = newPinBox.getText().toString();
+
+        currentPinBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int numCurrent = currentPinBox.getText().toString().length();
+                currentPinCount.setText(""+numCurrent+"/4");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        newPinBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int numNew = newPinBox.getText().toString().length();
+                newPinCount.setText(""+numNew+"/4");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        confirmNewPinBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int numConfirmNew = confirmNewPinBox.getText().toString().length();
+                confirmNewPinCount.setText(""+numConfirmNew+"/4");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        closeChangePinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePinDialog.dismiss();
+            }
+        });
+
+        confirmChangePinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(currentPinBox.getText().toString().length()==0 || newPinBox.getText().toString().length()==0 || confirmNewPinBox.getText().toString().length()==0){
+                    // If blank
+                    if(currentPinBox.getText().toString().length()==0) {currentPinError.setText("This field cannot be blank.");}
+                    if(newPinBox.getText().toString().length()==0){newPinError.setText("This field cannot be blank.");}
+                    if(confirmNewPinBox.getText().toString().length()==0){confirmNewPinError.setText("This field cannot be blank.");}
+                }else if(!(newPinBox.getText().toString().equals(confirmNewPinBox.getText().toString()))){
+                    // If both fields are not match
+                    currentPinError.setText("");
+                    newPinError.setText("");
+                    confirmNewPinError.setText("PIN don’t match.");
+                }else if(newPinBox.getText().toString().length() < 4 || confirmNewPinBox.getText().toString().length() < 4 ){
+                    // If less than 4 digit
+                    currentPinError.setText("");
+                    newPinError.setText("Please fill in all 4 digits of your pin.");
+                    confirmNewPinError.setText("Please fill in all 4 digits of your pin.");
+                }else if(currentPinBox.getText().toString().equals(newPinBox.getText().toString())){
+                    // If Current PIN and New PIN are the same
+                    currentPinError.setText("");
+                    newPinError.setText("New and old PIN are identical.");
+                    confirmNewPinError.setText("");
+                }else{
+                    // If all condition are met...
+                    url = "https://vcanteen.herokuapp.com/";
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(url)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                    Call<Void> call = jsonPlaceHolderApi.checkPin(vendor_id, currentPin);
+
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if(!response.isSuccessful()){
+                                Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                newPinBox.setText("CODE: "+response.code());
+                                currentPinBox.setText("CODE: "+response.code());
+                                confirmNewPinBox.setText("CODE: "+response.code());
+                                return;
+                            }
+                            int code = response.code();
+                            if(code==200) { // If current PIN match with BE PIN
+
+                                url = "https://vcanteen.herokuapp.com/";
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(url)
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+                                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                                Call<Void> call2 = jsonPlaceHolderApi.changePin(vendor_id, newPin);
+
+                                call2.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        if(!response.isSuccessful()){
+                                            Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                                            newPinBox.setText("CODE: "+response.code());
+                                            confirmNewPinBox.setText("CODE: "+response.code());
+                                            return;
+                                        }
+                                        if(response.code()==200) {
+                                            newPinBox.setText("");
+                                            currentPinBox.setText("");
+                                            confirmNewPinBox.setText("");
+                                            changePinDialog.dismiss();
+                                            Toast.makeText(SettingsActivity.this, "Your 4-digit pin is changed.", Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        System.out.println("Error change pin");
+                                    }
+                                });
+
+
+                            }
+                            if(response.code()==404) {
+                                currentPinError.setText("Incorrect PIN");
+                                newPinError.setText("");
+                                confirmNewPinError.setText("");
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            System.out.println("Error verify pin");
+                        }
+                    });
+
+
+                }
+            }
+        });
+
     }
 
 }

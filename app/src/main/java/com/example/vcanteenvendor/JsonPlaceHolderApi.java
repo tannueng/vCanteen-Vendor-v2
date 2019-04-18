@@ -1,5 +1,7 @@
 package com.example.vcanteenvendor;
 
+import com.example.vcanteenvendor.POJO.BugReport;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -81,4 +83,19 @@ interface JsonPlaceHolderApi {
 
     @GET("v2/settings/{vendorId}/info")
     Call<VendorInfoArray> getVendorInfoV2(@Path("vendorId") int vendorId);
+
+    @FormUrlEncoded
+    @PUT("/v2/user-authentication/verify/pin")
+    Call<Void> checkPin(@Field("vendorId") int vendorId, @Field("fourDigitPin") String fourDigitPin);
+
+    @FormUrlEncoded
+    @PUT("/v2/user-authentication/vendor/pin")
+    Call<Void> changePin(@Field("vendorId") int vendorId, @Field("fourDigitPin") String fourDigitPin);
+
+    @FormUrlEncoded
+    @PUT("/v2/profile-management/vendor/profile")
+    Call<Void> changeNameAndEmail(@Field("vendorId") int vendorId, @Field("restaurantName") String restaurantName, @Field("email") String email);
+
+    @POST("/v2/settings/vendor/report")
+    Call<Void> postBugReport(@Body BugReport bugReport);
 }
