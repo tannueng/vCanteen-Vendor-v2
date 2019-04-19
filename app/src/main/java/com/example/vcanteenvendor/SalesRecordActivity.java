@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -77,6 +79,12 @@ public class SalesRecordActivity extends AppCompatActivity {
     TextInputEditText pinInput;
     TextView errorText;
 
+    private ImageView itemNotEnterPin;
+    private TextView itemNotEnterPin2;
+    private Button itemNotEnterPin3;
+    private LinearLayout LinearLayout1, LinearLayout2;
+    private View divider2;
+
     ListView salesRecordListListView;
 
     ProgressDialog progressDialog;
@@ -90,7 +98,15 @@ public class SalesRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales_record);
 
-
+        LinearLayout1 = findViewById(R.id.LinearLayout1);
+        LinearLayout2 = findViewById(R.id.LinearLayout2);
+        itemNotEnterPin = findViewById(R.id.itemNotEnterPin);
+        itemNotEnterPin2 = findViewById(R.id.itemNotEnterPin2);
+        itemNotEnterPin3 = findViewById(R.id.itemNotEnterPin3);
+        divider2 = findViewById(R.id.divider2);
+        itemNotEnterPin.setVisibility(View.GONE);
+        itemNotEnterPin2.setVisibility(View.GONE);
+        itemNotEnterPin3.setVisibility(View.GONE);
 
         orderStatusButton = (Button) findViewById(R.id.orderStatusButton);
         menuButton = (Button) findViewById(R.id.menuButton);
@@ -173,9 +189,22 @@ public class SalesRecordActivity extends AppCompatActivity {
         errorText = dialog.findViewById(R.id.errorText);
         errorText.setText("");
 
+        itemNotEnterPin3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
+
         negativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LinearLayout1.setVisibility(View.INVISIBLE);
+                LinearLayout2.setVisibility(View.INVISIBLE);
+                itemNotEnterPin.setVisibility(View.VISIBLE);
+                itemNotEnterPin2.setVisibility(View.VISIBLE);
+                itemNotEnterPin3.setVisibility(View.VISIBLE);
+                divider2.setVisibility(View.INVISIBLE);
                 dialog.dismiss();
             }
         });
@@ -193,6 +222,13 @@ public class SalesRecordActivity extends AppCompatActivity {
                 }
                 // If all condition are met
                 else{
+                    itemNotEnterPin.setVisibility(View.GONE);
+                    itemNotEnterPin2.setVisibility(View.GONE);
+                    itemNotEnterPin3.setVisibility(View.GONE);
+                    LinearLayout1.setVisibility(View.VISIBLE);
+                    LinearLayout2.setVisibility(View.VISIBLE);
+                    divider2.setVisibility(View.VISIBLE);
+                    //dialog.dismiss(); // try
                     String pin = pinInput.getText().toString();
                     url = "https://vcanteen.herokuapp.com/";
                     Retrofit retrofit = new Retrofit.Builder()

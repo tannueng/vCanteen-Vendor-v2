@@ -126,6 +126,11 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView vendorNameError, emailError;
     VendorSingleton vendorSingleton;
 
+    // FOR CHANGE PROFILE PICTURE //
+    private Button changePictureButton, openGalleryButton, savePictureButton, closeChangePicButton;
+    private Dialog changePictureDialog;
+    private ImageView uploadPicture;
+
     private Button report;
     private EditText reportText;
     private TextView counter;
@@ -133,7 +138,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button closeDialog;
     private SharedPreferences sharedPref;
-
 
     private RequestQueue mQueue;
     private String url = "FROM ENDPOINTS";
@@ -187,6 +191,8 @@ public class SettingsActivity extends AppCompatActivity {
         reviewValue = findViewById(R.id.reviewValue);
 
         changePinButton = findViewById(R.id.changePinButton);
+
+        changePictureButton = findViewById(R.id.changePictureButton);
 
         editProfileButton = findViewById(R.id.editProfileButton);
         vendorSingleton = com.example.vcanteenvendor.VendorSingleton.getInstance();
@@ -354,6 +360,35 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showChangePinDialog();
+            }
+        });
+
+        ///////////////////// CHANGE PROFILE PICTURE ////////////////////////
+        changePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePictureDialog = new Dialog(SettingsActivity.this);
+                changePictureDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                changePictureDialog.setContentView(R.layout.edit_profile_image_pop_up);
+
+                uploadPicture = changePictureDialog.findViewById(R.id.uploadPicture);
+                openGalleryButton = changePictureDialog.findViewById(R.id.openGalleryButton);
+                savePictureButton = changePictureDialog.findViewById(R.id.savePictureButton);
+                closeChangePicButton = changePictureDialog.findViewById(R.id.closeButton);
+
+                if(vendorSingleton.getVendorImage() != null){
+                    // display current photo
+                    //uploadPicture.
+                }
+
+                changePictureDialog.show();
+
+                closeChangePicButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        changePictureDialog.dismiss();
+                    }
+                });
             }
         });
 
@@ -918,8 +953,10 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
 
-                    if (vendor.getVendorImage() != null)
+                    if (vendor.getVendorImage() != null) {
                         Glide.with(SettingsActivity.this).load(vendor.getVendorImage()).apply(option).into(vendorProfilePicture);
+                        vendorSingleton.setVendorImage(vendor.getVendorImage());
+                    }
                     //This array always have 1 member, so use get(1).
 
                 } else {

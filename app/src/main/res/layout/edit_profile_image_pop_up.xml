@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="500dp"
+    android:layout_height="480dp">
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_close" />
+
+    <TextView
+        android:id="@+id/editProfileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/sfprotext_bold"
+        android:padding="15dp"
+        android:text="Edit Profile Picture"
+        android:textColor="#333333"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/uploadPicture"
+        android:layout_width="345dp"
+        android:layout_height="255dp"
+        android:layout_below="@+id/editProfileTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/img_loading" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/uploadPicture"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/openGalleryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/button_gradient_rounded"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="OPEN GALLERY"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/savePictureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/button_gradient_rounded"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="SAVE"
+            android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+
+
+    </LinearLayout>
+
+
+
+    <!--<Button-->
+        <!--android:id="@+id/saveButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/uploadPicture"-->
+        <!--android:layout_marginLeft="@+id/openGalleryButton"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/button_gradient_rounded"-->
+        <!--android:fontFamily="@font/sfprotext_semibold"-->
+        <!--android:text="SAVE"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="18sp" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/openGalleryButton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/uploadPicture"-->
+        <!--android:layout_toLeftOf="@id/saveButton"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/button_gradient_rounded"-->
+        <!--android:fontFamily="@font/sfprotext_semibold"-->
+        <!--android:text="OPEN GALLERY"-->
+        <!--android:textColor="#ffffff"-->
+        <!--android:textSize="18sp" />-->
+
+</RelativeLayout>
