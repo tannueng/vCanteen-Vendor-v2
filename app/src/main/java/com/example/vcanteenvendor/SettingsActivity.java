@@ -2,35 +2,27 @@ package com.example.vcanteenvendor;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.vcanteenvendor.POJO.BugReport;
@@ -40,12 +32,7 @@ import com.google.gson.GsonBuilder;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -86,6 +73,11 @@ public class SettingsActivity extends AppCompatActivity {
     TextView checkScb;
     TextView checkKplus;
     TextView checkTrueMoney;
+
+    EditText accountNumber;
+    TextView inline_error;
+
+    TextView linkCUNex,linkScb,linkKplus,linkTrueMoney;
 
     ImageView vendorProfilePicture;
 
@@ -159,25 +151,29 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        orderStatusButton = findViewById(R.id.orderStatusButton);
+        menuButton =  findViewById(R.id.menuButton);
+        salesRecordButton = findViewById(R.id.salesRecordButton);
+        settingsButton = findViewById(R.id.settingsButton);
 
-        orderStatusButton = (Button) findViewById(R.id.orderStatusButton);
-        menuButton = (Button) findViewById(R.id.menuButton);
-        salesRecordButton = (Button) findViewById(R.id.salesRecordButton);
-        settingsButton = (Button) findViewById(R.id.settingsButton);
+        signOutButton = findViewById(R.id.signOutButton);
+        vendorStatusToggle = findViewById(R.id.vendorStatusToggle);
+        statusText = findViewById(R.id.statusText);
 
-        signOutButton = (Button) findViewById(R.id.signOutButton);
-        vendorStatusToggle = (Switch) findViewById(R.id.vendorStatusToggle);
-        statusText = (TextView) findViewById(R.id.statusText);
+        vendorNameInput = findViewById(R.id.vendorNameInput);
+        vendorEmailInput = findViewById(R.id.vendorEmailInput);
 
-        vendorNameInput = (EditText) findViewById(R.id.vendorNameInput);
-        vendorEmailInput = (EditText) findViewById(R.id.vendorEmailInput);
+        vendorProfile = findViewById(R.id.vendorProfile);
 
-        vendorProfile = (TextView) findViewById(R.id.vendorProfile);
+        checkCUNex = findViewById(R.id.checkCUNex);
+        checkScb = findViewById(R.id.checkScb);
+        checkKplus = findViewById(R.id.checkKplus);
+        checkTrueMoney = findViewById(R.id.checkTrueMoney);
 
-        checkCUNex = (TextView) findViewById(R.id.checkCUNex);
-        checkScb = (TextView) findViewById(R.id.checkScb);
-        checkKplus = (TextView) findViewById(R.id.checkKplus);
-        checkTrueMoney = (TextView) findViewById(R.id.checkTrueMoney);
+        linkCUNex = findViewById(R.id.linkCUNex);
+        linkScb = findViewById(R.id.linkScb);
+        linkKplus = findViewById(R.id.linkKplus);
+        linkTrueMoney = findViewById(R.id.linkTrueMoney);
 
         vendorProfilePicture = findViewById(R.id.vendorProfilePicture);
 
@@ -197,6 +193,8 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         accountJSONLoadUp();
+
+        onClickLink();
 
 
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
@@ -783,10 +781,131 @@ public class SettingsActivity extends AppCompatActivity {
 //                reportText.setFocusable(false);
                 return true;
 
+            }
+        });
 
+    }
+
+    private void onClickLink() {
+        linkCUNex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("LINK CUNEX pressed");
+                showLinkPopup("CU_NEX");
+            }
+        });
+        linkScb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("LINK SCB EASY pressed");
+                showLinkPopup("SCB_EASY");
+            }
+        });
+        linkKplus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("LINK K PLUS pressed");
+                showLinkPopup("K_PLUS");
+            }
+        });
+        linkTrueMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("LINK TrueMoney Wallet pressed");
+                showLinkPopup("TRUEMONEY_WALLET");
+            }
+        });
+    }
+
+    private void showLinkPopup(final String serviceProvider) {
+        dialog = new Dialog(SettingsActivity.this);
+        dialog.setContentView(R.layout.popup_payment_link);
+        dialog.setCancelable(true);
+        TextView serviceProviderText = dialog.findViewById(R.id.serviceProviderText);
+        ImageView close_x = dialog.findViewById(R.id.close_x);
+        Button linkBtn = dialog.findViewById(R.id.link_btn);
+        accountNumber = dialog.findViewById(R.id.accountNumber);
+        inline_error = dialog.findViewById(R.id.inline_error);
+        String shownServiceProviderName = "";
+        if(serviceProvider.equals("CU_NEX")) {
+            shownServiceProviderName = "CU NEX";
+        }
+        if(serviceProvider.equals("SCB_EASY")) {
+            shownServiceProviderName = "SCB EASY";
+        }
+        if(serviceProvider.equals("K_PLUS")) {
+            shownServiceProviderName = "K PLUS";
+        }
+        if(serviceProvider.equals("TRUEMONEY_WALLET")) {
+            shownServiceProviderName = "TrueMoney Wallet";
+        }
+        serviceProviderText.setText(shownServiceProviderName);
+
+        close_x.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        linkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("LINK Pressed");
+                if(accountNumber.getText().toString().equals("")) {
+                    inline_error.setVisibility(View.VISIBLE);
+                    return;
+                }
+                progressDialog = new ProgressDialog(SettingsActivity.this);
+                progressDialog = ProgressDialog.show(SettingsActivity.this
+                        , "",
+                        "Loading. Please wait...", true);
+                //Retrofit
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://vcanteen.herokuapp.com/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                Call<Void> call =  jsonPlaceHolderApi.postLinkPayment(sharedPref.getInt("vendorId",0), serviceProvider, accountNumber.getText().toString());
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(!response.isSuccessful()) {
+                            Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                            dialog.dismiss();
+//                            reload();
+                            return;
+                        }
+                        Toast.makeText(SettingsActivity.this, "Successfully Linked Account ", Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        progressDialog.dismiss();
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });
+
+        accountNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().length()>0) {
+                    inline_error.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        dialog.show();
 
     }
 
@@ -929,18 +1048,22 @@ public class SettingsActivity extends AppCompatActivity {
 
                 if (vendorInfoArray.findServiceProviderFromList(vendorInfoArray.getVendorPaymentMethod(), "CU_NEX")) {
                     checkCUNex.setVisibility(View.VISIBLE);
+                    linkCUNex.setVisibility(View.INVISIBLE);
                 }
 
                 if (vendorInfoArray.findServiceProviderFromList(vendorInfoArray.getVendorPaymentMethod(), "SCB_EASY")) {
                     checkScb.setVisibility(View.VISIBLE);
+                    linkScb.setVisibility(View.INVISIBLE);
                 }
 
                 if (vendorInfoArray.findServiceProviderFromList(vendorInfoArray.getVendorPaymentMethod(), "K_PLUS")) {
                     checkKplus.setVisibility(View.VISIBLE);
+                    linkKplus.setVisibility(View.INVISIBLE);
                 }
 
                 if (vendorInfoArray.findServiceProviderFromList(vendorInfoArray.getVendorPaymentMethod(), "TRUEMONEY_WALLET")) {
                     checkTrueMoney.setVisibility(View.VISIBLE);
+                    linkTrueMoney.setVisibility(View.INVISIBLE);
                 }
 
 

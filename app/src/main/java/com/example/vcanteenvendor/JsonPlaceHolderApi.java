@@ -98,4 +98,14 @@ interface JsonPlaceHolderApi {
 
     @POST("/v2/settings/vendor/report")
     Call<Void> postBugReport(@Body BugReport bugReport);
+
+    @FormUrlEncoded
+    @POST("/v2/payments/vendor/link ")
+    Call<Void> postLinkPayment(
+            @Field("vendorId") int vendorId,
+            @Field("serviceProvider") String serviceProvider,
+            @Field("accountNumber") String accountNumber
+    );
+
+
 }
