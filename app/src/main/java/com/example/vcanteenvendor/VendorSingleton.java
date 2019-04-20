@@ -13,7 +13,15 @@ public class VendorSingleton {
         return  instance;
     }
 
-    String vendorName, email;
+    String vendorName, email, vendorImage;
+
+    public String getVendorImage() {
+        return vendorImage;
+    }
+
+    public void setVendorImage(String vendorImage) {
+        this.vendorImage = vendorImage;
+    }
 
     public String getVendorName() {
         return vendorName;

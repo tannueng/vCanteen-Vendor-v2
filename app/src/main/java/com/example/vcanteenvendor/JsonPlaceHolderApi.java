@@ -98,4 +98,8 @@ interface JsonPlaceHolderApi {
 
     @POST("/v2/settings/vendor/report")
     Call<Void> postBugReport(@Body BugReport bugReport);
+
+    @FormUrlEncoded
+    @PUT("/v2/profile-management/vendor/image")
+    Call<Void> updateProfileImage(@Field("vendorId") int vendorId, @Field("vendorImage") String vendorImage);
 }

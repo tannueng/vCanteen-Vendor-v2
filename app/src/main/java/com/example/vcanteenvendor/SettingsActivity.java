@@ -2,12 +2,17 @@ package com.example.vcanteenvendor;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -35,6 +41,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.vcanteenvendor.POJO.BugReport;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,6 +59,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -130,6 +148,16 @@ public class SettingsActivity extends AppCompatActivity {
     private Button changePictureButton, openGalleryButton, savePictureButton, closeChangePicButton;
     private Dialog changePictureDialog;
     private ImageView uploadPicture;
+    Bitmap bitmap;
+    // DAVE CODE FOR CHANGE PICTURE //
+    private static final int PICK_IMAGE_REQUEST = 1; //Can be any number
+    private Uri mImageUri;
+    private StorageReference mStorageRef;
+    private DatabaseReference mDatabaseRef;
+    private StorageTask mUploadTask;
+    private String imageUrl;
+    private Uri downloadUri;
+    private ProgressDialog progressDialog2;
 
     private Button report;
     private EditText reportText;
@@ -163,6 +191,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // DAVE CODE FOR CHAGNE PICTURE //
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploadsVendorImage");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploadsVendorImage");
 
         orderStatusButton = (Button) findViewById(R.id.orderStatusButton);
         menuButton = (Button) findViewById(R.id.menuButton);
@@ -377,8 +408,8 @@ public class SettingsActivity extends AppCompatActivity {
                 closeChangePicButton = changePictureDialog.findViewById(R.id.closeButton);
 
                 if(vendorSingleton.getVendorImage() != null){
-                    // display current photo
-                    //uploadPicture.
+                    //Glide.with(SettingsActivity.this).load(vendorSingleton.getVendorImage()).apply(option).into(uploadPicture);
+
                 }
 
                 changePictureDialog.show();
@@ -389,6 +420,21 @@ public class SettingsActivity extends AppCompatActivity {
                         changePictureDialog.dismiss();
                     }
                 });
+
+                openGalleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openFileChooser();
+                    }
+                });
+
+                savePictureButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        uploadFile(); //เริ่มอัพโหลดเมื่อไหร่ก็ใส่ตรงนั้น ในกรณีนี้คือเราให้เลือกไฟล์เสร็จ อัพเลยทันที
+                    }
+                });
+
             }
         });
 
@@ -920,6 +966,7 @@ public class SettingsActivity extends AppCompatActivity {
         int vendor_id = sharedPref.getInt("vendor_id", 0);
         System.out.println(vendor_id);
         Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfoV2(vendor_id);
+//        Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfo(vendor_id); //add to try
 
         progressDialog.dismiss();
 
@@ -1263,6 +1310,151 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // DAVE CODE FOR UPLOADING PHOTO //
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //มีไว้คู่กับ open file chooser เฉยๆ
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            mImageUri = data.getData();
+
+            //Picasso.with(this).load(mImageUri).into(mImageView);
+            Glide.with(this).load(mImageUri).apply(option).into(uploadPicture);
+
+
+        }
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void uploadFile() {
+        if (mImageUri != null) {
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));  //สร้างที่ไฟล์ ชื่อจาก System.currentTimeMillis() เพื่อไม่ให้มันชื่อซ้ำ
+
+            progressDialog2 = new ProgressDialog(SettingsActivity.this);
+            progressDialog2 = ProgressDialog.show(SettingsActivity.this, "",
+                    "Uploading ...", true);
+
+            mUploadTask = fileReference.putFile(mImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) { // เมื่ออัพโหลดเสร็จ ทำอะไร
+
+                                    progressDialog.dismiss();
+
+                                    downloadUri = uri;
+                                    imageUrl = downloadUri.toString(); //ได้ URL ของรูปนั้นมาเป็น string
+                                    //selectedMenu.setFoodImg(imageUrl); //เอาไปเก็บไว้ เตรียมส่งให้ MySQL ด้วย retrofit
+                                    vendorSingleton.setVendorImage(imageUrl);
+                                    System.out.println("URL of image :"+imageUrl);
+                                    UploadVendorProfileImage upload = new UploadVendorProfileImage(vendorSingleton.getVendorName().trim(), downloadUri.toString());
+                                    //สร้าง class ชื่อ Upload ด้วย
+
+                                    String uploadId = mDatabaseRef.push().getKey();
+
+                                    mDatabaseRef.child(uploadId).setValue(upload);
+
+                                    Toast.makeText(SettingsActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+
+                                    // call endpoint?
+                                    callToUpdateProfileImage();
+
+
+
+                                    //bitmap = getBitmapFromURL(vendorSingleton.getVendorImage());
+                                   // vendorProfilePicture.setImageBitmap(bitmap);
+
+                                    progressDialog2.dismiss();
+                                    changePictureDialog.dismiss();
+                                }
+                            });
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) { // อัพไม่สำเร็จ ทำอะไร
+                            System.out.println("Fail to upload photo");
+                            progressDialog.dismiss();
+                            Toast.makeText(SettingsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) { //ระหว่างกำลังอัพ ทำอะไร
+                            System.out.println("Try to upload image");
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void callToUpdateProfileImage(){
+        url = "https://vcanteen.herokuapp.com/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        Call<Void> callToEditProfileImage = jsonPlaceHolderApi.updateProfileImage(vendor_id, vendorSingleton.getVendorImage());
+
+        callToEditProfileImage.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                    System.out.println("CODE: "+response.code());
+                    return;
+                }
+
+                if(response.code()==200) {
+                    Glide.with(SettingsActivity.this).load(vendorSingleton.getVendorImage()).apply(option).into(vendorProfilePicture);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("Error in updating profile image");
+            }
+        });
+    }
+
+    public Bitmap getBitmapFromURL(String src){
+        try{
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
