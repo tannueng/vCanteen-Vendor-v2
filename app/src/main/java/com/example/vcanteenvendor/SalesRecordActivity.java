@@ -81,7 +81,7 @@ public class SalesRecordActivity extends AppCompatActivity {
 
     private ImageView itemNotEnterPin;
     private TextView itemNotEnterPin2;
-    private Button itemNotEnterPin3;
+    private Button reappearPinDialogButton;
     private LinearLayout LinearLayout1, LinearLayout2;
     private View divider2;
 
@@ -102,11 +102,11 @@ public class SalesRecordActivity extends AppCompatActivity {
         LinearLayout2 = findViewById(R.id.LinearLayout2);
         itemNotEnterPin = findViewById(R.id.itemNotEnterPin);
         itemNotEnterPin2 = findViewById(R.id.itemNotEnterPin2);
-        itemNotEnterPin3 = findViewById(R.id.itemNotEnterPin3);
+        reappearPinDialogButton = findViewById(R.id.reappearPinDialogButton);
         divider2 = findViewById(R.id.divider2);
         itemNotEnterPin.setVisibility(View.GONE);
         itemNotEnterPin2.setVisibility(View.GONE);
-        itemNotEnterPin3.setVisibility(View.GONE);
+        reappearPinDialogButton.setVisibility(View.GONE);
 
         orderStatusButton = (Button) findViewById(R.id.orderStatusButton);
         menuButton = (Button) findViewById(R.id.menuButton);
@@ -189,9 +189,11 @@ public class SalesRecordActivity extends AppCompatActivity {
         errorText = dialog.findViewById(R.id.errorText);
         errorText.setText("");
 
-        itemNotEnterPin3.setOnClickListener(new View.OnClickListener() {
+        reappearPinDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pinInput.setText("");
+                errorText.setText("");
                 dialog.show();
             }
         });
@@ -203,7 +205,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                 LinearLayout2.setVisibility(View.INVISIBLE);
                 itemNotEnterPin.setVisibility(View.VISIBLE);
                 itemNotEnterPin2.setVisibility(View.VISIBLE);
-                itemNotEnterPin3.setVisibility(View.VISIBLE);
+                reappearPinDialogButton.setVisibility(View.VISIBLE);
                 divider2.setVisibility(View.INVISIBLE);
                 dialog.dismiss();
             }
@@ -224,7 +226,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                 else{
                     itemNotEnterPin.setVisibility(View.GONE);
                     itemNotEnterPin2.setVisibility(View.GONE);
-                    itemNotEnterPin3.setVisibility(View.GONE);
+                    reappearPinDialogButton.setVisibility(View.GONE);
                     LinearLayout1.setVisibility(View.VISIBLE);
                     LinearLayout2.setVisibility(View.VISIBLE);
                     divider2.setVisibility(View.VISIBLE);
