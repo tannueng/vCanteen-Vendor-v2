@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void orderLoadUp() {
 
         progressDialog = new ProgressDialog(MainActivity.this);
