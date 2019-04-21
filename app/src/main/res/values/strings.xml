@@ -2,6 +2,7 @@
     <string name="app_name">vCanteenVendor</string>
     <string name="vendor_name_label">Vendor\nName</string>
     <string name="unlink"><u>unlink</u></string>
+    <string name="link">LINK</string>
 
     <string name="closing_vendor">
         \u2022 Awaiting orders will be cancelled.

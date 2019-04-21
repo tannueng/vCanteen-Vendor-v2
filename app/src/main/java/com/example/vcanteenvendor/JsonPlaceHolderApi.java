@@ -102,4 +102,12 @@ interface JsonPlaceHolderApi {
     @FormUrlEncoded
     @PUT("/v2/profile-management/vendor/image")
     Call<Void> updateProfileImage(@Field("vendorId") int vendorId, @Field("vendorImage") String vendorImage);
+
+    @FormUrlEncoded
+    @POST("/v2/payments/vendor/link ")
+    Call<Void> postLinkPayment(
+            @Field("vendorId") int vendorId,
+            @Field("serviceProvider") String serviceProvider,
+            @Field("accountNumber") String accountNumber
+    );
 }

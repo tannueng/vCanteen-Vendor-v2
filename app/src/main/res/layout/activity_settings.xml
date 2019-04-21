@@ -459,11 +459,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/cuNex"
                     android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/sfprotext_regular"
-                    android:text="@string/unlink"
+                    android:fontFamily="@font/sfprotext_semibold"
+                    android:text="@string/link"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -507,11 +507,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/scbEasy"
                     android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/sfprotext_regular"
-                    android:text="@string/unlink"
+                    android:fontFamily="@font/sfprotext_semibold"
+                    android:text="@string/link"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -556,11 +556,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/kPlus"
                     android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/sfprotext_regular"
-                    android:text="@string/unlink"
+                    android:fontFamily="@font/sfprotext_semibold"
+                    android:text="@string/link"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -595,7 +595,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_toEndOf="@+id/checkTrueMoney"
                     android:fontFamily="@font/sfprotext_regular"
-                    android:text="K PLUS"
+                    android:text="TrueMoney Wallet"
                     android:textColor="@color/colortext"
                     android:textSize="18sp" />
 
@@ -609,7 +609,7 @@
                     android:text="LINK"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
