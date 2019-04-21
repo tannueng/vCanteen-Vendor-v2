@@ -803,7 +803,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 //TODO Include retrofit here for sending
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://vcanteen.herokuapp.com/")
+                        .baseUrl("https://vcanteen.herokuapp.com/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
@@ -871,6 +871,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    /////////////EDIT EPAYMENT//////////
     private void onClickLink() {
         linkCUNex.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -947,33 +948,37 @@ public class SettingsActivity extends AppCompatActivity {
                         "Loading. Please wait...", true);
                 //Retrofit
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://vcanteen.herokuapp.com/")
+                        .baseUrl("https://vcanteen.herokuapp.com/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-                Call<Void> call =  jsonPlaceHolderApi.postLinkPayment(sharedPref.getInt("vendorId",0), serviceProvider, accountNumber.getText().toString());
+                Call<Void> call =  jsonPlaceHolderApi.postLinkPayment(vendor_id, serviceProvider, accountNumber.getText().toString());
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(!response.isSuccessful()) {
                             Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
+                            System.out.println("error onResponse post link");
                             progressDialog.dismiss();
                             dialog.dismiss();
-//                            reload();
                             return;
                         }
-                        Toast.makeText(SettingsActivity.this, "Successfully Linked Account ", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
+                        System.out.println("Successfully Linked Account and reloading page");
+                        accountJSONLoadUp();
+                        Toast.makeText(SettingsActivity.this, "Successfully Linked Account", Toast.LENGTH_LONG).show();
+
                         dialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("error onFailure post link");
                         progressDialog.dismiss();
                         dialog.dismiss();
                     }
                 });
-
+//                progressDialog.dismiss();
             }
         });
 
@@ -1133,6 +1138,16 @@ public class SettingsActivity extends AppCompatActivity {
                     vendorNameInput.setText("Receive Null");
                 }
 
+                checkCUNex.setVisibility(View.INVISIBLE);
+                checkScb.setVisibility(View.INVISIBLE);
+                checkKplus.setVisibility(View.INVISIBLE);
+                checkTrueMoney.setVisibility(View.INVISIBLE);
+
+                linkCUNex.setVisibility(View.VISIBLE);
+                linkScb.setVisibility(View.VISIBLE);
+                linkKplus.setVisibility(View.VISIBLE);
+                linkTrueMoney.setVisibility(View.VISIBLE);
+
 
                 if (vendorInfoArray.findServiceProviderFromList(vendorInfoArray.getVendorPaymentMethod(), "CU_NEX")) {
                     checkCUNex.setVisibility(View.VISIBLE);
@@ -1164,6 +1179,7 @@ public class SettingsActivity extends AppCompatActivity {
                     statusText.setText("CLOSED");
                     statusText.setTextColor(Color.parseColor("#828282"));
                 }
+                progressDialog.dismiss();
 
 
             }

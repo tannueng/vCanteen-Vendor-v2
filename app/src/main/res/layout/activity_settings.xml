@@ -439,6 +439,7 @@
                     android:drawablePadding="8dp"
                     android:fontFamily="@font/sfprotext_regular"
                     android:text="LINKED"
+                    android:textColor="@color/pinkPrimary"
                     android:textSize="12sp"
                     android:visibility="invisible" />
 
@@ -460,7 +461,7 @@
                     android:layout_alignBaseline="@+id/cuNex"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/sfprotext_semibold"
-                    android:text="@string/link"
+                    android:text="LINK"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -508,7 +509,7 @@
                     android:layout_alignBaseline="@+id/scbEasy"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/sfprotext_semibold"
-                    android:text="@string/link"
+                    android:text="LINK"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -557,7 +558,7 @@
                     android:layout_alignBaseline="@+id/kPlus"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/sfprotext_semibold"
-                    android:text="@string/link"
+                    android:text="LINK"
                     android:textColor="@color/pinkPrimary"
                     android:textSize="18sp"
                     android:visibility="visible" />
@@ -644,13 +645,14 @@
                 android:layout_alignLeft="@id/bugReportTitle"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/outline_rect"
-                android:gravity="top"
                 android:cursorVisible="false"
                 android:focusable="auto"
+                android:focusableInTouchMode="true"
+                android:gravity="top"
                 android:hint="Report any bug here, every little things will improve your experiences with the app :)"
-                android:padding="10dp"
 
-                android:focusableInTouchMode="true"/>
+                android:maxLength="300"
+                android:padding="10dp" />
 
             <Button
                 android:id="@+id/reportButton"
