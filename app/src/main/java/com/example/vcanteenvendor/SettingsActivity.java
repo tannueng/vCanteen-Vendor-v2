@@ -1241,7 +1241,7 @@ public class SettingsActivity extends AppCompatActivity {
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                     JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-                    Call<Void> call = jsonPlaceHolderApi.checkPin(vendor_id, currentPin);
+                    Call<Void> call = jsonPlaceHolderApi.checkPin(vendor_id, currentPinBox.getText().toString());
 
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -1250,7 +1250,13 @@ public class SettingsActivity extends AppCompatActivity {
                                 Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
                                 newPinBox.setText("CODE: "+response.code());
                                 currentPinBox.setText("CODE: "+response.code());
+                                currentPinError.setText("CODE: "+response.code());
                                 confirmNewPinBox.setText("CODE: "+response.code());
+                                if(response.code()==404) {
+                                    currentPinError.setText("Incorrect PIN");
+                                    newPinError.setText("");
+                                    confirmNewPinError.setText("");
+                                }
                                 return;
                             }
                             int code = response.code();
@@ -1262,14 +1268,14 @@ public class SettingsActivity extends AppCompatActivity {
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-                                Call<Void> call2 = jsonPlaceHolderApi.changePin(vendor_id, newPin);
+                                Call<Void> call2 = jsonPlaceHolderApi.changePin(vendor_id, newPinBox.getText().toString());
 
                                 call2.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
                                         if(!response.isSuccessful()){
                                             Toast.makeText(SettingsActivity.this, "CODE: "+response.code(), Toast.LENGTH_LONG).show();
-                                            newPinBox.setText("CODE: "+response.code());
+                                            newPinError.setText("CODE: "+response.code());
                                             confirmNewPinBox.setText("CODE: "+response.code());
                                             return;
                                         }
@@ -1290,8 +1296,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 });
 
 
-                            }
-                            if(response.code()==404) {
+                            } else if(code==404) {
                                 currentPinError.setText("Incorrect PIN");
                                 newPinError.setText("");
                                 confirmNewPinError.setText("");

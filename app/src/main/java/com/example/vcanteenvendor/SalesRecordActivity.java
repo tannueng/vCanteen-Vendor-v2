@@ -107,6 +107,7 @@ public class SalesRecordActivity extends AppCompatActivity {
         itemNotEnterPin.setVisibility(View.GONE);
         itemNotEnterPin2.setVisibility(View.GONE);
         reappearPinDialogButton.setVisibility(View.GONE);
+        LinearLayout2.setVisibility(View.INVISIBLE);
 
         orderStatusButton = (Button) findViewById(R.id.orderStatusButton);
         menuButton = (Button) findViewById(R.id.menuButton);
@@ -227,9 +228,6 @@ public class SalesRecordActivity extends AppCompatActivity {
                     itemNotEnterPin.setVisibility(View.GONE);
                     itemNotEnterPin2.setVisibility(View.GONE);
                     reappearPinDialogButton.setVisibility(View.GONE);
-                    LinearLayout1.setVisibility(View.VISIBLE);
-                    LinearLayout2.setVisibility(View.VISIBLE);
-                    divider2.setVisibility(View.VISIBLE);
                     //dialog.dismiss(); // try
                     String pin = pinInput.getText().toString();
                     url = "https://vcanteen.herokuapp.com/";
@@ -244,7 +242,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if(!response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "CODE: "+response.code(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(), "CODE: "+response.code(), Toast.LENGTH_SHORT).show();
                                 if(response.code()==404){
                                     errorText.setText("Incorrect Pin");
                                 }
@@ -302,36 +300,9 @@ public class SalesRecordActivity extends AppCompatActivity {
                     return;
                 }
 
-                //put it in array list here
-                //String[] name = {"Fried Chicken with Sticky RiceFried Chicken with Sticky RiceFried Chicken with Sticky Rice","Sticky RiceFried Chicken with Sticky Rice","Food3","Food4","Fried Chicken with Sticky RiceFried Chicken with Sticky RiceFried Chicken with Sticky RiceFried Chicken with Sticky Rice","Food6"};
-                //String[] price = {"20.-", "30.-", "40.-", "20.-", "30.-", "50.-" };
-                /*ArrayList<String> price = new ArrayList<String>();
-                price.add("20.-");
-                price.add("90.-");
-                price.add("2045.-");
-                price.add("42.-");
-                price.add("18.-");
-                price.add("200.-");
-                price.add("30.-");
-                String[] extra = {"extra1","extra2", "extra3", "extra4", "extra5","extra6"};
-                ArrayList<String> name = new ArrayList<String>();
-                name.add("A");
-                name.add("B");
-                name.add("C");
-                name.add("D");
-                name.add("E");
-                name.add("F");
-                ListAdapter testAdapter = new SalesRecordAdapter(this, food);
-                ListView salesRecordList = findViewById(R.id.salesRecordList);
-                salesRecordList.setAdapter(testAdapter);*/
-                // Construct the data source
-                // Create the adapter to convert the array to views
-                //UsersAdapter adapter = new UsersAdapter(this, arrayOfUsers);
-                // Attach the adapter to a ListView
-                // ListView listView = (ListView) findViewById(R.id.lvItems);
-                //listView.setAdapter(adapter);
-
                 //ArrayAdapter<SalesRecordArrayList> itemsAdapter = new ArrayAdapter<String>(this, R.layout.sales_record_row, item);
+                LinearLayout1.setVisibility(View.VISIBLE);
+                divider2.setVisibility(View.VISIBLE);
                 if (response.body().getTotalDailySales().getSum() == 0){
                     best_seller_dish.setText("No sales today" );
                     number_sold.setText( "0 DISHES");
@@ -341,11 +312,14 @@ public class SalesRecordActivity extends AppCompatActivity {
                     temp.add(newOrderList);
                     SalesRecordAdapter adapter = new SalesRecordAdapter(SalesRecordActivity.this, temp);
                     salesRecordListListView.setAdapter(adapter);
+                    salesRecordListListView.setVisibility(View.INVISIBLE);
+                    LinearLayout2.setVisibility(View.INVISIBLE);
                     Log.d("Test if", "if");
                     progressDialog.dismiss();
                     return;
                 } else {
-
+                    LinearLayout2.setVisibility(View.VISIBLE);
+                    salesRecordListListView.setVisibility(View.VISIBLE);
                     String bestSellingName = response.body().getBestSeller().getOrdername();
                     int bestSellingAmount = response.body().getBestSeller().getAmount();
                     int totalDailySales = response.body().getTotalDailySales().getSum();
