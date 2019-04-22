@@ -36,6 +36,8 @@ import com.android.volley.toolbox.Volley;*/
 
 import com.google.gson.Gson;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -230,6 +232,9 @@ public class SalesRecordActivity extends AppCompatActivity {
                     reappearPinDialogButton.setVisibility(View.GONE);
                     //dialog.dismiss(); // try
                     String pin = pinInput.getText().toString();
+                    System.out.println("PIN : " + pin);
+                    pin = new String(Hex.encodeHex(DigestUtils.sha256(pin)));
+                    System.out.println("PIN Hash : " + pin);
                     url = "https://vcanteen.herokuapp.com/";
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl(url)

@@ -132,6 +132,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button closeChangePinButton, confirmChangePinButton;
     private TextView currentPinError, newPinError, confirmNewPinError;
     private TextView currentPinCount, newPinCount, confirmNewPinCount;
+    private String currentPinHash, newPinHash;
 
     // FOR EDIT PROFILE //
     private Button editProfileButton, closeEditProfileButton, saveEditProfileButton;
@@ -389,6 +390,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         ///////////////////// CHANGE 4 DIGIT PIN ////////////////////////
         changePinDialog = new Dialog(SettingsActivity.this);
+        currentPinHash = "";
+        newPinHash = "";
         changePinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1377,6 +1380,11 @@ public class SettingsActivity extends AppCompatActivity {
                     newPinError.setText("New and old PIN are identical.");
                     confirmNewPinError.setText("");
                 }else{
+                    currentPinHash = new String(Hex.encodeHex(DigestUtils.sha256(currentPinBox.getText().toString()))); // just add
+                    newPinHash = new String(Hex.encodeHex(DigestUtils.sha256(newPinBox.getText().toString()))); // just add
+
+                    System.out.println("Hash current : "+ currentPinHash);
+                    System.out.println("Hash new : "+ newPinHash);
                     // If all condition are met...
                     url = "https://vcanteen.herokuapp.com/";
                     Retrofit retrofit = new Retrofit.Builder()
@@ -1384,7 +1392,7 @@ public class SettingsActivity extends AppCompatActivity {
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                     JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-                    Call<Void> call = jsonPlaceHolderApi.checkPin(vendor_id, currentPinBox.getText().toString());
+                    Call<Void> call = jsonPlaceHolderApi.checkPin(vendor_id, currentPinHash); //currentPinBox.getText().toString());
 
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -1411,7 +1419,7 @@ public class SettingsActivity extends AppCompatActivity {
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
                                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-                                Call<Void> call2 = jsonPlaceHolderApi.changePin(vendor_id, newPinBox.getText().toString());
+                                Call<Void> call2 = jsonPlaceHolderApi.changePin(vendor_id, newPinHash);//newPinBox.getText().toString());
 
                                 call2.enqueue(new Callback<Void>() {
                                     @Override
