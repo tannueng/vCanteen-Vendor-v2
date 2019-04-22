@@ -26,12 +26,11 @@ interface JsonPlaceHolderApi {
     @GET("v1/menu-management/{vendorId}/menu")
     Call<CombinationAlacarteList> getAllMenu(@Path("vendorId") int vendorId);
 
-
-
-
-
     @POST("v1/user-authentication/vendor/check/token")
     Call<LoginResponse> sendLogin(@Body LoginVendor loginVendor);
+
+//    @POST("v2/user-authentication/vendor/signin")
+//    Call<LoginResponse> sendLogin(@Body LoginVendor loginVendor);
 
     @PUT("v1/user-authentication/vendor/password/recover")
     Call<Void> recoverPass(@Body RecoverPass recoverPass);
@@ -64,9 +63,10 @@ interface JsonPlaceHolderApi {
                                 @Field("vendorStatus") String vendorStatus);
 
     @FormUrlEncoded
-    @PUT("v1/vendor-main/order/status")
+    @PUT("v2/vendor-main/order/status")
     Call<Void> editOrderStatus(@Field("orderId") int orderId,
-                                @Field("orderStatus") String orderStatus);
+                                @Field("orderStatus") String orderStatus,
+                               @Field("cancelReason") String cancelReason);
 
     @PUT("v1/user-authentication/vendor/password/change")
     Call<Void> resetPass(@Body ChangePass changePass);
