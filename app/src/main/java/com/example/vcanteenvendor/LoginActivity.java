@@ -17,11 +17,14 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +68,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity /*implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener*/{
 
     private EditText emailField;
     private EditText passField;
@@ -106,7 +109,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        LinearLayout layout = (LinearLayout) findViewById(R.id.login);
+        layout.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                hideKeyboard(view);
+                return false;
+            }
+        });
 
 
         FirebaseApp.initializeApp(LoginActivity.this);
@@ -530,6 +541,60 @@ public class LoginActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+    protected void hideKeyboard(View view)    {
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
 
+    /*@Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
 
+    @Override
+    public void onShowPress(MotionEvent e) {
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        System.out.println("single tap detected");
+        closeKeyboard();
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        System.out.println("single tap confirmed detected");
+        closeKeyboard();
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        System.out.println("double tap detected");
+        closeKeyboard();
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        System.out.println("double tap detected");
+        closeKeyboard();
+        return true;
+    }*/
 }

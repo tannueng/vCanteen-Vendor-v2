@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cancel_dialog"
     android:layout_width="480dp"
     android:layout_height="430dp">
 
@@ -9,138 +10,143 @@
         android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
-        android:padding="3dp"
-        android:background="@drawable/ic_close"/>
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_close"
+        android:padding="3dp" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm Order"
-        android:fontFamily="@font/sfprotext_bold"
-        android:textSize="24sp"
-        android:textColor="#333333"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"/>
+        android:fontFamily="@font/sfprotext_bold"
+        android:text="Cancel Order"
+        android:textColor="#333333"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Do you wish to cancel the order"
         android:fontFamily="@font/sfprotext_regular"
-        android:textSize="20sp"
+        android:text="Do you wish to cancel the order"
         android:textColor="#333333"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/orderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/description"
-        android:layout_marginTop="5dp"
-        android:text="Ordernamehere+?"
-        android:fontFamily="@font/sfprotext_medium"
-        android:textSize="20sp"
-        android:textColor="#333333"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/sfprotext_medium"
+        android:text="Ordernamehere+?"
+        android:textColor="#333333"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/ingredientsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/orderName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/sfprotext_semibold"
         android:text="Yes, we ran out of ingredients"
         android:textAllCaps="false"
         android:textColor="@color/pinkPrimary"
-        android:layout_below="@id/orderName"
-        android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ingredientsButton"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="or"
-        android:textSize="16sp"
         android:fontFamily="@font/sfprotext_regular"
+        android:text="or"
         android:textColor="#828282"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/reasonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please specify your reasons"
         android:layout_below="@id/or"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/redPrimary"
-        android:fontFamily="@font/sfprotext_semibold"
         android:layout_alignLeft="@id/reasonBox"
-        android:layout_centerHorizontal="true"/>
-    
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/sfprotext_semibold"
+        android:text="Please specify your reasons"
+        android:textColor="@color/redPrimary" />
+
     <EditText
         android:id="@+id/reasonBox"
         android:layout_width="310dp"
         android:layout_height="80dp"
         android:layout_below="@id/reasonTitle"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/outline_rect"
-        android:layout_centerHorizontal="true"/>
+        android:cursorVisible="false"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-*‘“#&amp;()@"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/redPrimary"
         android:layout_below="@id/reasonBox"
-        android:layout_marginTop="-5dp"
         android:layout_alignLeft="@id/reasonBox"
         android:layout_alignRight="@id/reasonBox"
+        android:layout_marginTop="0dp"
         android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="14sp"
         android:text="error"
-        />
+        android:textColor="@color/redPrimary"
+        android:textSize="14sp"
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
+        android:layout_below="@id/error"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/error">
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dissmissButton"
+            android:id="@+id/dismissButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:paddingHorizontal="30dp"
-            android:text="DISSMISS"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sfprotext_semibold"
-            android:textColor="@android:color/darker_gray"/>
+            android:paddingHorizontal="30dp"
+            android:text="DISMISS"
+            android:textColor="@android:color/darker_gray" />
 
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/pink_rect"
+            android:clickable="false"
+            android:elevation="1dp"
+            android:fontFamily="@font/sfprotext_semibold"
             android:paddingHorizontal="30dp"
             android:text="CONFIRM"
-            android:layout_marginHorizontal="10dp"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:background="@drawable/pink_rect"
-            android:elevation="1dp"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </RelativeLayout>

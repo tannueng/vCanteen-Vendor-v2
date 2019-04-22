@@ -6,19 +6,24 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,21 +32,24 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 public class OrderAdapter extends ArrayAdapter {
 
     private OrderList mOrderList;
     private List<Order> mOrderArrayList;
     View customView;
+    TextView idNumber;
     TextView foodname;
     TextView foodextra;
     Button cancelButton;
     Button doneButton;
     Order singleOrder;
     ProgressDialog progressDialog;
-
+    String inputReason;
     int mPosition;
 
-
+    Dialog dialog;
 
 
     OrderAdapter(Context context, OrderList List){
@@ -63,129 +71,125 @@ public class OrderAdapter extends ArrayAdapter {
         LayoutInflater orderInflater = LayoutInflater.from(getContext());
         customView = orderInflater.inflate(R.layout.order_row_relative, parent, false);
 
-
-
         singleOrder = (Order) getItem(position);
 
         final int singleOrderId = singleOrder.getOrderId();
 
+        idNumber = (TextView) customView.findViewById(R.id.idNumber);
         foodname = (TextView) customView.findViewById(R.id.foodName);
         foodextra = (TextView) customView.findViewById(R.id.foodExtra);
         cancelButton = (Button) customView.findViewById(R.id.cancelButton);
         doneButton = (Button) customView.findViewById(R.id.doneButton);
-
-
-
+        idNumber.setText(String.valueOf(singleOrder.getOrderId()));
+        foodname.setText(singleOrder.getOrderName());
+        foodextra.setText(singleOrder.getOrderNameExtra());
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.vendor_list_cancel_popup);
+                TextView orderName = (TextView) dialog.findViewById(R.id.orderName);
+                Button ingredientsButton = (Button) dialog.findViewById(R.id.ingredientsButton);
+                final EditText reasonBox = (EditText) dialog.findViewById(R.id.reasonBox);
+                final TextView error = (TextView) dialog.findViewById(R.id.error);
+                Button confirmButton = (Button) dialog.findViewById(R.id.confirmButton);
+                Button dismissButton = (Button) dialog.findViewById(R.id.dismissButton);
+                Button closeDialog = (Button) dialog.findViewById(R.id.close_dialog);
+                orderName.setText(singleOrder.getOrderName() + "?");
+                dialog.show();
 
-                final Dialog dialog = new Dialog(getContext());
-                //dialog.setTitle("Devahoy");
-                dialog.setContentView(R.layout.dialog_cancel_order);
-
-                final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
-                //final TextView content = (TextView) dialog.findViewById(R.id.dialogContent);
-                Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
-                Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
-                final CheckBox dialogCheckbox = (CheckBox) dialog.findViewById(R.id.dialogCheckbox);
-                final EditText reasonInput = (EditText) dialog.findViewById(R.id.reasonInput);
-
-
-                positiveButton.setText("CONFIRM");
-                //negativeButton.setVisibility(View.GONE);
-
-
-
-
-
-
-                dialogCheckbox.setOnClickListener(new View.OnClickListener() {
+                reasonBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        if(dialogCheckbox.isChecked()){
-                            dialogCheckbox.setBackgroundResource(R.drawable.button_gradient_rounded);
-                            dialogCheckbox.setTextColor(Color.WHITE);
-                        }
-                        if(!dialogCheckbox.isChecked()){
-                            dialogCheckbox.setBackgroundResource(R.drawable.button_gradient_rounded_unchecked);
-                            dialogCheckbox.setTextColor(Color.BLACK);
-                        }
-
-                    }
-                });
-                
-                reasonInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if(hasFocus & dialogCheckbox.isChecked()){
-
-                            dialogCheckbox.setBackgroundResource(R.drawable.button_gradient_rounded_unchecked);
-                            dialogCheckbox.setTextColor(Color.BLACK);
-                            dialogCheckbox.setChecked(false);
-                        }
+                        //reasonBox.setFocusable(true);
+                        reasonBox.setCursorVisible(true);
+                        error.setVisibility(View.VISIBLE);
+                        error.setText("Only a-z A-Z 0-9 _ - * ‘ “ # & () @ are allowed.");
+                        System.out.println("reasonBox clicked");
                     }
                 });
 
-                /*System.out.println(dialogCheckbox.isChecked());
-                if (dialogCheckbox.isChecked()) {
-
-                    dialogCheckbox.setBackgroundResource(R.drawable.button_gradient_rounded_unchecked);
-                    dialogCheckbox.setTextColor(Color.BLACK);
-                    dialogCheckbox.setChecked(false);
-                }*/
-
-
-                negativeButton.setOnClickListener(new View.OnClickListener() {
+                ingredientsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+                        inputReason = "Ran out of ingredients";
                         orderCancel(singleOrderId);
-                        //another put
                         mOrderArrayList.remove(position);
                         OrderAdapter.super.notifyDataSetChanged();
-
-
                         dialog.dismiss();
-
+                    }
+                });
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        inputReason = reasonBox.getText().toString().trim();
+                        System.out.println("TEST: " + reasonBox.getText().toString().trim() + "end here");
+                        if(inputReason.isEmpty()) {
+                            System.out.println("TEST NULL: " + reasonBox.getText().toString().trim() + "end here");
+                        } else {
+                            System.out.println("TEST NOT NULL: " + reasonBox.getText().toString().trim() + "end here");
+                            orderCancel(singleOrderId);
+                            mOrderArrayList.remove(position);
+                            OrderAdapter.super.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
                     }
                 });
 
-                dialog.show();
+                dismissButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                closeDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOrderArrayList.remove(position);
-                OrderAdapter.super.notifyDataSetChanged();
-
-                orderDone(singleOrderId);
-                //sent put here
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.vendor_list_done_popup);
+                TextView orderName = (TextView) dialog.findViewById(R.id.orderName);
+                Button confirmButton = (Button) dialog.findViewById(R.id.confirmButton);
+                Button dismissButton = (Button) dialog.findViewById(R.id.dismissButton);
+                Button closeDialog = (Button) dialog.findViewById(R.id.close_dialog);
+                orderName.setText(singleOrder.getOrderName() + "?");
+                dialog.show();
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        orderDone(singleOrderId);
+                        mOrderArrayList.remove(position);
+                        OrderAdapter.super.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                dismissButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                closeDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        foodname.setText(singleOrder.getOrderName());
-        foodextra.setText(singleOrder.getOrderNameExtra());
         return customView;
     }
 
@@ -203,7 +207,7 @@ public class OrderAdapter extends ArrayAdapter {
 
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-        Call<Void> call = jsonPlaceHolderApi.editOrderStatus(orderId, "CANCELLED");
+        Call<Void> call = jsonPlaceHolderApi.editOrderStatus(orderId, "CANCELLED", inputReason);
 
         call.enqueue(new Callback<Void>() {
             @Override
@@ -213,6 +217,8 @@ public class OrderAdapter extends ArrayAdapter {
 
                     System.out.println("---------------**********---------------"+"Code: "+response.code()+"---------------**********---------------");
                     return;
+                } else {
+                    System.out.println("CANCELLED SUCCEEDED");
                 }
 
 
@@ -241,7 +247,7 @@ public class OrderAdapter extends ArrayAdapter {
 
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-        Call<Void> call = jsonPlaceHolderApi.editOrderStatus(orderId, "DONE");
+        Call<Void> call = jsonPlaceHolderApi.editOrderStatus(orderId, "DONE", null);
 
         call.enqueue(new Callback<Void>() {
             @Override
@@ -251,6 +257,8 @@ public class OrderAdapter extends ArrayAdapter {
 
                     System.out.println("---------------**********---------------"+"Code: "+response.code()+"---------------**********---------------");
                     return;
+                } else {
+                    System.out.println("DONE SUCCEEDED");
                 }
 
 
@@ -264,6 +272,5 @@ public class OrderAdapter extends ArrayAdapter {
         });
 
     }
-
 
 }

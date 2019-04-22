@@ -61,12 +61,12 @@
         android:layout_below="@id/orderName">
 
         <Button
-            android:id="@+id/dissmissButton"
+            android:id="@+id/dismissButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:paddingHorizontal="30dp"
-            android:text="DISSMISS"
+            android:text="DISMISS"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sfprotext_semibold"
             android:textColor="@android:color/darker_gray"/>
