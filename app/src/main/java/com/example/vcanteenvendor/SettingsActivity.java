@@ -37,8 +37,10 @@ import com.example.vcanteenvendor.POJO.BugReport;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +52,7 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -1230,7 +1233,24 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void logOut() {
+
         LoginManager.getInstance().logOut();
+        boolean isSignedIn = FirebaseAuth.getInstance().isSignInWithEmailLink(sharedPref.getString("email", "no email"));
+
+        System.out.println("============== Check if Firebase Signed in ==== "+isSignedIn);
+        if (isSignedIn)
+            FirebaseAuth.getInstance().signOut();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
         sharedPref.edit().putString("token", "NO TOKEN").commit();
         sharedPref.edit().putInt("vendor_id", 0).commit();
         sharedPref.edit().putString("email", "empty email").commit();

@@ -171,6 +171,7 @@ public class FourDigitPage extends AppCompatActivity {
     private void sendToSignUp(String FireBaseToken, String accountType) {
 
         System.out.println(" ==================== sendEmailToSignUp :: "+email+" ==================== ");
+        System.out.println(" ==================== Firebasetoken :: "+FireBaseToken+" ==================== ");
         progressDialog = new ProgressDialog(FourDigitPage.this);
         progressDialog = ProgressDialog.show(FourDigitPage.this, "",
                 "Verifying. Please wait...", true);
@@ -248,13 +249,15 @@ public class FourDigitPage extends AppCompatActivity {
                         } else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 progressDialog.dismiss();
-                                Toast.makeText(FourDigitPage.this, "FirebaseAuthUserCollisionException", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(FourDigitPage.this, "FirebaseAuthUserCollisionException", Toast.LENGTH_LONG).show();
+                                System.out.println("============== Firebase Collision because acctype is "+acccountType+"================");
                                 if (acccountType.equals("FACEBOOK")){
                                     sendToSignUp(firebaseToken,"FACEBOOK");
                                 }
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(FourDigitPage.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(FourDigitPage.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                System.out.println("============== Firebase Check Exist Error "+task.getException().getMessage()+" ================");
                             }
                         }
 
@@ -306,6 +309,10 @@ public class FourDigitPage extends AppCompatActivity {
     }
 
     private void registerFireBase2(final String acccountType) {
+        progressDialog = new ProgressDialog(FourDigitPage.this);
+        progressDialog = ProgressDialog.show(FourDigitPage.this, "",
+                "Loading. Please wait...", true);
+
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -322,7 +329,8 @@ public class FourDigitPage extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(FourDigitPage.this, "Firebase Auth Complete", Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(FourDigitPage.this, "Firebase Auth Complete", Toast.LENGTH_LONG).show();
+                                        System.out.println("============== Firebase Auth Complete================");
                                         sendToSignUp(firebaseToken, acccountType);
                                         progressDialog.dismiss();
 
@@ -334,7 +342,8 @@ public class FourDigitPage extends AppCompatActivity {
 
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(FourDigitPage.this, "Firebase Auth Fail", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(FourDigitPage.this, "Firebase Auth Fail", Toast.LENGTH_LONG).show();
+                            System.out.println("============== Firebase Auth Fail ================");
 
                         }
                     }

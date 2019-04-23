@@ -77,12 +77,17 @@ public class SignupInfoPage extends AppCompatActivity {
                     phoneNumberError.setVisibility(View.VISIBLE);
                     restaurantError.setVisibility(View.INVISIBLE);
 
-                } else if(phoneNumberBox.length() != 9 || phoneNumberBox.length() != 10){
+                } else if( phoneNumberBox.length() != 10){
                     phoneNumberError.setText("Phone number is too short.");
                     phoneNumberError.setVisibility(View.VISIBLE);
                     restaurantError.setVisibility(View.INVISIBLE);
 
-                } else {
+                } /*else if(phoneNumberBox.length() != 9 ){
+                    phoneNumberError.setText("Phone number is too short.");
+                    phoneNumberError.setVisibility(View.VISIBLE);
+                    restaurantError.setVisibility(View.INVISIBLE);
+
+                }*/ else {
                     vendorName = restaurantBox.getText().toString().trim();
                     vendorPhoneNumber = phoneNumberBox.getText().toString().trim();
 

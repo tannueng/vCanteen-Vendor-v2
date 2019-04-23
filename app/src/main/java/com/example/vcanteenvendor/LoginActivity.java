@@ -540,7 +540,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                 firebaseLogin(email,password);
 
                             } else {
-                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                System.out.println("============== Firebase Check Exist Error "+task.getException().getMessage()+" ================");
                             }
                         }
 
@@ -571,7 +572,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(LoginActivity.this, "Firebase Auth Complete", Toast.LENGTH_LONG).show();
+                                        //Toast.makeText(LoginActivity.this, "Firebase Auth Complete", Toast.LENGTH_LONG).show();
+                                        System.out.println("============== Firebase Auth Complete================");
                                         sendJSONFacebook(email, firebaseToken);
                                         progressDialog.dismiss();
 
@@ -583,7 +585,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
 
                         } else {
                             progressDialog.dismiss();
-                            Toast.makeText(LoginActivity.this, "Firebase Auth Fail", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(LoginActivity.this, "Firebase Auth Fail", Toast.LENGTH_LONG).show();
+                            System.out.println("============== Firebase Auth Fail ================");
 
                         }
                     }
@@ -592,6 +595,9 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
     }
 
     private void firebaseLogin(final String email, String password){
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                "Loading. Please wait...", true);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -622,6 +628,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                     sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
                                     passwd = null;
                                     sendJSONFacebook(email, firebaseToken);
+                                    progressDialog.dismiss();
 
                                 }
                             }, 3500);
@@ -631,6 +638,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                             errorMessage.setText("Email or Password is Incorrect");
                             errorMessage.setVisibility(View.VISIBLE);
                             System.out.println("FIREBASE LOGIN FAIL");
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -647,6 +655,9 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
     }
 
     private void sendJSON(final String email, String pass, String firebaseToken) {
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                "Loading. Please wait...", true);
 
 //        LoginVendor loginVendor = new LoginVendor(email, passwd, firebaseToken, account_type);      //V1
 
