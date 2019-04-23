@@ -63,6 +63,15 @@ to reveal the Sales Record Page"
             />
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/redPrimary"
+        android:fontFamily="@font/sfprotext_regular"
+        android:text="error" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
