@@ -192,6 +192,8 @@
             android:textSize="24sp" />
 
         <ListView
+            android:divider="@android:color/transparent"
+            android:dividerHeight="8.0sp"
             android:id="@+id/reviewlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

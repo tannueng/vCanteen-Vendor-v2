@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:text="Rating"
         android:fontFamily="@font/sfprotext_bold"
-
         android:textColor="@color/pinkPrimary"
         android:textSize="18sp"/>
 
@@ -22,17 +21,17 @@
         android:id="@+id/reviewOrderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_toEndOf="@+id/scoreStar"
-        android:layout_alignBaseline="@id/ratingScore"
+        android:singleLine="true"
         android:fontFamily="@font/sfprotext_regular"
         android:text="Order Name"
+        android:layout_below="@id/rating"
         android:textColor="#828282"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/reviewOrderNameExtra"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_toEndOf="@+id/reviewOrderName"
@@ -40,7 +39,8 @@
         android:fontFamily="@font/sfprotext_regular"
         android:text="Order Name Extra"
         android:textColor="#828282"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/ratingScore"
@@ -72,11 +72,10 @@
         android:layout_height="wrap_content"
         android:text="comment"
         android:fontFamily="@font/sfprotext_regular"
-
         android:textColor="#333333"
         android:textSize="16sp"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/rating"
+        android:layout_below="@id/reviewOrderName"
         />
 
     <TextView
