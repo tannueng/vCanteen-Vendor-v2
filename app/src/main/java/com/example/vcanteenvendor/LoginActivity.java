@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.login);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.linearParent);
         layout.setOnTouchListener(new View.OnTouchListener()
         {
             @Override

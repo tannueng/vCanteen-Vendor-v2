@@ -7,56 +7,59 @@
     android:onClick="hideKb"
     android:focusableInTouchMode="true"
     android:focusable="true"
+    android:id="@+id/linearParent"
     >
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="30dp"
-    android:orientation="vertical"
-    android:layout_weight="0.5"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        android:orientation="vertical"
+        android:layout_weight="0.5"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <ImageView
             android:id="@+id/vcanteenlogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_vcanteen_logo"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/ic_vcanteen_logo" />
+            android:layout_marginBottom="30dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginBottom="32dp"
-            android:fontFamily="@font/sfprotext_semibold"
             android:text="Vendor Login"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="28dp" />
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="28dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginLeft="40dp"/>
 
         <LinearLayout
             android:id="@+id/emailbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:orientation="vertical"
             android:layout_marginBottom="12dp"
-            android:orientation="vertical">
+            android:layout_marginLeft="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sfprotext_semibold"
                 android:text="Email"
                 android:textColor="@color/colortext"
-                android:textSize="24dp" />
+                android:fontFamily="@font/sfprotext_semibold"
+                android:textSize="24dp"
+                />
 
             <EditText
                 android:id="@+id/email_field"
                 android:layout_width="490dp"
                 android:layout_height="wrap_content"
+                android:hint="Enter your email..."
                 android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:fontFamily="@font/sfprotext_regular"
@@ -71,20 +74,17 @@
             android:id="@+id/passwordbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:orientation="vertical"
             android:layout_marginTop="12dp"
-            android:orientation="vertical">
+            android:layout_marginLeft="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_weight="7"
-                android:inputType="textPassword"
-                android:clickable="true"
-                android:focusableInTouchMode="true"
-                android:maxLength="40"
-                android:singleLine="true"
+                android:text="Password"
+                android:textColor="@color/colortext"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:textSize="24dp"
                 />
 
             <LinearLayout
@@ -99,9 +99,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_weight="7"
+                    android:inputType="textPassword"
                     android:clickable="true"
                     android:focusableInTouchMode="true"
-                    android:inputType="textPassword" />
+                    android:maxLength="40"
+                    android:singleLine="true"
+                    />
 
                 <Button
                     android:id="@+id/show_pw_btn"
@@ -112,7 +115,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="0dp"
                     android:text="SHOW"
-                    android:textColor="#FF9494" />
+                    android:textColor="#FF9494"
+                    />
 
             </LinearLayout>
 
@@ -123,115 +127,93 @@
                 android:layout_height="wrap_content"
                 android:text="Email or Password is Incorrect"
                 android:textColor="@color/redPrimary"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:paddingBottom="15dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginBottom="30dp">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            >
+            <Button
+                android:id="@+id/signup_button"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:text="SIGN UP"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:textSize="18sp"
+                android:textColor="@color/pinkPrimary"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/outline_pink_round_btn"
+                android:translationZ="2dp"
+                android:layout_marginEnd="33dp"
+                android:layout_alignParentEnd="true"
+                />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:paddingBottom="15dp"
-        android:layout_marginLeft="50dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        >
-    <Button
-        android:id="@+id/signup_button"
-        android:layout_width="230dp"
-        android:layout_height="60dp"
-        android:text="SIGN UP"
-        android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="18sp"
-        android:textColor="@color/pinkPrimary"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/outline_pink_round_btn"
-        android:translationZ="2dp"
-        android:layout_marginEnd="33dp"
-        android:layout_alignParentEnd="true"
-        />
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="230dp"
+                android:layout_alignParentStart="true"
+                android:layout_height="60dp"
+                android:text="LOGIN"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:textSize="18sp"
+                android:textColor="#ffffff"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/pink_round_btn"
+                android:translationZ="2dp"
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="230dp"
-        android:layout_alignParentStart="true"
-        android:layout_height="60dp"
-        android:text="LOGIN"
-        android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="18sp"
-        android:textColor="#ffffff"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/pink_round_btn"
-        android:translationZ="2dp"
+                />
 
-        />
-
-    </RelativeLayout>
+        </RelativeLayout>
 
         <View
             android:id="@+id/divider"
             android:layout_width="490dp"
             android:layout_height="0.2dp"
+            android:background="?android:attr/listDivider"
             android:layout_marginStart="50dp"
-            android:layout_marginBottom="30dp"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginBottom="30dp"/>
 
 
-    <Button
-        android:id="@+id/facebook_button"
-        android:layout_width="490dp"
-        android:layout_height="60dp"
-        android:text="Sign in with Facebook"
-        android:layout_gravity="center_horizontal"
-        android:textAllCaps="false"
-        android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="18sp"
-        android:textColor="@color/design_default_color_primary_dark"
-        android:background="@drawable/button_facebook"
-        android:paddingStart="130dp"
-        android:paddingEnd="100dp"
-        android:drawableStart="@drawable/ic_facebook"
-        />
+        <Button
+            android:id="@+id/facebook_button"
+            android:layout_width="490dp"
+            android:layout_height="60dp"
+            android:text="Sign in with Facebook"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:fontFamily="@font/sfprotext_semibold"
+            android:textSize="18sp"
+            android:textColor="@color/design_default_color_primary_dark"
+            android:background="@drawable/button_facebook"
+            android:paddingStart="130dp"
+            android:paddingEnd="100dp"
+            android:drawableStart="@drawable/ic_facebook"
+            />
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/forgot_pw_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        android:layout_alignParentTop="true"
-        android:textAllCaps="false"
-        android:fontFamily="@font/sfprotext_semibold"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="15dp"
-        android:textSize="16dp"
-        android:textColor="#7BCAE8"
-        android:background="?android:attr/selectableItemBackground"/>
-</RelativeLayout>
-
-</LinearLayout>
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <Button
                 android:id="@+id/forgot_pw_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Forgot Password?"
                 android:layout_alignParentTop="true"
+                android:textAllCaps="false"
+                android:fontFamily="@font/sfprotext_semibold"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/sfprotext_semibold"
-                android:text="Forgot Password?"
-                android:textAllCaps="false"
+                android:textSize="16dp"
                 android:textColor="#7BCAE8"
-                android:textSize="22dp" />
+                android:background="?android:attr/selectableItemBackground"/>
         </RelativeLayout>
+
     </LinearLayout>
 
     <ImageView
