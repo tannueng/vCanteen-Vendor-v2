@@ -43,11 +43,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -57,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,6 +74,11 @@ import com.bumptech.glide.request.RequestOptions;
 
 public class LoginActivity extends AppCompatActivity /*implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener*/{
 
+    private static final Pattern EMAIL_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.]+\\..{2,3}(.{2,3})?$");
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9@!#$%^&+-=](?=\\S+$).{7,}$");
+
     private EditText emailField;
     private EditText passField;
     private Button loginBtn;
@@ -78,6 +87,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
     private TextView errorMessage;
     private Button showPass;
     private CallbackManager callbackManager;
+
+    private Button signup_button;
 
     private Dialog recoverPassDialog;
     private Button sendRecoverBtn;
@@ -103,6 +114,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
     private FirebaseAuth mAuth;
     private DatabaseReference dbUsers;
     private String firebaseToken;
+
+    private String emailFromSignUpPage;
 
 
     @Override
@@ -132,31 +145,56 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
         forgotPass = findViewById(R.id.forgot_pw_button);
         errorMessage = findViewById(R.id.errorLogin);
         showPass = findViewById(R.id.show_pw_btn);
+        signup_button = findViewById(R.id.signup_button);
+
+        emailFromSignUpPage = getIntent().getStringExtra("emailFromSignUpPage");
+        System.out.println("================== Email Form Sign Up = "+emailFromSignUpPage+" =================");
+        if (emailFromSignUpPage!=null && !emailFromSignUpPage.equals("") && emailFromSignUpPage.contains("@")){
+            emailField.setText(emailFromSignUpPage);
+        }
+
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (emailField.getText().toString().equals("") && passField.getText().toString().equals("")) {
+                System.out.println("================== login button pressed! ==================");
+                if (emailField.getText().toString().trim().equals("") && passField.getText().toString().trim().equals("")) {
                     errorMessage.setText("Please fill both Email and Password.");
                     errorMessage.setVisibility(View.VISIBLE);
                     return;
+                } else if (!(EMAIL_PATTERN.matcher(emailField.getText().toString().trim()).matches())){
+                    errorMessage.setText("Invalid E-mail. Please try again.");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    return;
+
                 }
+
                 email = emailField.getText().toString();
                 passwd = passField.getText().toString();
-                System.out.println(passwd);
+
+                System.out.println("==================Login Email :::: "+email+" ==================");
+                System.out.println("==================Login Plain Pass :::: "+passwd+" ==================");
+
 //                passwd = DigestUtils.sha256Hex(passwd);
                 passwd = new String(Hex.encodeHex(DigestUtils.sha256(passwd)));
-                System.out.println(passwd);
                 account_type = "NORMAL";
+
+
+                System.out.println("==================Login Hash Pass :::: "+passwd+" ==================");
+
                 progressDialog = new ProgressDialog(LoginActivity.this);
                 progressDialog = ProgressDialog.show(LoginActivity.this, "",
                         "Loading. Please wait...", true);
+
+
+                System.out.println("================== mAuth Start -- signInWithEmailAndPassword(email, passwd) ==================");
+
                 mAuth.signInWithEmailAndPassword(email, passwd)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    System.out.println("SUCCESS");
+                                    System.out.println("================== mAuth SUCCESS! ==================");
                                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     dbUsers = FirebaseDatabase.getInstance().getReference("users").child(uid);
 
@@ -165,12 +203,12 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for(DataSnapshot dsUser: dataSnapshot.getChildren())
                                                 firebaseToken = dsUser.getValue(String.class);
-                                            System.out.println("From datasnapshot: "+firebaseToken);
+                                            System.out.println("================== FireBase Token From datasnapshot: "+firebaseToken+" ==================");
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                            System.out.println("================== mAuth CANCELLED! ==================");
                                         }
                                     });
 
@@ -178,8 +216,9 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                         @Override
                                         public void run() {
 
-                                            System.out.println("FIREBASE TOKEN : "+firebaseToken);
+                                            System.out.println("================== FIREBASE TOKEN to sharepref : "+firebaseToken+" ==================");
                                             sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
+                                            System.out.println("================== Begin sendJSON by NORMAL LOGIN ==================");
                                             sendJSON(email, passwd, firebaseToken);
 
                                         }
@@ -200,6 +239,13 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
             @Override
             public void onClick(View v) {
                 Fblogin();
+            }
+        });
+
+        signup_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignupPage.class));
             }
         });
 
@@ -365,9 +411,12 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
 
     }
 
+
+
     private void Fblogin() {
         callbackManager = CallbackManager.Factory.create();
 
+        LoginManager.getInstance().logOut();
         // Set permissions
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
 
@@ -392,14 +441,16 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                             System.out.println("JSON Result" + jsonresult);
 
                                             email = json.optString("email");
-//                                                Toast.makeText(LoginActivity.this, email, Toast.LENGTH_LONG).show();
                                             String str_id = json.optString("id");
                                             String str_firstname = json.optString("first_name");
                                             String str_lastname = json.optString("last_name");
 
                                             account_type = "FACEBOOK";
                                             passwd = "firebaseOnlyNaja";
-                                            mAuth.signInWithEmailAndPassword(email, passwd)
+
+                                            firebaseCheckExist(email,passwd);
+
+                                            /*mAuth.signInWithEmailAndPassword(email, passwd)
                                                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -427,7 +478,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                                                     public void run() {
                                                                         sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
                                                                         passwd = null;
-                                                                        sendJSON(email, passwd, firebaseToken);
+                                                                        sendJSONFacebook(email, firebaseToken);
 
                                                                     }
                                                                 }, 3500);
@@ -439,7 +490,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                                                                 System.out.println("FIREBASE LOGIN FAIL");
                                                             }
                                                         }
-                                                    });
+                                                    });*/
 
 
                                         }
@@ -464,8 +515,129 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
 
                     }
                 });
+    }
+
+
+    private void firebaseCheckExist(final String email, final String password){
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                "Loading. Please wait...", true);
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+                            progressDialog.dismiss();
+                            registerToFirebase(email);
+                            System.out.println("========= Email not found in Firebase, register new to firebase::::"+email+"===Pass::: "+password);
+
+                        } else {
+                            progressDialog.dismiss();
+                            if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                System.out.println("========= Email FOUND in Firebase, login to firebase to get token::::"+email+"===Pass::: "+password);
+                                firebaseLogin(email,password);
+
+                            } else {
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                    }
+                });
 
     }
+
+
+    private void registerToFirebase(final String email){
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                "Loading. Please wait...", true);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            firebaseToken = task.getResult().getToken();
+                            String emailFromFirebase = mAuth.getCurrentUser().getEmail();
+                            User user = new User("VENDOR",email, firebaseToken);
+
+                            DatabaseReference dbUsers = FirebaseDatabase.getInstance().getReference("users");
+
+                            dbUsers.child(mAuth.getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "Firebase Auth Complete", Toast.LENGTH_LONG).show();
+                                        sendJSONFacebook(email, firebaseToken);
+                                        progressDialog.dismiss();
+
+                                    }
+                                    progressDialog.dismiss();
+                                }
+                            });
+
+
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "Firebase Auth Fail", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                });
+
+    }
+
+    private void firebaseLogin(final String email, String password){
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            System.out.println("firebaseLogin SUCCESS");
+                            String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            dbUsers = FirebaseDatabase.getInstance().getReference("users").child(uid);
+
+                            dbUsers.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for(DataSnapshot dsUser: dataSnapshot.getChildren())
+                                        firebaseToken = dsUser.getValue(String.class);
+                                    System.out.println("==============firebaseLogin receive firebase token"+firebaseToken);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
+                                    passwd = null;
+                                    sendJSONFacebook(email, firebaseToken);
+
+                                }
+                            }, 3500);
+
+
+                        } else {
+                            errorMessage.setText("Email or Password is Incorrect");
+                            errorMessage.setVisibility(View.VISIBLE);
+                            System.out.println("FIREBASE LOGIN FAIL");
+                        }
+                    }
+                });
+
+    }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -474,9 +646,13 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void sendJSON(String email, String pass, String firebaseToken) {
-        LoginVendor loginVendor = new LoginVendor(email, passwd, firebaseToken, account_type);
-        System.out.println(loginVendor.toString());
+    private void sendJSON(final String email, String pass, String firebaseToken) {
+
+//        LoginVendor loginVendor = new LoginVendor(email, passwd, firebaseToken, account_type);      //V1
+
+        LoginVendor loginVendor = new LoginVendor(email, passwd, firebaseToken);
+        System.out.println("======================sent loginVendor to string::: "+loginVendor.toString() + " ==sendLogin=============");
+
         Gson gson = new GsonBuilder().serializeNulls().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URL)
@@ -484,35 +660,41 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                 .build();
         final JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<LoginResponse> call = jsonPlaceHolderApi.sendLogin(loginVendor);
-        System.out.println(loginVendor.toString());
+//        Call<LoginResponse> call = jsonPlaceHolderApi.sendLogin(loginVendor);
+        Call<LoginResponse> call = jsonPlaceHolderApi.sendLoginV2(email, passwd, firebaseToken);
+
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                System.out.println(response.code());
-                if (response.code() != 200 && response.code() != 409) {
-                    // Fail
-                    if (account_type.equals("FACEBOOK"))
-                        sharedPref.edit().putString("token", "NO TOKEN JA EDOK").commit();
+                System.out.println("==================Code :::: "+response.code()+" ==sendLogin()================");
+
+                if (response.code() != 200 ) {
+                    // Error
+                    /*if (account_type.equals("FACEBOOK"))
+                        sharedPref.edit().putString("token", "NO TOKEN JA EDOK").commit();*/
                     progressDialog.dismiss();
                     errorMessage.setText("Email or Password is Incorrect");
                     errorMessage.setVisibility(View.VISIBLE);
-                    if (account_type.equals("FACEBOOK"))
+                    /*if (account_type.equals("FACEBOOK"))
                         LoginManager.getInstance().logOut();
-                    progressDialog.dismiss();
-                } else if(response.code()==409) {
+                    progressDialog.dismiss();*/
+
+                /*} else if(response.code()==409) {
                     progressDialog.dismiss();
                     errorMessage.setText("This account can only be logged into with Facebook");
-                    errorMessage.setVisibility(View.VISIBLE);
+                    errorMessage.setVisibility(View.VISIBLE);*/
+
                 } else {
                     // Success
 
                     // save vendor_id, token
                     sharedPref.edit().putString("token", response.body().getToken()).commit();
-                    System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
                     sharedPref.edit().putInt("vendor_id", response.body().getVendor_id()).commit();
-                    sharedPref.edit().putString("account_type", account_type).commit();
-                    System.out.println(response.body().getVendor_id());
+                    sharedPref.edit().putString("email", email).commit();
+                    //sharedPref.edit().putString("account_type", account_type).commit();
+
+                    System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
+                    System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
                     progressDialog.dismiss();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
@@ -520,19 +702,115 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                System.out.println("==================send Login Fail :::: "+t.getMessage()+" ==================");
 
             }
         });
 
-        ImageView chefpic = findViewById(R.id.chefpic);
+        /*ImageView chefpic = findViewById(R.id.chefpic);
         RequestOptions option = new RequestOptions().centerCrop();
-        Glide.with(LoginActivity.this).load(R.drawable.hero_image).apply(option).into(chefpic);
+        Glide.with(LoginActivity.this).load(R.drawable.hero_image).apply(option).into(chefpic);*/
     }
 
-    /*public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }*/
+
+
+
+    private void sendJSONFacebook(final String email, final String firebaseToken){
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                "Loading. Please wait...", true);
+
+        LoginVendor loginVendor = new LoginVendor(email, firebaseToken);
+        System.out.println("======================sent FACEBOOK loginVendor to string::: "+loginVendor.toString() + " ==sendLoginFacebook=============");
+
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        final JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<LoginResponse> call = jsonPlaceHolderApi.sendLoginFacebook(email, firebaseToken);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                System.out.println("==================Code :::: "+response.code()+" ==sendLoginFacebook()================");
+
+                if (response.code() != 200 && response.code() != 404 ) {
+                    // Error
+                    /*if (account_type.equals("FACEBOOK"))
+                        sharedPref.edit().putString("token", "NO TOKEN JA EDOK").commit();*/
+                    sharedPref.edit().putString("token", "NO TOKEN JA EDOK").commit();
+                    progressDialog.dismiss();
+                    errorMessage.setText("Email or Password is Incorrect");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    LoginManager.getInstance().logOut();
+                    /*if (account_type.equals("FACEBOOK"))
+                        LoginManager.getInstance().logOut();
+                    progressDialog.dismiss();*/
+                } else if(response.code() == 404){
+                    //Email not found in DB, go to sign up
+                    System.out.println("================== FACEBOOK EMAIL NOT IN DB, GO SIGN UP ================");
+                    progressDialog.dismiss();
+                    Intent i = new Intent(LoginActivity.this,SignupInfoPage.class);
+                    // passing data to the next activity
+                    i.putExtra("input_email",email);
+                    i.putExtra("accountType","FACEBOOK");
+                    i.putExtra("input_firebase_token",firebaseToken);
+                    startActivity(i);
+
+                /*} else if(response.code()==409) {
+                    progressDialog.dismiss();
+                    errorMessage.setText("This account can only be logged into with Facebook");
+                    errorMessage.setVisibility(View.VISIBLE);*/
+
+                } else {
+                    // Success
+                    System.out.println("================== sendLoginFacebook() = SUCCESS! ================");
+                    String type = response.body().getAccountType();
+
+                    if(type.equals("FACEBOOK")){
+                        // save vendor_id, token
+                        sharedPref.edit().putString("token", response.body().getToken()).commit();
+                        sharedPref.edit().putInt("vendor_id", response.body().getVendor_id()).commit();
+                        sharedPref.edit().putString("email", email).commit();
+                        //sharedPref.edit().putString("account_type", account_type).commit();
+
+                        System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
+                        System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
+                        System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
+                        progressDialog.dismiss();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+
+                    }else{
+
+                        System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
+                        System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
+                        System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
+                        progressDialog.dismiss();
+                        emailField.setText(email);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                System.out.println("==================send Login Fail :::: "+t.getMessage()+" ==================");
+
+            }
+        });
+
+    }
+
+    public void hideKb(View view){ //For hiding soft keyboard when tap outside
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();

@@ -4,11 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupPage">
+    tools:context=".SignupPage"
+    android:onClick="hideKb"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:onClick="hideKb"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/vendorSignUpTitle"
@@ -58,7 +66,9 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="#333333"
-            android:hint="Enter your email"/>
+            android:hint="Enter your email"
+            android:maxLength="40"
+            android:singleLine="true"/>
         <TextView
             android:id="@+id/emailError"
             android:layout_width="wrap_content"
@@ -68,7 +78,8 @@
             android:textColor="@color/redPrimary"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="14sp"
-            android:text="error"/>
+            android:text="error"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/or"
@@ -81,17 +92,7 @@
             android:layout_marginRight="20dp"
             android:layout_alignLeft="@id/emailBox"/>
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/facebook_login_button"
-            android:text="Facebook"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_toRightOf="@id/or"
-            android:layout_below="@id/emailError"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp" />
+
 
         <Button
             android:id="@+id/nextButton"
@@ -100,13 +101,25 @@
             android:text="NEXT"
             android:fontFamily="@font/sfprotext_semibold"
             android:layout_alignRight="@id/emailBox"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textColor="#ffffff"
             android:layout_marginTop="20dp"
             android:background="@drawable/pink_round_btn"
             android:layout_below="@id/emailError"
             android:layout_alignBaseline="@id/or"
             android:elevation="2dp"/>
+
+        <ImageView
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/fblogin"
+            android:layout_toRightOf="@id/or"
+            android:layout_below="@id/emailError"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:clickable="true"
+            />
     </RelativeLayout>
 
 

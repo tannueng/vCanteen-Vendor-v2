@@ -13,8 +13,14 @@
             <corners android:radius="100dp"/>
             <solid android:color="#fff" />
             <stroke
-                android:width="2dp"
+                android:width="0dp"
                 android:color="@color/pinkPrimary" />
+            <padding
+                android:left="15dp"
+                android:top="15dp"
+                android:right="15dp"
+                android:bottom="15dp"
+                />
         </shape>
     </item>
     <item
@@ -23,6 +29,7 @@
         android:right="2dp"
         android:top="2dp">
         <shape android:shape="rectangle" >
+
 
         </shape>
     </item>

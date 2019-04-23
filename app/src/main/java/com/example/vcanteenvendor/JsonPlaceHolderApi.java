@@ -24,13 +24,46 @@ interface JsonPlaceHolderApi {
     Call<OrderList> getOrder(@Path("vendorId") int vendorId);
 
     @GET("v1/menu-management/{vendorId}/menu")
-    Call<CombinationAlacarteList> getAllMenu(@Path("vendorId") int vendorId);
+    Call<CombinationAlacarteList> getAllMenu(@Path("vendorId") int vendorId); //UNUSED V1
+
+    @GET("v2/menu-management/{vendorId}/menu")
+    Call<CombinationAlacarteList> getAllMenuV2(@Path("vendorId") int vendorId);
+
+
 
     @POST("v1/user-authentication/vendor/check/token")
-    Call<LoginResponse> sendLogin(@Body LoginVendor loginVendor);
+    Call<LoginResponse> sendLogin(@Body LoginVendor loginVendor); //UNUSED V1
 
 //    @POST("v2/user-authentication/vendor/signin")
 //    Call<LoginResponse> sendLogin(@Body LoginVendor loginVendor);
+
+    @FormUrlEncoded
+    @POST("v2/user-authentication/vendor/signin")
+    Call<LoginResponse> sendLoginV2(@Field("email") String email,
+                                    @Field("password") String password,
+                                    @Field("firebaseToken") String firebaseToken);
+
+    @FormUrlEncoded
+    @PUT("v2/user-authentication/vendor/verify/email")
+    Call<LoginResponse> checkIfEmailExist(@Field("email") String email);
+
+    @FormUrlEncoded
+    @PUT("v2/user-authentication/vendor/verify/facebook")
+    Call<LoginResponse> sendLoginFacebook(@Field("email") String email,
+                                          @Field("firebaseToken") String firebaseToken);
+
+    @FormUrlEncoded
+    @POST("v2/user-authentication/vendor/new")
+    Call<LoginResponse> signUpNewVendor(@Field("email") String email,
+                                        @Field("password") String password,
+                                        @Field("accountType") String accountType,
+                                        @Field("serviceProvider") String serviceProvider,
+                                        @Field("accountNumber") String accountNumber,
+                                        @Field("firebaseToken") String firebaseToken,
+                                        @Field("vendorName") String vendorName,
+                                        @Field("phoneNumber") String phoneNumber,
+                                        @Field("fourDigitPin") String fourDigitPin);
+
 
     @PUT("v1/user-authentication/vendor/password/recover")
     Call<Void> recoverPass(@Body RecoverPass recoverPass);
@@ -42,7 +75,18 @@ interface JsonPlaceHolderApi {
                         @Field("price") int foodPrice,
                         @Field("foodStatus") String foodStatus,
                         @Field("foodType")String foodType,
-                        @Field("foodImage") String foodImage);
+                        @Field("foodImage") String foodImage);  //UNUSED V1
+
+    @FormUrlEncoded
+    @PUT("v1/menu-management/vendorId/menu/foodId")
+    Call<Void> editMenuV2(@Field("vendorId") int vendorId, @Field("foodId") int foodId,
+                        @Field("foodName") String foodName,
+                        @Field("price") int foodPrice,
+                        @Field("foodStatus") String foodStatus,
+                        @Field("foodType")String foodType,
+                        @Field("foodImage") String foodImage,
+                          @Field("categoryName") String categoryName,
+                          @Field("prepareDuration") int prepareDuration);
 
     @FormUrlEncoded
     @POST("v1/menu-management/vendorId/menu")
@@ -51,7 +95,18 @@ interface JsonPlaceHolderApi {
                         @Field("price") int foodPrice,
                         @Field("foodStatus") String foodStatus,
                         @Field("foodType")String foodType,
-                        @Field("foodImage") String foodImage);
+                        @Field("foodImage") String foodImage); //UNUSED V1
+
+    @FormUrlEncoded
+    @POST("v2/menu-management/menu")
+    Call<Integer> addMenuV2(@Field("vendorId") int vendorId,
+                          @Field("foodName") String foodName,
+                          @Field("price") int foodPrice,
+                          @Field("foodStatus") String foodStatus,
+                          @Field("foodType")String foodType,
+                          @Field("foodImage") String foodImage,
+                            @Field("categoryName") String categoryName,
+                            @Field("prepareDuration") int prepareDuration);
 
     @DELETE("v1/menu-management/{vendorId}/menu/{foodId}")
     Call<Void> deleteMenu(@Path("vendorId") int vendorId,
@@ -76,7 +131,8 @@ interface JsonPlaceHolderApi {
 
     @FormUrlEncoded
     @PUT("v1/settings/vendor/orders/cancel-all")
-    Call<Void> cancelAllOrder(@Field("vendorId") int vendorId);
+    Call<Void> cancelAllOrder(@Field("vendorId") int vendorId,
+                              @Field("cancelReason") String cancelReason);
 
     @GET("v2/settings/{vendorId}/info/reviews")
     Call<ReviewList> getReviews(@Path("vendorId") int vendorId);

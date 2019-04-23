@@ -1,6 +1,7 @@
 package com.example.vcanteenvendor;
 
 import android.content.Context;
+import android.media.tv.TvTrackInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ public class ReviewListAdapter extends ArrayAdapter {
     TextView reviewDate;
     TextView commentText;
     View customView;
+    TextView reviewOrderName;
+    TextView reviewOrderNameExtra;
+
 
     private ReviewList mReviewList;
     private List<Review> mReviewArrayList;
@@ -38,12 +42,12 @@ public class ReviewListAdapter extends ArrayAdapter {
         ratingScore = customView.findViewById(R.id.ratingScore);
         reviewDate = customView.findViewById(R.id.reviewDate);
         commentText = customView.findViewById(R.id.commentText);
+        reviewOrderName = customView.findViewById(R.id.reviewOrderName);
+        reviewOrderNameExtra = customView.findViewById(R.id.reviewOrderNameExtra);
 
 
-
-
-
-
+        reviewOrderNameExtra.setText(singleReview.getOrderNameExtra());
+        reviewOrderName.setText(singleReview.getOrderName());
         ratingScore.setText(String.valueOf(singleReview.getScore()));
         reviewDate.setText(singleReview.getCreatedAt());
         commentText.setText(singleReview.getComment());

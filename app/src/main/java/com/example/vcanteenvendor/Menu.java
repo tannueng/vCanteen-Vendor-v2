@@ -13,14 +13,6 @@ public class Menu {
     @SerializedName("foodId")
     private int foodId;
 
-
-
-
-
-    /////////////////////////////////////  GETTER SETTER CONSTRUCTOR  //////////////////////////////
-
-
-
     @SerializedName("foodImage")
     private String foodImg;
 
@@ -30,14 +22,47 @@ public class Menu {
     @SerializedName("foodType")
     private String foodType;
 
+    @SerializedName("categoryName")
+    private String categoryName;
+
+    @SerializedName("prepareDuration")
+    private int prepareDuration;
+
+
+    /////////////////////////////////////  GETTER SETTER CONSTRUCTOR  //////////////////////////////
+
+
+    public Menu(String foodName, int foodPrice, int foodId, String foodImg, String foodStatus, String foodType, String categoryName, int prepareDuration) {
+        this.foodName = foodName;
+        this.foodPrice = foodPrice;
+        this.foodId = foodId;
+        this.foodImg = foodImg;
+        this.foodStatus = foodStatus;
+        this.foodType = foodType;
+        this.categoryName = categoryName;
+        this.prepareDuration = prepareDuration;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getPrepareDuration() {
+        return prepareDuration;
+    }
+
+    public void setPrepareDuration(int prepareDuration) {
+        this.prepareDuration = prepareDuration;
+    }
+
     public void setFoodImg(String foodImg) {
         this.foodImg = foodImg;
     }
 
-
-
-
-    /////////////////////////////////////  GETTER SETTER CONSTRUCTOR  //////////////////////////////
 
     public String getFoodImg() {
         return foodImg;
@@ -100,5 +125,17 @@ public class Menu {
         this.foodId = foodId;
     }
 
-
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "foodName='" + foodName + '\'' +
+                ", foodPrice=" + foodPrice +
+                ", foodId=" + foodId +
+                ", foodImg='" + foodImg + '\'' +
+                ", foodStatus='" + foodStatus + '\'' +
+                ", foodType='" + foodType + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", prepareDuration='" + prepareDuration + '\'' +
+                '}';
+    }
 }

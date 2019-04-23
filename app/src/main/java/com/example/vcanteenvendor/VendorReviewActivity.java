@@ -82,10 +82,10 @@ public class VendorReviewActivity extends AppCompatActivity {
             }
         });
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+        salesRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToSettings();
+                goToSalesRecord();
             }
         });
 
@@ -166,8 +166,8 @@ public class VendorReviewActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    public void goToSalesRecord() {
+        Intent intent = new Intent(this, SalesRecordActivity.class);
         startActivity(intent);
     }
 

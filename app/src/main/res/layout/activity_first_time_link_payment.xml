@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstTimeLinkPayment">
+    tools:context=".FirstTimeLinkPayment"
+    android:onClick="hideKb">
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:onClick="hideKb"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/vendorSignUpTitle"
@@ -65,11 +69,11 @@
             android:orientation="horizontal">
 
             <Spinner
+                android:id="@+id/paymentSpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="6"
-                android:background="@android:color/transparent"
                 android:gravity="center"
                 android:spinnerMode="dropdown"/>
 
@@ -79,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:src="@drawable/ic_angle_down_arrow" />
 
         </LinearLayout>
@@ -92,7 +97,8 @@
             android:layout_below="@id/paymentDropdown"
             android:textSize="20sp"
             android:text="Account Number"
-            android:fontFamily="@font/sfprotext_semibold"/>
+            android:fontFamily="@font/sfprotext_semibold"
+            android:layout_marginBottom="6dp"/>
 
         <EditText
             android:id="@+id/accountNumberBox"
@@ -105,6 +111,10 @@
             android:layout_alignLeft="@id/linkPaymentTitle"
             android:layout_marginRight="50dp"
             android:background="@drawable/outline_rect"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:inputType="number"
+            android:paddingHorizontal="12dp"
             />
 
         <TextView
@@ -117,6 +127,7 @@
             android:textSize="14sp"
             android:text="Error"
             android:fontFamily="@font/sfprotext_semibold"
+            android:visibility="invisible"
             />
 
         <Button
