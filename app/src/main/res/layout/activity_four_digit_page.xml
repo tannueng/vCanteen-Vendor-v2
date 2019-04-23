@@ -4,11 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FourDigitPage">
+    tools:context=".FourDigitPage"
+    android:onClick="hideKb"
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:onClick="hideKb"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/vendorSignUpTitle"
@@ -55,11 +61,13 @@
             android:layout_marginLeft="50dp"
             android:layout_below="@id/fourDigitTitle"
             android:layout_marginTop="20dp"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="20sp"
             android:textColor="#333333"
-            android:hint="Enter your 4-digit pin"/>
+            android:hint="Enter your 4-digit pin"
+            android:maxLength="4"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/pinError"
@@ -70,7 +78,8 @@
             android:textColor="@color/redPrimary"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="14sp"
-            android:text="error" />
+            android:text="error"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/confirmPinTitle"
@@ -90,12 +99,14 @@
             android:layout_marginRight="50dp"
             android:layout_marginLeft="50dp"
             android:layout_below="@id/confirmPinTitle"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:fontFamily="@font/sfprotext_semibold"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="#333333"
-            android:hint="Confirm your 4-digit pin"/>
+            android:hint="Confirm your 4-digit pin"
+            android:maxLength="4"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/confirmPinError"
@@ -106,7 +117,8 @@
             android:textColor="@color/redPrimary"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="14sp"
-            android:text="error" />
+            android:text="error"
+            android:visibility="invisible"/>
 
 
 
@@ -117,7 +129,7 @@
             android:text="NEXT"
             android:fontFamily="@font/sfprotext_semibold"
             android:layout_alignRight="@id/fourDigitBox"
-            android:textSize="28dp"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             android:layout_marginTop="20dp"
             android:background="@drawable/pink_round_btn"

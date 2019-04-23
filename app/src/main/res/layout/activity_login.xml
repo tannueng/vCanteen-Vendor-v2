@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="hideKb"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     >
 
 <LinearLayout
@@ -11,7 +14,9 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     android:orientation="vertical"
-    android:layout_weight="0.5">
+    android:layout_weight="0.5"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/vcanteenlogo"
@@ -56,7 +61,12 @@
                 android:hint="Enter your email..."
                 android:layout_marginTop="30dp"
                 android:clickable="true"
-                android:focusableInTouchMode="true" />
+                android:fontFamily="@font/sfprotext_regular"
+                android:textSize="18sp"
+                android:textColorHint="#E0E0E0"
+                android:focusableInTouchMode="true"
+                android:maxLength="40"
+                android:singleLine="true"/>
         </LinearLayout>
 
     <LinearLayout
@@ -91,6 +101,8 @@
                 android:inputType="textPassword"
                 android:clickable="true"
                 android:focusableInTouchMode="true"
+                android:maxLength="40"
+                android:singleLine="true"
                 />
 
             <Button
@@ -120,8 +132,11 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="15dp"
+        android:paddingBottom="15dp"
         android:layout_marginLeft="50dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         >
     <Button
         android:id="@+id/signup_button"
@@ -129,25 +144,29 @@
         android:layout_height="60dp"
         android:text="SIGN UP"
         android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="28dp"
+        android:textSize="18sp"
         android:textColor="@color/pinkPrimary"
         android:layout_marginTop="20dp"
         android:background="@drawable/outline_pink_round_btn"
-        android:layout_marginRight="33dp"
-        android:translationZ="2dp"/>
+        android:translationZ="2dp"
+        android:layout_marginEnd="33dp"
+        android:layout_alignParentEnd="true"
+        />
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="230dp"
-        android:layout_toRightOf="@id/signup_button"
+        android:layout_alignParentStart="true"
         android:layout_height="60dp"
         android:text="LOGIN"
         android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="28dp"
+        android:textSize="18sp"
         android:textColor="#ffffff"
         android:layout_marginTop="20dp"
         android:background="@drawable/pink_round_btn"
-        android:translationZ="2dp"/>
+        android:translationZ="2dp"
+
+        />
 
     </RelativeLayout>
 
@@ -168,9 +187,12 @@
         android:layout_gravity="center_horizontal"
         android:textAllCaps="false"
         android:fontFamily="@font/sfprotext_semibold"
-        android:textSize="22dp"
+        android:textSize="18sp"
         android:textColor="@color/design_default_color_primary_dark"
         android:background="@drawable/button_facebook"
+        android:paddingStart="130dp"
+        android:paddingEnd="100dp"
+        android:drawableStart="@drawable/ic_facebook"
         />
 
 <RelativeLayout
@@ -186,10 +208,11 @@
         android:fontFamily="@font/sfprotext_semibold"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
-        android:textSize="22dp"
+        android:textSize="16dp"
         android:textColor="#7BCAE8"
         android:background="?android:attr/selectableItemBackground"/>
 </RelativeLayout>
+
 </LinearLayout>
 
     <ImageView

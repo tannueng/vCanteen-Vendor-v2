@@ -4,14 +4,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    @SerializedName("status")
     private String status;
 
-    @SerializedName("vendorToken")
+    @SerializedName("accountType")
+    private String accountType;
+
+    @SerializedName("vendorSessionToken")
     private String token;
 
-    @SerializedName("vendor_id")
+    @SerializedName("vendorId")
     private int vendor_id;
+
+    public LoginResponse(String token, int vendor_id) {
+        this.token = token;
+        this.vendor_id = vendor_id;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "status='" + status + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", token='" + token + '\'' +
+                ", vendor_id=" + vendor_id +
+                '}';
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
 
     public String getStatus() {
         return status;

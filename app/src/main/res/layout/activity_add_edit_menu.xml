@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AddEditMenuActivity"
+    android:onClick="hideKb"
     >
 
     <LinearLayout
@@ -157,8 +158,9 @@
             android:layout_marginEnd="32dp"
             android:layout_centerVertical="true"
             android:text="save"
-            android:background="@drawable/pink_round_btn"
+            android:background="@drawable/button_grey_rounded"
             android:fontFamily="@font/sfprotext_bold"
+            android:enabled="false"
             android:textColor="#ffffff"
             android:textSize="16sp"/>
     </RelativeLayout>
@@ -234,9 +236,6 @@
                     android:text="Main"
                     android:layout_marginStart="8dp"
                     android:buttonTint="@color/pinkPrimary"
-                    android:checked="true"
-
-
                     android:textColor="@color/colortext"
                     android:fontFamily="@font/sfprotext_regular"
                     android:textSize="18sp"
@@ -264,7 +263,7 @@
                     android:text="A La Carte"
                     android:layout_marginStart="26dp"
                     android:buttonTint="@color/pinkPrimary"
-
+                    android:checked="true"
                     android:textColor="@color/colortext"
                     android:fontFamily="@font/sfprotext_regular"
                     android:textSize="18sp"
@@ -300,39 +299,53 @@
                 android:maxLines="1"
                 android:inputType="text"
                 android:scrollHorizontally="true"
-
-
+                android:background="@drawable/bg_input"
                 android:textColor="#333333"
                 android:fontFamily="@font/sfprotext_regular"
                 android:textSize="18sp"
-                android:background="@drawable/bg_input"
+                android:maxLength="40"
+
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="14dp"/>
 
 
         </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/priceInput"
+
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="540dp"
             android:layout_height="wrap_content"
+            android:id="@+id/priceInputLayout"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/nameInputLayout"
             android:layout_marginTop="24dp"
             android:ems="10"
-            android:inputType="numberSigned"
-            android:layout_centerHorizontal="true"
-            android:hint="Baht"
             android:focusable="true"
             android:focusableInTouchMode="true"
-
             android:textColorHint="#E0E0E0"
-            android:textColor="#333333"
-            android:fontFamily="@font/sfprotext_regular"
-            android:textSize="18sp"
-            android:background="@drawable/bg_input"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="14dp"
-            android:maxLength="10"/>
+            app:errorEnabled="true"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/priceInput"
+
+                android:hint="Baht"
+                android:id="@+id/priceInput"
+                android:maxLines="1"
+                android:inputType="numberSigned"
+                android:scrollHorizontally="true"
+                android:textColor="#333333"
+                android:fontFamily="@font/sfprotext_regular"
+                android:textSize="18sp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp"
+                android:maxLength="10"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/editMenuPicture"
@@ -367,9 +380,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radioButtons"
+            android:layout_alignStart="@+id/typeInputLabel"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="43dp"
-            android:layout_toStartOf="@+id/nameInputLayout"
             android:fontFamily="@font/sfprotext_semibold"
             android:text="Name"
             android:textColor="#828282"
@@ -380,9 +393,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/nameInputLayout"
+            android:layout_alignStart="@+id/nameInputLabel"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="41dp"
-            android:layout_marginEnd="48dp"
-            android:layout_toStartOf="@+id/nameInputLayout"
             android:fontFamily="@font/sfprotext_semibold"
             android:text="Price"
             android:textColor="#828282"
@@ -392,10 +405,10 @@
             android:id="@+id/categoryInputLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/priceInput"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="48dp"
-            android:layout_toStartOf="@+id/nameInputLayout"
+            android:layout_below="@+id/priceInputLayout"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="41dp"
+            android:layout_toEndOf="@+id/durationInputLayout"
             android:fontFamily="@font/sfprotext_semibold"
             android:text="Category"
             android:textColor="#828282"
@@ -405,10 +418,63 @@
             android:id="@+id/categoryInput"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/priceInput"
+            android:layout_below="@+id/priceInputLayout"
 
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="39dp"
             android:layout_toEndOf="@+id/categoryInputLabel" />
+
+        <TextView
+            android:id="@+id/durationInputLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/priceInputLayout"
+            android:layout_alignStart="@+id/priceInputLabel"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="33dp"
+
+            android:fontFamily="@font/sfprotext_semibold"
+            android:text="Prepare\nDuration"
+            android:textColor="#828282"
+            android:textSize="16sp" />
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="236dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/durationInputLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/priceInputLayout"
+            android:layout_alignStart="@+id/priceInputLayout"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:errorEnabled="true"
+            android:textColorHint="#E0E0E0"
+            >
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/priceInput"
+                android:hint="Second"
+                android:id="@+id/durationInput"
+                android:maxLines="1"
+                android:inputType="numberSigned"
+                android:scrollHorizontally="true"
+                android:textColor="#333333"
+                android:fontFamily="@font/sfprotext_regular"
+                android:textSize="18sp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp"
+                android:maxLength="10"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
 
     </RelativeLayout>

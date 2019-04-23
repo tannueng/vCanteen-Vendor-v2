@@ -51,9 +51,11 @@ public class MenuRecyclerviewAdapter extends RecyclerView.Adapter<MenuRecyclervi
                 i.putExtra("foodId",mData.get(viewHolder.getAdapterPosition()).getFoodId());
                 i.putExtra("foodName",mData.get(viewHolder.getAdapterPosition()).getFoodName());
                 i.putExtra("price",mData.get(viewHolder.getAdapterPosition()).getFoodPrice());
-                i.putExtra("foodImageUrl",mData.get(viewHolder.getAdapterPosition()).getFoodImg());
+                i.putExtra("foodImage",mData.get(viewHolder.getAdapterPosition()).getFoodImg());
                 i.putExtra("foodStatus",mData.get(viewHolder.getAdapterPosition()).getFoodStatus());
                 i.putExtra("foodType",mData.get(viewHolder.getAdapterPosition()).getFoodType());
+                i.putExtra("categoryName",mData.get(viewHolder.getAdapterPosition()).getCategoryName());
+                i.putExtra("prepareDuration",mData.get(viewHolder.getAdapterPosition()).getPrepareDuration());
                 // start the activity
                 mContext.startActivity(i);
 

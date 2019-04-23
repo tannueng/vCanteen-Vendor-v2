@@ -136,7 +136,7 @@ public class MenuActivity extends AppCompatActivity {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<CombinationAlacarteList> call = jsonPlaceHolderApi.getAllMenu(vendor_id); //SET LOGIC TO INSERT ID HERE
+        Call<CombinationAlacarteList> call = jsonPlaceHolderApi.getAllMenuV2(vendor_id); //SET LOGIC TO INSERT ID HERE
         System.out.println("VENDOR ID : "+vendor_id);
 
 

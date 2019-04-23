@@ -219,7 +219,7 @@
 
             <EditText
                 android:id="@+id/vendorNameInput"
-                android:layout_width="230dp"
+                android:layout_width="294dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changePictureButton"
                 android:layout_centerHorizontal="true"
@@ -241,7 +241,7 @@
 
             <EditText
                 android:id="@+id/vendorEmailInput"
-                android:layout_width="230dp"
+                android:layout_width="288dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vendorNameInput"
                 android:layout_centerHorizontal="true"
@@ -253,7 +253,7 @@
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/sfprotext_regular"
                 android:inputType="none"
-                android:paddingHorizontal="12dp"
+                android:paddingHorizontal="8dp"
                 android:paddingVertical="14dp"
                 android:singleLine="true"
                 android:text="Loading..."

@@ -57,7 +57,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^[a-zA-Z0-9@!#$%^&+-=](?=\\S+$).{7,}$");
+            Pattern.compile("^[a-zA-Z0-9_@#&-*'()\"](?=\\S+$).{7,}$");
 
     private static final Pattern VENDOR_NAME_PATTERN =
             Pattern.compile("[a-zA-Z][a-zA-Z ]+[a-zA-Z]$");
@@ -197,6 +197,13 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         accountJSONLoadUp();
+
+        viewReviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingsActivity.this,VendorReviewActivity.class));
+            }
+        });
 
 
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
@@ -794,6 +801,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void cancelAllCookingOrders() {
 
         url = "https://vcanteen.herokuapp.com/";
+        String reason = "The vendor has closed their restaurant.";
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -802,7 +810,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-        Call<Void> call = jsonPlaceHolderApi.cancelAllOrder(vendor_id);
+        Call<Void> call = jsonPlaceHolderApi.cancelAllOrder(vendor_id,reason);
 
         call.enqueue(new Callback<Void>() {
             @Override
@@ -814,13 +822,15 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 }
 
+                System.out.println("\n\n\n\n********************"+ " ALL COOKING of vendor id "+ vendor_id +"********************\n\n\n\n");
+
 
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 //vendorProfile.setText(t.getMessage());
-                System.out.println("\n\n\n\n********************" + t.getMessage() + "********************\n\n\n\n");
+                System.out.println("\n\n\n\n******************** Fail::: " + t.getMessage() + "********************\n\n\n\n");
 
 
             }
@@ -987,8 +997,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void logOut() {
         LoginManager.getInstance().logOut();
-        sharedPref.edit().putString("token", "NO TOKEN JA EDOK").commit();
+        sharedPref.edit().putString("token", "NO TOKEN").commit();
         sharedPref.edit().putInt("vendor_id", 0).commit();
+        sharedPref.edit().putString("email", "empty email").commit();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

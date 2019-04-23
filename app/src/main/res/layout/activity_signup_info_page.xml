@@ -4,11 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupInfoPage">
+    tools:context=".SignupInfoPage"
+    android:onClick="hideKb"
+    android:clipChildren="false"
+    android:clipToPadding="false">
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:onClick="hideKb"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/vendorSignUpTitle"
@@ -58,7 +64,9 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="#333333"
-            android:hint="Enter your restaurant name"/>
+            android:hint="Enter your restaurant name"
+            android:maxLength="40"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/restaurantError"
@@ -69,7 +77,8 @@
             android:textColor="@color/redPrimary"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="14sp"
-            android:text="error" />
+            android:text="error"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/phoneNumberTitle"
@@ -94,7 +103,9 @@
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="#333333"
-            android:hint="Enter your phone number"/>
+            android:hint="Enter your phone number"
+            android:maxLength="10"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/phoneNumberError"
@@ -105,7 +116,8 @@
             android:textColor="@color/redPrimary"
             android:fontFamily="@font/sfprotext_semibold"
             android:textSize="14sp"
-            android:text="error" />
+            android:text="error"
+            android:visibility="invisible"/>
 
 
 
@@ -116,7 +128,7 @@
             android:text="NEXT"
             android:fontFamily="@font/sfprotext_semibold"
             android:layout_alignRight="@id/restaurantBox"
-            android:textSize="28dp"
+            android:textSize="20sp"
             android:textColor="#ffffff"
             android:layout_marginTop="20dp"
             android:background="@drawable/pink_round_btn"

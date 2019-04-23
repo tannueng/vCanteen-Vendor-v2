@@ -18,11 +18,17 @@
     <string name="order_id">ID</string>
 
     <string-array name="category_array">
-        <item></item>
-        <item>Vegan</item>
-        <item>Spicy</item>
-        <item>Meat</item>
-        <item>Noodles</item>
-        <item>Soup</item>
+        <item>VEGAN</item>
+        <item>SPICY</item>
+        <item>MEAT</item>
+        <item>NOODLES</item>
+        <item>SOUP</item>
+    </string-array>
+
+    <string-array name="service_provider_array">
+        <item>SCB EASY</item>
+        <item>K PLUS</item>
+        <item>CU NEX</item>
+        <item>TRUEMONEY WALLET</item>
     </string-array>
 </resources>

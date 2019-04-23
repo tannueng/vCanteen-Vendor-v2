@@ -68,7 +68,7 @@
             android:id="@+id/salesRecordButton"
             style="@style/MyButtonStyle"
 
-            android:drawableLeft="@drawable/ic_chart_red"
+            android:drawableLeft="@drawable/ic_chart"
             android:drawablePadding="12dp"
             android:paddingLeft="65dp"
             android:paddingRight="65dp"
@@ -80,8 +80,8 @@
             android:textSize="18sp"
 
 
-            android:textColor="#FF4141"
-            android:background="#FFF5F4"
+            android:textColor="#828282"
+            android:background="#FFFFFF"
             android:fontFamily="@font/sfprotext_semibold"
 
             />
@@ -91,7 +91,7 @@
             android:id="@+id/settingsButton"
             style="@style/MyButtonStyle"
 
-            android:drawableLeft="@drawable/ic_set"
+            android:drawableLeft="@drawable/ic_set_red"
             android:drawablePadding="12dp"
             android:paddingLeft="95dp"
             android:paddingRight="95dp"
@@ -103,8 +103,8 @@
             android:textSize="18sp"
             android:fontFamily="@font/sfprotext_semibold"
 
-            android:textColor="#828282"
-            android:background="#FFFFFF"
+            android:textColor="#FF4141"
+            android:background="#FFF5F4"
 
             />
     </LinearLayout>

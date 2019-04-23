@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/listview_background_shape">
-    <padding android:left="6dp"
-        android:top="6dp"
-        android:right="6dp"
-        android:bottom="6dp" />
+
     <corners android:radius="100dp" />
     <gradient
         android:startColor="@color/pinkPrimary"
@@ -13,4 +10,9 @@
         android:angle="45"
         />
     <solid android:color="@color/pinkPrimary" />
+    <padding android:left="16dp"
+        android:top="16dp"
+        android:right="16dp"
+        android:bottom="16dp" />
+
 </shape>
