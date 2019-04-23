@@ -301,6 +301,7 @@ public class SalesRecordActivity extends AppCompatActivity {
             public void onResponse(Call<SalesRecord> call, Response<SalesRecord> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),"cannot connect error code: "+response.code(),Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                     //System.out.println("\n\n\n\n********************"+ "Code: " + response.code() +"********************\n\n\n\n");
                     return;
                 }
@@ -355,7 +356,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                     salesRecordListListView.setAdapter(adapter);
                     progressDialog.dismiss();
                 }
-
+                progressDialog.dismiss();
 
 
                 // Attach the adapter to a ListView
@@ -381,6 +382,7 @@ public class SalesRecordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<SalesRecord> call, Throwable t) {
+                progressDialog.dismiss();
 
             }
         });

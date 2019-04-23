@@ -397,6 +397,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
         toggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                enableSave();
 
 
                 if(!toggle.isChecked() && foodId != 0){
