@@ -240,6 +240,7 @@ public class SignupPage extends AppCompatActivity {
 
                                             acccountType = "FACEBOOK";
                                             passwd = "firebaseOnlyNaja";
+                                            //progressDialog.dismiss();
 
                                             firebaseCheckExist(email,passwd);
 
@@ -295,16 +296,19 @@ public class SignupPage extends AppCompatActivity {
                         parameters.putString("fields", "id,name,first_name, last_name, email,link, picture.type(large)");
                         request.setParameters(parameters);
                         request.executeAsync();
+                        //progressDialog.dismiss();
 
                     }
 
                     @Override
                     public void onCancel() {
+                        //progressDialog.dismiss();
 
                     }
 
                     @Override
                     public void onError(FacebookException error) {
+                       // progressDialog.dismiss();
 
                     }
                 });
@@ -385,6 +389,9 @@ public class SignupPage extends AppCompatActivity {
     }
 
     private void firebaseLogin(final String email, String password){
+        progressDialog = new ProgressDialog(SignupPage.this);
+        progressDialog = ProgressDialog.show(SignupPage.this, "",
+                "Loading. Please wait...", true);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignupPage.this, new OnCompleteListener<AuthResult>() {
@@ -401,12 +408,15 @@ public class SignupPage extends AppCompatActivity {
                                     for(DataSnapshot dsUser: dataSnapshot.getChildren())
                                         firebaseToken = dsUser.getValue(String.class);
                                     System.out.println("==============firebaseLogin receive firebase token"+firebaseToken);
+
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    
 
                                 }
+
                             });
 
                             new Handler().postDelayed(new Runnable() {
@@ -415,6 +425,7 @@ public class SignupPage extends AppCompatActivity {
                                     sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
                                     passwd = null;
                                     sendJSONFacebook(email, firebaseToken);
+                                    progressDialog.dismiss();
 
                                 }
                             }, 3500);
@@ -424,6 +435,7 @@ public class SignupPage extends AppCompatActivity {
                             emailError.setText("Email or Password is Incorrect");
                             emailError.setVisibility(View.VISIBLE);
                             System.out.println("FIREBASE LOGIN FAIL");
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -504,7 +516,7 @@ public class SignupPage extends AppCompatActivity {
                         System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
                         System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
                         System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
                         startActivity(new Intent(SignupPage.this, MainActivity.class));
 
 
@@ -513,7 +525,7 @@ public class SignupPage extends AppCompatActivity {
                         System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
                         System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
                         System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
                         //emailBox.setText(email);
                         Intent i = new Intent(SignupPage.this, LoginActivity.class);
                         i.putExtra("emailFromSignUpPage",email);
