@@ -1108,7 +1108,7 @@ public class SettingsActivity extends AppCompatActivity {
         Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfoV2(vendor_id);
 //        Call<VendorInfoArray> call = jsonPlaceHolderApi.getVendorInfo(vendor_id); //add to try
 
-        progressDialog.dismiss();
+
 
         call.enqueue(new Callback<VendorInfoArray>() {
             @Override
@@ -1117,8 +1117,10 @@ public class SettingsActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     //vendorNameInput.setText("Code: " + response.code());
                     //vendorNameInput.setText("");
+                    progressDialog.dismiss();
                     return;
                 }
+
 
 
                 vendorInfoArray = response.body();
@@ -1135,9 +1137,10 @@ public class SettingsActivity extends AppCompatActivity {
                     vendorSingleton.setVendorName(vendor.getVendorName());
                     vendorSingleton.setEmail(vendor.getVendorEmail());
 
-                    if(vendor.getScore() != 0.0){
+                    /*if(vendor.getScore() != 0.0){
                         reviewValue.setText(String.valueOf(vendor.getScore())+" ✭");
-                    }
+                    }*/
+                    reviewValue.setText(String.valueOf(vendor.getScore())+" ✭");
 
 
                     if (vendor.getVendorImage() != null) {
@@ -1145,9 +1148,11 @@ public class SettingsActivity extends AppCompatActivity {
                         vendorSingleton.setVendorImage(vendor.getVendorImage());
                     }
                     //This array always have 1 member, so use get(1).
+                    progressDialog.dismiss();
 
                 } else {
                     vendorNameInput.setText("Receive Null");
+                    progressDialog.dismiss();
                 }
 
                 checkCUNex.setVisibility(View.INVISIBLE);

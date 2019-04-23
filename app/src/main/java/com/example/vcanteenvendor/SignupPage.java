@@ -26,6 +26,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -88,6 +89,9 @@ public class SignupPage extends AppCompatActivity {
         nextButton = findViewById(R.id.nextButton);
 
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
+        FirebaseApp.initializeApp(SignupPage.this);
+        mAuth = FirebaseAuth.getInstance();
 
 
         emailBox.setOnClickListener(new View.OnClickListener() {

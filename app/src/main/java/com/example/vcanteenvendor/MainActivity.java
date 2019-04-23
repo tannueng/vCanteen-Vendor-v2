@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "You have already granted this permission!",
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(MainActivity.this, "You have already granted this permission!",
+                    Toast.LENGTH_SHORT).show();*/
         } else {
             requestStoragePermission();
         }
