@@ -75,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
             Pattern.compile("^\\w+@\\w+\\..{2,3}(.{1,})?$");
 
     private static final Pattern EMAIL_CHARACTER_PATTERN =
-            Pattern.compile("^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\\..{2,3}(.{2,3})?$");
+            Pattern.compile("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.]+\\..{2,3}(.{2,3})?$");
 
     Button orderStatusButton; //ORDER STATUS
     Button menuButton; //MENU
@@ -546,7 +546,7 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                         // Case 4 : Contains other characters than a-z, A-Z, 0-9, or a period in email
                         else if(!(EMAIL_CHARACTER_PATTERN.matcher(emailBox.getText().toString()).matches())){
-                            emailError.setText("Only a-z, A-Z, 0-9, or a period is allowed.");
+                            emailError.setText("Only a-z, A-Z, 0-9, -, _, or a period is allowed.");
                             vendorNameError.setText("");
                         }
                         // If the above condition are met
