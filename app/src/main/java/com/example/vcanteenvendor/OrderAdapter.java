@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +25,8 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.engine.Resource;
 
 import java.sql.SQLOutput;
 import java.util.List;
@@ -44,6 +49,7 @@ public class OrderAdapter extends ArrayAdapter {
     TextView foodextra;
     Button cancelButton;
     Button doneButton;
+    Button confirmButtonForCancel;
     Order singleOrder;
     ProgressDialog progressDialog;
     String inputReason;
@@ -93,9 +99,11 @@ public class OrderAdapter extends ArrayAdapter {
                 dialog.setContentView(R.layout.vendor_list_cancel_popup);
                 TextView orderName = (TextView) dialog.findViewById(R.id.orderName);
                 Button ingredientsButton = (Button) dialog.findViewById(R.id.ingredientsButton);
+                ingredientsButton.setPaintFlags(ingredientsButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
                 final EditText reasonBox = (EditText) dialog.findViewById(R.id.reasonBox);
                 final TextView error = (TextView) dialog.findViewById(R.id.error);
-                Button confirmButton = (Button) dialog.findViewById(R.id.confirmButton);
+                confirmButtonForCancel = (Button) dialog.findViewById(R.id.confirmButton);
                 Button dismissButton = (Button) dialog.findViewById(R.id.dismissButton);
                 Button closeDialog = (Button) dialog.findViewById(R.id.close_dialog);
                 orderName.setText(singleOrder.getOrderName() + "?");
@@ -104,13 +112,15 @@ public class OrderAdapter extends ArrayAdapter {
                 reasonBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //reasonBox.setFocusable(true);
                         reasonBox.setCursorVisible(true);
-                        error.setVisibility(View.VISIBLE);
+                        reasonBox.setEnabled(true);
+                        System.out.println("REASONBOX TAPPED");
                         error.setText("Only a-z A-Z 0-9 _ - * ‘ “ # & () @ are allowed.");
-                        System.out.println("reasonBox clicked");
+                        error.setVisibility(View.VISIBLE);
+
                     }
                 });
+                reasonBox.addTextChangedListener(inputTextWatcher);
 
                 ingredientsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,15 +132,14 @@ public class OrderAdapter extends ArrayAdapter {
                         dialog.dismiss();
                     }
                 });
-                confirmButton.setOnClickListener(new View.OnClickListener() {
+                confirmButtonForCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         inputReason = reasonBox.getText().toString().trim();
-                        System.out.println("TEST: " + reasonBox.getText().toString().trim() + "end here");
                         if(inputReason.isEmpty()) {
-                            System.out.println("TEST NULL: " + reasonBox.getText().toString().trim() + "end here");
+                            //confirmButtonForCancel.setBackgroundResource(R.drawable.button_grey_rounded);
+                            return;
                         } else {
-                            System.out.println("TEST NOT NULL: " + reasonBox.getText().toString().trim() + "end here");
                             orderCancel(singleOrderId);
                             mOrderArrayList.remove(position);
                             OrderAdapter.super.notifyDataSetChanged();
@@ -215,7 +224,7 @@ public class OrderAdapter extends ArrayAdapter {
 
                 if (!response.isSuccessful()) {
 
-                    System.out.println("---------------**********---------------"+"Code: "+response.code()+"---------------**********---------------");
+                    System.out.println("Code: "+response.code());
                     return;
                 } else {
                     System.out.println("CANCELLED SUCCEEDED");
@@ -227,7 +236,7 @@ public class OrderAdapter extends ArrayAdapter {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
 
-                System.out.println("---------------**********---------------"+t.getMessage()+"---------------**********---------------");
+                System.out.println("onFailure at orderCancel " +t.getMessage());
             }
         });
 
@@ -255,7 +264,7 @@ public class OrderAdapter extends ArrayAdapter {
 
                 if (!response.isSuccessful()) {
 
-                    System.out.println("---------------**********---------------"+"Code: "+response.code()+"---------------**********---------------");
+                    System.out.println("Code: "+response.code());
                     return;
                 } else {
                     System.out.println("DONE SUCCEEDED");
@@ -267,10 +276,26 @@ public class OrderAdapter extends ArrayAdapter {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
 
-                System.out.println("---------------**********---------------"+t.getMessage()+"---------------**********---------------");
+                System.out.println("onFailure at orderDone " + t.getMessage());
             }
         });
 
     }
+    private TextWatcher inputTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            confirmButtonForCancel.setBackgroundResource(R.drawable.pink_round_btn);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }
