@@ -34,6 +34,7 @@ public class OrderAdapter extends ArrayAdapter {
     View customView;
     TextView foodname;
     TextView foodextra;
+    TextView idNumber;
     Button cancelButton;
     Button doneButton;
     Order singleOrder;
@@ -73,6 +74,7 @@ public class OrderAdapter extends ArrayAdapter {
         foodextra = (TextView) customView.findViewById(R.id.foodExtra);
         cancelButton = (Button) customView.findViewById(R.id.cancelButton);
         doneButton = (Button) customView.findViewById(R.id.doneButton);
+        idNumber = (TextView) customView.findViewById(R.id.idNumber);
 
 
 
@@ -186,6 +188,7 @@ public class OrderAdapter extends ArrayAdapter {
 
         foodname.setText(singleOrder.getOrderName());
         foodextra.setText(singleOrder.getOrderNameExtra());
+        idNumber.setText(String.valueOf(singleOrder.getOrderId()));
         return customView;
     }
 

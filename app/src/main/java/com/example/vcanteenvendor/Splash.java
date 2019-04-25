@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -33,45 +34,57 @@ public class Splash extends AppCompatActivity {
                 .build();
         final JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Token token = new Token(sharedPref.getString("email", "empty email"), sharedPref.getString("token", "empty token"));
-        Call<TokenVerification> call = jsonPlaceHolderApi.verifyToken(token);
+        final boolean first = sharedPref.getBoolean("firstRun", true);
 
-        if (sharedPref.getBoolean("firstrun", true)){
-            startTutorial();
-            sharedPref.edit().putBoolean("firstrun", false).commit();
-        } else {
-            // POST DATA FOR TOKEN VERIFICATION
-            call.enqueue(new Callback<TokenVerification>() {
-                @Override
-                public void onResponse(Call<TokenVerification> call, final Response<TokenVerification> response) {
-                    if(!response.isSuccessful())
-                        Toast.makeText(getApplicationContext(), "Error Occured, please try again.", Toast.LENGTH_SHORT);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            // yourMethod();
-                            boolean isExpired = response.body().isExpired();
-                            if(isExpired)
-                                startActivity(new Intent(Splash.this, LoginActivity.class));
-                            else
-                                startActivity(new Intent(Splash.this, MainActivity.class));
+
+        final Handler handlerFirst = new Handler();
+        handlerFirst.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (first){
+                    startTutorial();
+                    sharedPref.edit().putBoolean("firstRun", false).commit();
+                } else {
+                    Token token = new Token(sharedPref.getString("email", "empty email"), sharedPref.getString("token", "empty token"));
+                    Call<TokenVerification> call = jsonPlaceHolderApi.verifyToken(token);
+
+                    // POST DATA FOR TOKEN VERIFICATION
+                    call.enqueue(new Callback<TokenVerification>() {
+                        @Override
+                        public void onResponse(Call<TokenVerification> call, final Response<TokenVerification> response) {
+                            if(!response.isSuccessful())
+                                Toast.makeText(getApplicationContext(), "Error Occured, please try again.", Toast.LENGTH_SHORT);
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    // yourMethod();
+                                    boolean isExpired = response.body().isExpired();
+                                    if(isExpired)
+                                        startActivity(new Intent(Splash.this, LoginActivity.class));
+                                    else
+                                        startActivity(new Intent(Splash.this, MainActivity.class));
+                                }
+                            }, 1000);
+
                         }
-                    }, 1000);
 
+                        @Override
+                        public void onFailure(Call<TokenVerification> call, Throwable t) {
+
+                        }
+                    });
                 }
 
-                @Override
-                public void onFailure(Call<TokenVerification> call, Throwable t) {
+            }
+        },3000);
+        Log.e("myTag", "firstrun");
 
-                }
-            });
-        }
 
     }
 
     public void startTutorial(){
         Intent intent = new Intent(this, TutorialPageOne.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
