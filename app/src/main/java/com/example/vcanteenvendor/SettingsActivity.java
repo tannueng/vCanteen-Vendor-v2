@@ -77,6 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
     private static final Pattern EMAIL_CHARACTER_PATTERN =
             Pattern.compile("^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\\..{2,3}(.{2,3})?$");
 
+    private static final Pattern TEXT_PATTERN =
+            Pattern.compile("^[a-zA-Z0-9. ,_\\-*‘\"#&()$@!?]+$");  // Text Constraint
+
     Button orderStatusButton; //ORDER STATUS
     Button menuButton; //MENU
     Button salesRecordButton; //SALES RECORD
@@ -796,7 +799,12 @@ public class SettingsActivity extends AppCompatActivity {
                     bugInline.setText("This field cannot be blank.");
                     bugInline.setVisibility(View.VISIBLE);
                     return;
+                } else if(!TEXT_PATTERN.matcher(reportText.getText().toString()).matches()) {
+                    bugInline.setText("Must be letter, number or these character . , _ - * ‘ \" # & () $ @ ! ?");
+                    bugInline.setVisibility(View.VISIBLE);
+                    return;
                 }
+
 
                 //TODO Check Emoji
                 sharedPref = SettingsActivity.this.getSharedPreferences("myPref", MODE_PRIVATE);
@@ -818,7 +826,6 @@ public class SettingsActivity extends AppCompatActivity {
                         if (!response.isSuccessful()) {
                             Toast.makeText(SettingsActivity.this, "CODE: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
-
                         }
                     }
 
@@ -842,9 +849,18 @@ public class SettingsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 counter.setText(s.toString().length()+"/300");
 
-                if(s.toString().length()>0) {
+                if(s.toString().isEmpty()) {
+                    bugInline.setVisibility(View.INVISIBLE);
+                    return;
+                } else if(!TEXT_PATTERN.matcher(reportText.getText().toString()).matches()) {
+                    bugInline.setText("Must be letter, number or these character . , _ - * ‘ \" # & () $ @ ! ?");
+                    bugInline.setVisibility(View.VISIBLE);
+                    return;
+                } else {
                     bugInline.setVisibility(View.INVISIBLE);
                 }
+
+
             }
         });
         reportText.setOnClickListener(new View.OnClickListener() {
