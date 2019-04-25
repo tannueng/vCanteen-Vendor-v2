@@ -195,6 +195,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != currentPosition) enableSave();
+                else disableSave();
             }
 
             @Override
@@ -264,6 +265,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
                 }
 
                 if (checkedId!=currentChecked) enableSave();
+                else disableSave();
             }
         });
 
@@ -928,6 +930,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
     private TextWatcher inputTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            disableSave();
 
         }
 

@@ -23,9 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Splash extends AppCompatActivity {
 
 
-
     private SharedPreferences sharedPref;
     private final String url = "https://vcanteen.herokuapp.com/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class Splash extends AppCompatActivity {
                         boolean isExpired = response.body().isExpired();
                         if(isExpired){
                             startActivity(new Intent(Splash.this, LoginActivity.class));
-                            Toast.makeText(getApplicationContext(), "Token Expired", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Token Expired", Toast.LENGTH_SHORT).show();
                         }
                         else
                             startActivity(new Intent(Splash.this, MainActivity.class));

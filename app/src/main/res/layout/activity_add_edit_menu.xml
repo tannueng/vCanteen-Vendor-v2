@@ -166,318 +166,331 @@
     </RelativeLayout>
 
 
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:id="@+id/uploadImage"
-            android:layout_width="310dp"
-            android:layout_height="wrap_content"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/ic_uploadimage"
-            android:text="" />
-
-
-        <TextView
-            android:id="@+id/menuAvailabilityLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="64dp"
-
-            android:layout_toEndOf="@id/uploadImage"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Menu Availability"
-            android:textColor="#4F4F4F"
-            android:textSize="20sp" />
-
-        <Switch
-            android:id="@+id/availabilityToggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/uploadImage"
-            android:layout_below="@id/menuAvailabilityLabel"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="16dp"
-            android:text=""
-            android:checked="true"
-            android:textOff="SOLD_OUT"
-            android:textOn="AVAILABLE"
-
-            android:scaleX="1.5"
-            android:scaleY="1.5"/>
-
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:id="@+id/radioButtons"
-            android:layout_below="@id/uploadImage"
-            android:layout_centerHorizontal="true">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:onClick="hideKb"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-            <RadioGroup
+
+            <ImageView
+                android:id="@+id/uploadImage"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ic_uploadimage"
+                android:text="" />
+
+
+            <TextView
+                android:id="@+id/menuAvailabilityLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/foodTypeRadioGroup">
 
-                <RadioButton
-                    android:id="@+id/combiMainRadio"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="64dp"
+
+                android:layout_toEndOf="@id/uploadImage"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Menu Availability"
+                android:textColor="#4F4F4F"
+                android:textSize="20sp" />
+
+            <Switch
+                android:id="@+id/availabilityToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/uploadImage"
+                android:layout_below="@id/menuAvailabilityLabel"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="16dp"
+                android:text=""
+                android:checked="true"
+                android:textOff="SOLD_OUT"
+                android:textOn="AVAILABLE"
+
+                android:scaleX="1.5"
+                android:scaleY="1.5"/>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:id="@+id/radioButtons"
+                android:layout_below="@id/uploadImage"
+                android:layout_centerHorizontal="true">
+
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Main"
-                    android:layout_marginStart="8dp"
-                    android:buttonTint="@color/pinkPrimary"
-                    android:textColor="@color/colortext"
-                    android:fontFamily="@font/sfprotext_regular"
-                    android:textSize="18sp"
-                    />
+                    android:orientation="horizontal"
+                    android:id="@+id/foodTypeRadioGroup">
 
-                <RadioButton
-                    android:id="@+id/combiBaseRadio"
-                    android:layout_width="wrap_content"
+                    <RadioButton
+                        android:id="@+id/combiMainRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Main"
+                        android:layout_marginStart="8dp"
+                        android:buttonTint="@color/pinkPrimary"
+                        android:textColor="@color/colortext"
+                        android:fontFamily="@font/sfprotext_regular"
+                        android:textSize="18sp"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/combiBaseRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Base"
+                        android:layout_marginStart="26dp"
+                        android:buttonTint="@color/pinkPrimary"
+
+                        android:textColor="@color/colortext"
+                        android:fontFamily="@font/sfprotext_regular"
+                        android:textSize="18sp"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/alacarteRadio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="A La Carte"
+                        android:layout_marginStart="26dp"
+                        android:buttonTint="@color/pinkPrimary"
+                        android:checked="true"
+                        android:textColor="@color/colortext"
+                        android:fontFamily="@font/sfprotext_regular"
+                        android:textSize="18sp"
+                        />
+                </RadioGroup>
+            </RelativeLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="540dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radioButtons"
+                android:layout_marginTop="24dp"
+                android:id="@+id/nameInputLayout"
+                android:layout_centerHorizontal="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@id/priceInput"
+                android:textColorHint="#E0E0E0"
+
+                app:counterEnabled="true"
+                app:counterMaxLength="40"
+                app:errorEnabled="true"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Base"
-                    android:layout_marginStart="26dp"
-                    android:buttonTint="@color/pinkPrimary"
-
-                    android:textColor="@color/colortext"
+                    android:layout_alignStart="@+id/nameInputLayout"
+                    android:textColorHint="#E0E0E0"
+                    android:hint="Give your dish a name"
+                    android:id="@+id/nameInput"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:scrollHorizontally="true"
+                    android:background="@drawable/bg_input"
+                    android:textColor="#333333"
                     android:fontFamily="@font/sfprotext_regular"
                     android:textSize="18sp"
-                    />
+                    android:maxLength="40"
 
-                <RadioButton
-                    android:id="@+id/alacarteRadio"
-                    android:layout_width="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="14dp"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="540dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceInputLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/nameInputLayout"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColorHint="#E0E0E0"
+                app:errorEnabled="true"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="A La Carte"
-                    android:layout_marginStart="26dp"
-                    android:buttonTint="@color/pinkPrimary"
-                    android:checked="true"
-                    android:textColor="@color/colortext"
+                    android:layout_alignStart="@+id/priceInput"
+
+                    android:hint="Baht"
+                    android:id="@+id/priceInput"
+                    android:maxLines="1"
+                    android:inputType="numberSigned"
+                    android:scrollHorizontally="true"
+                    android:textColor="#333333"
                     android:fontFamily="@font/sfprotext_regular"
                     android:textSize="18sp"
-                    />
-            </RadioGroup>
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="14dp"
+                    android:maxLength="10"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/editMenuPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/uploadImage"
+                android:layout_marginTop="12dp"
+
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/sfprotext_bold"
+                android:text="Edit Menu Picture"
+                android:textColor="@color/pinkPrimary"
+                android:textSize="16sp"
+                android:clickable="true"/>
+
+
+            <TextView
+                android:id="@+id/typeInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/uploadImage"
+                android:layout_marginTop="62dp"
+                android:layout_marginEnd="50dp"
+                android:layout_toStartOf="@+id/nameInputLayout"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Type"
+                android:textColor="#828282"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/nameInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radioButtons"
+                android:layout_alignStart="@+id/typeInputLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Name"
+                android:textColor="#828282"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/priceInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameInputLayout"
+                android:layout_alignStart="@+id/nameInputLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Price"
+                android:textColor="#828282"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/categoryInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceInputLayout"
+                android:layout_marginStart="54dp"
+                android:layout_marginTop="41dp"
+                android:layout_toEndOf="@+id/durationInputLayout"
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Category"
+                android:textColor="#828282"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/categoryInput"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceInputLayout"
+
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="39dp"
+                android:layout_toEndOf="@+id/categoryInputLabel" />
+
+            <TextView
+                android:id="@+id/durationInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/priceInputLayout"
+                android:layout_alignStart="@+id/priceInputLabel"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="38dp"
+
+                android:fontFamily="@font/sfprotext_semibold"
+                android:text="Prepare\nDuration"
+                android:textColor="#828282"
+                android:textSize="16sp" />
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="236dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/durationInputLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/priceInputLayout"
+                android:layout_alignStart="@+id/priceInputLayout"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:errorEnabled="true"
+                android:textColorHint="#E0E0E0"
+                >
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/priceInput"
+                    android:hint="Second"
+                    android:id="@+id/durationInput"
+                    android:maxLines="1"
+                    android:inputType="numberSigned"
+                    android:scrollHorizontally="true"
+                    android:textColor="#333333"
+                    android:fontFamily="@font/sfprotext_regular"
+                    android:textSize="18sp"
+                    android:background="@drawable/bg_input"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="14dp"
+                    android:maxLength="10"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
         </RelativeLayout>
 
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="540dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/radioButtons"
-            android:layout_marginTop="24dp"
-            android:id="@+id/nameInputLayout"
-            android:layout_centerHorizontal="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:nextFocusDown="@id/priceInput"
-            android:textColorHint="#E0E0E0"
-
-            app:counterEnabled="true"
-            app:counterMaxLength="40"
-            app:errorEnabled="true"
-            >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/nameInputLayout"
-                android:textColorHint="#E0E0E0"
-                android:hint="Give your dish a name"
-                android:id="@+id/nameInput"
-                android:maxLines="1"
-                android:inputType="text"
-                android:scrollHorizontally="true"
-                android:background="@drawable/bg_input"
-                android:textColor="#333333"
-                android:fontFamily="@font/sfprotext_regular"
-                android:textSize="18sp"
-                android:maxLength="40"
-
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="14dp"/>
+    </ScrollView>
 
 
-        </android.support.design.widget.TextInputLayout>
-
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="540dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/priceInputLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/nameInputLayout"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:textColorHint="#E0E0E0"
-            app:errorEnabled="true"
-            >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/priceInput"
-
-                android:hint="Baht"
-                android:id="@+id/priceInput"
-                android:maxLines="1"
-                android:inputType="numberSigned"
-                android:scrollHorizontally="true"
-                android:textColor="#333333"
-                android:fontFamily="@font/sfprotext_regular"
-                android:textSize="18sp"
-                android:background="@drawable/bg_input"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="14dp"
-                android:maxLength="10"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/editMenuPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/uploadImage"
-            android:layout_marginTop="12dp"
-
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/sfprotext_bold"
-            android:text="Edit Menu Picture"
-            android:textColor="@color/pinkPrimary"
-            android:textSize="16sp"
-            android:clickable="true"/>
-
-
-        <TextView
-            android:id="@+id/typeInputLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/uploadImage"
-            android:layout_marginTop="62dp"
-            android:layout_marginEnd="50dp"
-            android:layout_toStartOf="@+id/nameInputLayout"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Type"
-            android:textColor="#828282"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/nameInputLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/radioButtons"
-            android:layout_alignStart="@+id/typeInputLabel"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Name"
-            android:textColor="#828282"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/priceInputLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nameInputLayout"
-            android:layout_alignStart="@+id/nameInputLabel"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="41dp"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Price"
-            android:textColor="#828282"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/categoryInputLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/priceInputLayout"
-            android:layout_marginStart="54dp"
-            android:layout_marginTop="41dp"
-            android:layout_toEndOf="@+id/durationInputLayout"
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Category"
-            android:textColor="#828282"
-            android:textSize="16sp" />
-
-        <Spinner
-            android:id="@+id/categoryInput"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/priceInputLayout"
-
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="39dp"
-            android:layout_toEndOf="@+id/categoryInputLabel" />
-
-        <TextView
-            android:id="@+id/durationInputLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/priceInputLayout"
-            android:layout_alignStart="@+id/priceInputLabel"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="33dp"
-
-            android:fontFamily="@font/sfprotext_semibold"
-            android:text="Prepare\nDuration"
-            android:textColor="#828282"
-            android:textSize="16sp" />
-
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="236dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/durationInputLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/priceInputLayout"
-            android:layout_alignStart="@+id/priceInputLayout"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="24dp"
-            android:ems="10"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            app:errorEnabled="true"
-            android:textColorHint="#E0E0E0"
-            >
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/priceInput"
-                android:hint="Second"
-                android:id="@+id/durationInput"
-                android:maxLines="1"
-                android:inputType="numberSigned"
-                android:scrollHorizontally="true"
-                android:textColor="#333333"
-                android:fontFamily="@font/sfprotext_regular"
-                android:textSize="18sp"
-                android:background="@drawable/bg_input"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="14dp"
-                android:maxLength="10"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-
-
-    </RelativeLayout>
 
 
 </LinearLayout>

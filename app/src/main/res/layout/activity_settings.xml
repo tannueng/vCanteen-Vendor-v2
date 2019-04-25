@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changePictureButton"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="25dp"
 
                 android:background="@android:color/transparent"
                 android:focusable="false"
@@ -269,7 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changePictureButton"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="27dp"
                 android:layout_marginEnd="27dp"
                 android:layout_toStartOf="@+id/vendorNameInput"
                 android:fontFamily="@font/sfprotext_semibold"
@@ -298,6 +298,7 @@
                 android:layout_alignLeft="@id/nameInputLabel"
                 android:layout_marginTop="38dp"
                 android:layout_marginEnd="33dp"
+                android:fontFamily="@font/sfprotext_semibold"
                 android:text="Reviews"
                 android:textColor="#828282"
                 android:textSize="16sp" />
@@ -312,7 +313,8 @@
                 android:fontFamily="@font/sfprotext_semibold"
                 android:text="Loading... ✭"
                 android:textColor="@color/pinkPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:maxLength="4"/>
 
             <Button
                 android:id="@+id/viewReviewsButton"
@@ -322,10 +324,10 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/reviewValue"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/sfprotext_semibold"
+                android:fontFamily="@font/sfprotext_regular"
                 android:text="see all reviews"
                 android:textColor="@color/pinkPrimary"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/changePinButton"
@@ -333,7 +335,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="48dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@id/changePasswordButton"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/sfprotext_bold"
@@ -348,7 +350,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="48dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:layout_toStartOf="@+id/signOutButton"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/sfprotext_bold"
@@ -364,7 +366,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/sfprotext_bold"
                 android:paddingHorizontal="8dp"
@@ -634,8 +636,8 @@
                 android:layout_alignRight="@id/bugReportBox"
                 android:fontFamily="@font/sfprotext_medium"
                 android:text="0/300"
-                android:textColor="#828282"
-                android:textSize="16sp" />
+                android:textColor="#E5E5E5"
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/bugReportBox"
@@ -649,6 +651,7 @@
                 android:focusable="auto"
                 android:focusableInTouchMode="true"
                 android:gravity="top"
+                android:textColorHint="#E0E0E0"
                 android:hint="Report any bug here, every little things will improve your experiences with the app :)"
 
                 android:maxLength="300"
@@ -660,7 +663,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/bugReportBox"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/sfprotext_semibold"
                 android:text="REPORT"
