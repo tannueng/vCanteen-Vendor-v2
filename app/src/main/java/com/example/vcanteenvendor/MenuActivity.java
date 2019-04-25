@@ -9,7 +9,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -41,6 +43,14 @@ public class MenuActivity extends AppCompatActivity {
     MenuRecyclerviewAdapter combinationMenuAdapter;
     MenuRecyclerviewAdapter alacarteMenuAdapter;
 
+    TextView combinationLabel;
+    TextView alarcarteLabel;
+    View menuDivider;
+    View sectionDivider;
+
+    ImageView vectorImage;
+    Button createNewButton;
+
     //List<Menu> lstMenu;
     CombinationAlacarteList combinationAlacarteList;
 
@@ -66,6 +76,13 @@ public class MenuActivity extends AppCompatActivity {
 
         combinationMenuRecyclerView = (RecyclerView) findViewById(R.id.combinationMenuRecyclerView);
         alacarteMenuRecyclerView = (RecyclerView) findViewById(R.id.alacarteMenuRecyclerView);
+
+        combinationLabel = findViewById(R.id.combinationLabel);
+        alarcarteLabel = findViewById(R.id.alarcarteLabel);
+        menuDivider = findViewById(R.id.menuDivider);
+        sectionDivider = findViewById(R.id.sectionDivider);
+        vectorImage = findViewById(R.id.vectorImage);
+        createNewButton = findViewById(R.id.createNewButton);
 
 
         //////////////////////////////////////////   Navigation   //////////////////////////////////////
@@ -99,6 +116,13 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         addMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToAddEdit();
+            }
+        });
+
+        createNewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToAddEdit();
@@ -161,6 +185,32 @@ public class MenuActivity extends AppCompatActivity {
                 alacarteMenuRecyclerView.setLayoutManager(new GridLayoutManager(MenuActivity.this, 4));
                 alacarteMenuRecyclerView.setAdapter(alacarteMenuAdapter);
 
+                if (combinationAlacarteList.combinationList.size()==0 && combinationAlacarteList.alacarteList.size()==0){
+                    vectorImage.setVisibility(View.VISIBLE);
+                    createNewButton.setVisibility(View.VISIBLE);
+                }
+
+                if(combinationAlacarteList.combinationList.size()>0){
+                    vectorImage.setVisibility(View.GONE);
+                    createNewButton.setVisibility(View.GONE);
+
+                    combinationMenuRecyclerView.setVisibility(View.VISIBLE);
+                    combinationLabel.setVisibility(View.VISIBLE);
+                    menuDivider.setVisibility(View.VISIBLE);
+                    addMenuButton.setVisibility(View.VISIBLE);
+                    sectionDivider.setVisibility(View.VISIBLE);
+                }
+
+                if(combinationAlacarteList.alacarteList.size()>0){
+                    vectorImage.setVisibility(View.GONE);
+                    createNewButton.setVisibility(View.GONE);
+
+                    alacarteMenuRecyclerView.setVisibility(View.VISIBLE);
+                    alarcarteLabel.setVisibility(View.VISIBLE);
+                    addMenuButton.setVisibility(View.VISIBLE);
+                    sectionDivider.setVisibility(View.VISIBLE);
+                }
+
                 progressDialog.dismiss();
 
                 //combinationMenuAdapter.notifyDataSetChanged();
@@ -175,14 +225,6 @@ public class MenuActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
-
-
-
 
 
     /*@Override
@@ -201,9 +243,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-//////////////////////////////////////////   Navigation(cont.)   //////////////////////////////////////
-public void goToMain(){
-        Intent intent=new Intent(this,MainActivity.class);
+    //////////////////////////////////////////   Navigation(cont.)   //////////////////////////////////////
+    public void goToMain(){
+            Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);
         }
 
