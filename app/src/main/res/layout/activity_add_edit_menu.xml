@@ -155,14 +155,14 @@
             android:layout_width="170dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="32dp"
             android:layout_centerVertical="true"
-            android:text="save"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/button_grey_rounded"
-            android:fontFamily="@font/sfprotext_bold"
             android:enabled="false"
+            android:fontFamily="@font/sfprotext_bold"
+            android:text="save"
             android:textColor="#ffffff"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </RelativeLayout>
 
 
