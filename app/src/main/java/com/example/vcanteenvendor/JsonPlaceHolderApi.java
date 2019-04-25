@@ -16,15 +16,14 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 interface JsonPlaceHolderApi {
-
     @GET("v1/settings/{vendorId}/info")
     Call<VendorInfoArray> getVendorInfo(@Path("vendorId") int vendorId);
 
     @GET("v1/vendor-main/{vendorId}/orders")
     Call<OrderList> getOrder(@Path("vendorId") int vendorId);
 
-    @GET("v1/menu-management/{vendorId}/menu")
-    Call<CombinationAlacarteList> getAllMenu(@Path("vendorId") int vendorId); //UNUSED V1
+    /*@GET("v1/menu-management/{vendorId}/menu")
+    Call<CombinationAlacarteList> getAllMenu(@Path("vendorId") int vendorId); //UNUSED V1*/
 
     @GET("v2/menu-management/{vendorId}/menu")
     Call<CombinationAlacarteList> getAllMenuV2(@Path("vendorId") int vendorId);

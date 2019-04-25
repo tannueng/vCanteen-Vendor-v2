@@ -113,11 +113,7 @@ public class OrderAdapter extends ArrayAdapter {
                     @Override
                     public void onClick(View v) {
                         reasonBox.setCursorVisible(true);
-                        reasonBox.setEnabled(true);
                         System.out.println("REASONBOX TAPPED");
-                        error.setText("Only a-z A-Z 0-9 _ - * ‘ “ # & () @ are allowed.");
-                        error.setVisibility(View.VISIBLE);
-
                     }
                 });
                 reasonBox.addTextChangedListener(inputTextWatcher);
@@ -137,8 +133,8 @@ public class OrderAdapter extends ArrayAdapter {
                     public void onClick(View v) {
                         inputReason = reasonBox.getText().toString().trim();
                         if(inputReason.isEmpty()) {
-                            //confirmButtonForCancel.setBackgroundResource(R.drawable.button_grey_rounded);
-                            return;
+                            error.setText("Please type your cancellation reasons.");
+                            error.setVisibility(View.VISIBLE);
                         } else {
                             orderCancel(singleOrderId);
                             mOrderArrayList.remove(position);
