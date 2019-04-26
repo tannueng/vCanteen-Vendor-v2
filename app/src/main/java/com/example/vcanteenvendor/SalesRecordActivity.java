@@ -294,7 +294,7 @@ public class SalesRecordActivity extends AppCompatActivity {
 
         SalesRecordApi jsonPlaceHolderApi = retrofit.create(SalesRecordApi.class);
 
-        Call<SalesRecord> call = jsonPlaceHolderApi.getSalesRecord(1); //SET LOGIC TO INSERT ID HERE
+        Call<SalesRecord> call = jsonPlaceHolderApi.getSalesRecord(vendor_id); //SET LOGIC TO INSERT ID HERE
 
         call.enqueue(new Callback<SalesRecord>() {
             @Override

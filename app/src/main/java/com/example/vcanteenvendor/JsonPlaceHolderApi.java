@@ -77,10 +77,10 @@ interface JsonPlaceHolderApi {
                         @Field("foodImage") String foodImage);  //UNUSED V1
 
     @FormUrlEncoded
-    @PUT("v1/menu-management/vendorId/menu/foodId")
+    @PUT("v2/menu-management/menu")
     Call<Void> editMenuV2(@Field("vendorId") int vendorId, @Field("foodId") int foodId,
                         @Field("foodName") String foodName,
-                        @Field("price") int foodPrice,
+                        @Field("foodPrice") int foodPrice,
                         @Field("foodStatus") String foodStatus,
                         @Field("foodType")String foodType,
                         @Field("foodImage") String foodImage,
@@ -91,7 +91,7 @@ interface JsonPlaceHolderApi {
     @POST("v1/menu-management/vendorId/menu")
     Call<Integer> addMenu(@Field("vendorId") int vendorId,
                         @Field("foodName") String foodName,
-                        @Field("price") int foodPrice,
+                        @Field("foodPrice") int foodPrice,
                         @Field("foodStatus") String foodStatus,
                         @Field("foodType")String foodType,
                         @Field("foodImage") String foodImage); //UNUSED V1
@@ -100,7 +100,7 @@ interface JsonPlaceHolderApi {
     @POST("v2/menu-management/menu")
     Call<Integer> addMenuV2(@Field("vendorId") int vendorId,
                           @Field("foodName") String foodName,
-                          @Field("price") int foodPrice,
+                          @Field("foodPrice") int foodPrice,
                           @Field("foodStatus") String foodStatus,
                           @Field("foodType")String foodType,
                           @Field("foodImage") String foodImage,

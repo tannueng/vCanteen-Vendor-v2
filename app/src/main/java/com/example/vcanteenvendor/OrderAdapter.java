@@ -47,7 +47,7 @@ public class OrderAdapter extends ArrayAdapter {
     TextView idNumber;
     TextView foodname;
     TextView foodextra;
-    TextView idNumber;
+
     Button cancelButton;
     Button doneButton;
     Button confirmButtonForCancel;
@@ -81,6 +81,7 @@ public class OrderAdapter extends ArrayAdapter {
         singleOrder = (Order) getItem(position);
 
         final int singleOrderId = singleOrder.getOrderId();
+        final String singleOrderNameForDialog = singleOrder.getOrderName();
 
         idNumber = (TextView) customView.findViewById(R.id.idNumber);
         foodname = (TextView) customView.findViewById(R.id.foodName);
@@ -107,7 +108,7 @@ public class OrderAdapter extends ArrayAdapter {
                 confirmButtonForCancel = (Button) dialog.findViewById(R.id.confirmButton);
                 Button dismissButton = (Button) dialog.findViewById(R.id.dismissButton);
                 Button closeDialog = (Button) dialog.findViewById(R.id.close_dialog);
-                orderName.setText(singleOrder.getOrderName() + "?");
+                orderName.setText(singleOrderNameForDialog + "?");
                 dialog.show();
 
                 reasonBox.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +172,7 @@ public class OrderAdapter extends ArrayAdapter {
                 Button confirmButton = (Button) dialog.findViewById(R.id.confirmButton);
                 Button dismissButton = (Button) dialog.findViewById(R.id.dismissButton);
                 Button closeDialog = (Button) dialog.findViewById(R.id.close_dialog);
-                orderName.setText(singleOrder.getOrderName() + "?");
+                orderName.setText(singleOrderNameForDialog + "?");
                 dialog.show();
                 confirmButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -224,7 +225,7 @@ public class OrderAdapter extends ArrayAdapter {
                     System.out.println("Code: "+response.code());
                     return;
                 } else {
-                    System.out.println("CANCELLED SUCCEEDED");
+                    System.out.println("ORDER CANCELLED");
                 }
 
 
@@ -264,7 +265,7 @@ public class OrderAdapter extends ArrayAdapter {
                     System.out.println("Code: "+response.code());
                     return;
                 } else {
-                    System.out.println("DONE SUCCEEDED");
+                    System.out.println("ORDER DONE");
                 }
 
 
