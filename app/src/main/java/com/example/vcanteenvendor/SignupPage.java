@@ -119,7 +119,11 @@ public class SignupPage extends AppCompatActivity {
                     emailError.setText("Invalid E-mail. Please try again.");
                     emailError.setVisibility(View.VISIBLE);
 
-                }else {
+                } else if(!email.trim().toLowerCase().contains("@gmail.com")){
+                    emailError.setText("Must be Gmail account only");
+                    emailError.setVisibility(View.VISIBLE);
+
+                } else {
                     sendEmailToCheck(email);
 
                 }

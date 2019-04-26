@@ -560,6 +560,12 @@ public class SettingsActivity extends AppCompatActivity {
                             emailError.setText("Only a-z, A-Z, 0-9, -, _, or a period is allowed.");
                             vendorNameError.setText("");
                         }
+                        else if (!emailBox.getText().toString().trim().toLowerCase().contains("@gmail.com")){
+                            emailError.setText("Must be Gmail account only");
+                            vendorNameError.setText("");
+                        }
+
+
                         // If the above condition are met
                         else{
                             System.out.println("the above condition are met!!!");

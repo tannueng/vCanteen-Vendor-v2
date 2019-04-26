@@ -171,6 +171,10 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                     errorMessage.setVisibility(View.VISIBLE);
                     return;
 
+                } else if(!emailField.getText().toString().trim().toLowerCase().contains("@gmail.com")){
+                    errorMessage.setText("Must be Gmail account only");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    return;
                 }
 
                 email = emailField.getText().toString();

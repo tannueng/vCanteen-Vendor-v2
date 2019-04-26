@@ -186,7 +186,7 @@ public class SalesRecordActivity extends AppCompatActivity {
         final TextView title = (TextView) dialog.findViewById(R.id.dialogTitle);
         final TextView content = (TextView) dialog.findViewById(R.id.dialogContent);
         Button negativeButton = (Button) dialog.findViewById(R.id.negativeButton);
-        Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
+        final Button positiveButton = (Button) dialog.findViewById(R.id.positiveButton);
 
         pinInput = dialog.findViewById(R.id.pinInput);
         errorText = dialog.findViewById(R.id.errorText);
@@ -214,9 +214,12 @@ public class SalesRecordActivity extends AppCompatActivity {
             }
         });
 
+        positiveButton.setClickable(true);
+
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                positiveButton.setClickable(false);
                 // Case if blank
                 if(pinInput.getText().toString().length()==0){
                     errorText.setText("Please fill in your 4-digit pin.");
@@ -254,6 +257,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                                 return;
                             }
                             if(response.code()==200) {
+                                positiveButton.setClickable(false);
                                 getSalesRecordArrayList();
                                 errorText.setText("");
                                 Toast.makeText(getApplicationContext(), "UNLOCKED!", Toast.LENGTH_SHORT).show();
@@ -309,6 +313,7 @@ public class SalesRecordActivity extends AppCompatActivity {
                 //ArrayAdapter<SalesRecordArrayList> itemsAdapter = new ArrayAdapter<String>(this, R.layout.sales_record_row, item);
                 LinearLayout1.setVisibility(View.VISIBLE);
                 divider2.setVisibility(View.VISIBLE);
+                progressDialog.dismiss();
                 if (response.body().getTotalDailySales().getSum() == 0){
                     best_seller_dish.setText("No sales today" );
                     number_sold.setText( "0 DISHES");
@@ -322,6 +327,16 @@ public class SalesRecordActivity extends AppCompatActivity {
                     LinearLayout2.setVisibility(View.INVISIBLE);
                     Log.d("Test if", "if");
                     progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+                    progressDialog.dismiss();
+
                     return;
                 } else {
                     LinearLayout2.setVisibility(View.VISIBLE);
