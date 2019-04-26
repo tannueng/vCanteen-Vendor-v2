@@ -1229,7 +1229,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 String accType = vendor.getVendorAccountType();
                 System.out.println("================== Setting Page loadup = Account Type: "+accType);
-                if (accType.equals("NORMAL")) changePasswordButton.setVisibility(View.VISIBLE);
+                if (accType.equals("NORMAL")) changePass.setVisibility(View.VISIBLE);
 
                 progressDialog.dismiss();
 
