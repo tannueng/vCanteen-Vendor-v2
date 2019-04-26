@@ -192,6 +192,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     Button viewReviewsButton;
     TextView reviewValue;
+    String accType;
 
 
     @Override
@@ -727,7 +728,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                                     String firebaseToken = sharedPref.getString("firebaseToken", "default no token");
                                     String account_type = sharedPref.getString("account_type", "DEFAULT");
-                                    LoginVendor loginVendor = new LoginVendor(email, hashedCurrPass, firebaseToken, account_type);
+                                    LoginVendor loginVendor = new LoginVendor(email, hashedCurrPass, firebaseToken, accType);
                                     System.out.println(loginVendor.toString());
                                     Call<LoginResponse> call = jsonPlaceHolderApi.sendLogin(loginVendor);
                                     progressDialog = new ProgressDialog(SettingsActivity.this);
@@ -1227,7 +1228,7 @@ public class SettingsActivity extends AppCompatActivity {
                     statusText.setTextColor(Color.parseColor("#828282"));
                 }
 
-                String accType = vendor.getVendorAccountType();
+                accType = vendor.getVendorAccountType();
                 System.out.println("================== Setting Page loadup = Account Type: "+accType);
                 if (accType.equals("NORMAL")) changePass.setVisibility(View.VISIBLE);
 
