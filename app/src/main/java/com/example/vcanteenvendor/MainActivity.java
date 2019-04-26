@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         /*ListAdapter testAdapter = new OrderAdapter(this, List); //Put the arraylist here
         orderListListView.setAdapter(testAdapter);*/
 
-//        realTimeOrder();
+        realTimeOrder();
 
 
     }
@@ -237,7 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     System.out.println("\n\n\n\n********************" + "Code: " + response.code() + "********************\n\n\n\n");
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "You have 0 order.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "You have 0 order.", Toast.LENGTH_SHORT).show();
+                    orderListListView.setAdapter(null);
                     return;
                 }
 
@@ -367,7 +368,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     System.out.println("\n\n\n\n********************" + "Code: " + response.code() + "********************\n\n\n\n");
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "You have 0 order.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "You have 0 order.", Toast.LENGTH_SHORT).show();
+                    orderListListView.setAdapter(null);
                     return;
                 }
 
@@ -402,62 +404,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void realTimeOrder(){
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(url)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//
-//        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-//
-//        final Call<OrderList> call = jsonPlaceHolderApi.getOrder(vendor_id); //SET LOGIC TO INSERT ID HERE
-//
-//
-//        final Handler handler = new Handler();
-//        final int delay = 10000;
-//
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                call.clone().enqueue(new Callback<OrderList>() {
-//                    @Override
-//                    public void onResponse(Call<OrderList> call, Response<OrderList> response) {
-////                        int orderId1 = (List.getOrderList().get(List.getOrderList().size())).getOrderId();
-////                        Log.e("order", String.valueOf((List.getOrderList().get(List.getOrderList().size())).getOrderId()));
-//                        Log.e("realtime", "run pass this already");
-//                        if (!response.isSuccessful()) {
-//                            System.out.println("\n\n\n\n********************"+ "Code: " + response.code() +"********************\n\n\n\n");
+    public void realTimeOrder(){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+        final Call<OrderList> call = jsonPlaceHolderApi.getOrder(vendor_id); //SET LOGIC TO INSERT ID HERE
+
+
+        final Handler handler = new Handler();
+        final int delay = 10000;
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                call.clone().enqueue(new Callback<OrderList>() {
+                    @Override
+                    public void onResponse(Call<OrderList> call, Response<OrderList> response) {
+//                        int orderId1 = (List.getOrderList().get(List.getOrderList().size())).getOrderId();
+//                        Log.e("order", String.valueOf((List.getOrderList().get(List.getOrderList().size())).getOrderId()));
+                        Log.e("realtime", "run pass this already");
+                        if (!response.isSuccessful()) {
+                            System.out.println("\n\n\n\n********************"+ "Code: " + response.code() +"********************\n\n\n\n");
 //                            Toast.makeText(getApplicationContext(), "You have 0 order.",  Toast.LENGTH_SHORT).show();
-//                            return;
-//                        }
-//
-//                        List = response.body();
-//                        if(List !=null){
-//                            orderId2 = List.orderList.get(List.getOrderList().size()-1).getOrderId();
-//                            ListAdapter testAdapter = new OrderAdapter(MainActivity.this, List); //Put the arraylist here
-//                            orderListListView.setAdapter(testAdapter);
-//                            progressDialog.dismiss();
-//                            if (orderId2 > orderId1) {
-//                                orderId1 = orderId2;
-//                                Toast.makeText(getApplicationContext(), "New Orders Have Arrived", Toast.LENGTH_SHORT).show();
-//                                return;
-//                            }
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<OrderList> call, Throwable t) {
-//                        //vendorProfile.setText(t.getMessage());
-//                        System.out.println("\n\n\n\n********************"+ t.getMessage() +"********************\n\n\n\n");
-//                    }
-//                });
-//                handler.postDelayed(this, delay);
-//            }
-//        }, delay);
-//
-//    }
+                            orderListListView.setAdapter(null);
+                            return;
+                        }
+
+                        List = response.body();
+                        if(List !=null){
+                            orderId2 = List.orderList.get(List.getOrderList().size()-1).getOrderId();
+                            ListAdapter testAdapter = new OrderAdapter(MainActivity.this, List); //Put the arraylist here
+                            orderListListView.setAdapter(testAdapter);
+                            progressDialog.dismiss();
+                            if (orderId2 > orderId1) {
+                                orderId1 = orderId2;
+                                Toast.makeText(getApplicationContext(), "New Orders Have Arrived", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderList> call, Throwable t) {
+                        //vendorProfile.setText(t.getMessage());
+                        System.out.println("\n\n\n\n********************"+ t.getMessage() +"********************\n\n\n\n");
+                    }
+                });
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+
+    }
 
 }
