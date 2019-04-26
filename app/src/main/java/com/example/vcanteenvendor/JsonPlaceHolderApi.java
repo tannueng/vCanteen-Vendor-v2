@@ -16,8 +16,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 interface JsonPlaceHolderApi {
-    @GET("v1/settings/{vendorId}/info")
-    Call<VendorInfoArray> getVendorInfo(@Path("vendorId") int vendorId);
+    /*@GET("v1/settings/{vendorId}/info")
+    Call<VendorInfoArray> getVendorInfo(@Path("vendorId") int vendorId);*/
 
     @GET("v1/vendor-main/{vendorId}/orders")
     Call<OrderList> getOrder(@Path("vendorId") int vendorId);
@@ -87,14 +87,14 @@ interface JsonPlaceHolderApi {
                           @Field("categoryName") String categoryName,
                           @Field("prepareDuration") int prepareDuration);
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST("v1/menu-management/vendorId/menu")
     Call<Integer> addMenu(@Field("vendorId") int vendorId,
                         @Field("foodName") String foodName,
                         @Field("foodPrice") int foodPrice,
                         @Field("foodStatus") String foodStatus,
                         @Field("foodType")String foodType,
-                        @Field("foodImage") String foodImage); //UNUSED V1
+                        @Field("foodImage") String foodImage); //UNUSED V1*/
 
     @FormUrlEncoded
     @POST("v2/menu-management/menu")

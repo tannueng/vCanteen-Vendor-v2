@@ -706,8 +706,9 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                     sharedPref.edit().putString("token", response.body().getToken()).commit();
                     sharedPref.edit().putInt("vendor_id", response.body().getVendor_id()).commit();
                     sharedPref.edit().putString("email", email).commit();
-                    //sharedPref.edit().putString("account_type", account_type).commit();
+                    sharedPref.edit().putString("account_type", response.body().getAccountType()).commit();
 
+                    System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
                     System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");
                     System.out.println("==================JWT Token :::: "+response.body().getToken()+" ==================");
                     progressDialog.dismiss();
@@ -791,7 +792,7 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
                         sharedPref.edit().putString("token", response.body().getToken()).commit();
                         sharedPref.edit().putInt("vendor_id", response.body().getVendor_id()).commit();
                         sharedPref.edit().putString("email", email).commit();
-                        //sharedPref.edit().putString("account_type", account_type).commit();
+                        sharedPref.edit().putString("account_type", response.body().getAccountType()).commit();
 
                         System.out.println("==================Account Type :::: "+response.body().getAccountType()+" ==================");
                         System.out.println("==================VENDOR ID :::: "+response.body().getVendor_id()+" ==================");

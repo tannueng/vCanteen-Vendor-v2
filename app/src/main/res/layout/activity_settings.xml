@@ -357,7 +357,8 @@
                 android:paddingHorizontal="8dp"
                 android:text="change password"
                 android:textColor="@color/pinkPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/signOutButton"

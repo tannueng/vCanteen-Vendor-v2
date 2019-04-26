@@ -1,11 +1,14 @@
 package com.example.vcanteenvendor;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,7 +16,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -67,6 +71,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SettingsActivity extends AppCompatActivity {
+    private int STORAGE_PERMISSION_CODE = 1234;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^[a-zA-Z0-9_@#&-*'()\"](?=\\S+$).{7,}$");
@@ -1215,6 +1220,11 @@ public class SettingsActivity extends AppCompatActivity {
                     statusText.setText("CLOSED");
                     statusText.setTextColor(Color.parseColor("#828282"));
                 }
+
+                String accType = vendor.getVendorAccountType();
+                System.out.println("================== Setting Page loadup = Account Type: "+accType);
+                if (accType.equals("NORMAL")) changePasswordButton.setVisibility(View.VISIBLE);
+
                 progressDialog.dismiss();
 
 
@@ -1519,12 +1529,65 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    private void requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission needed")
+                    .setMessage("This permission is needed because of this and that")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(SettingsActivity.this,
+                                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == STORAGE_PERMISSION_CODE)  {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+            } else {
+                Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     // DAVE CODE FOR UPLOADING PHOTO //
     private void openFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        if (ContextCompat.checkSelfPermission(SettingsActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            /*Toast.makeText(MainActivity.this, "You have already granted this permission!",
+                    Toast.LENGTH_SHORT).show();*/
+
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+
+        } else {
+            requestStoragePermission();
+        }
     }
 
     @Override

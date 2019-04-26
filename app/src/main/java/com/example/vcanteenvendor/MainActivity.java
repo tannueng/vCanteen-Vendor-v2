@@ -252,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
                     orderListListView.setAdapter(testAdapter);
                     progressDialog.dismiss();
 
+                } else{
+                    progressDialog.dismiss();
                 }
 
             }
@@ -384,6 +386,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
+                } else {
+                    progressDialog.dismiss();
                 }
 
             }
