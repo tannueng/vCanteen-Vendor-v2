@@ -47,6 +47,7 @@ public class OrderAdapter extends ArrayAdapter {
     TextView idNumber;
     TextView foodname;
     TextView foodextra;
+    TextView idNumber;
     Button cancelButton;
     Button doneButton;
     Button confirmButtonForCancel;
