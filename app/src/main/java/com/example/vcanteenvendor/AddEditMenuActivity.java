@@ -371,7 +371,7 @@ public class AddEditMenuActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Toast.makeText(getApplicationContext(), "Deleting new menu...",  Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Deleting menu...",  Toast.LENGTH_SHORT).show();
                         deleteMenuButton.setText("deleting...");
                         deleteMenuButton.setClickable(false);
                         deleteThisMenu();
