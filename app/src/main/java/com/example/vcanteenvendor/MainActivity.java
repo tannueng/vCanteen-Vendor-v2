@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     int orderId1;
     int orderId2;
 
+    Handler handler;
+
     String url = "https://vcanteen.herokuapp.com/";
 
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 goToMenu();
             }
         });
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         salesRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 goToSalesRecord();
             }
         });
@@ -129,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 goToSettings();
             }
         });
@@ -136,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 refreshOrder();
             }
         });
@@ -163,13 +169,9 @@ public class MainActivity extends AppCompatActivity {
         List = new OrderList(orderList);
 
 
-        orderLoadUp(); //GET DATA FROM JSON
-
 
         /*ListAdapter testAdapter = new OrderAdapter(this, List); //Put the arraylist here
         orderListListView.setAdapter(testAdapter);*/
-
-        realTimeOrder();
 
 
     }
@@ -211,6 +213,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacksAndMessages(null);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        orderLoadUp(); //GET DATA FROM JSON
+        realTimeOrder();
+        super.onResume();
     }
 
     //FIRST LOAD UP
@@ -274,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
             //super.onBackPressed();
+            handler.removeCallbacksAndMessages(null);
 
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
             homeIntent.addCategory( Intent.CATEGORY_HOME );
@@ -413,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
         final Call<OrderList> call = jsonPlaceHolderApi.getOrder(vendor_id); //SET LOGIC TO INSERT ID HERE
 
 
-        final Handler handler = new Handler();
+        handler = new Handler();
         final int delay = 10000;
 
         handler.postDelayed(new Runnable() {
