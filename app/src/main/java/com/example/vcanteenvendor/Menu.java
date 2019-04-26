@@ -7,7 +7,7 @@ public class Menu {
     @SerializedName("foodName")
     private String foodName;
 
-    @SerializedName("foodPrice")
+    @SerializedName("price")
     private int foodPrice;
 
     @SerializedName("foodId")
