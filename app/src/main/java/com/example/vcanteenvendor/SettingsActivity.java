@@ -552,10 +552,10 @@ public class SettingsActivity extends AppCompatActivity {
                             emailError.setText("");
                         }
                         // Case 3 : Wrong email format
-                        else if(!(EMAIL_PATTERN.matcher(emailBox.getText().toString()).matches())){
+                        /*else if(!(EMAIL_PATTERN.matcher(emailBox.getText().toString()).matches())){
                             emailError.setText("Invalid email. Please try again.");
                             vendorNameError.setText("");
-                        }
+                        }*/
                         // Case 4 : Contains other characters than a-z, A-Z, 0-9, or a period in email
                         else if(!(EMAIL_CHARACTER_PATTERN.matcher(emailBox.getText().toString()).matches())){
                             emailError.setText("Only a-z, A-Z, 0-9, -, _, or a period is allowed.");
