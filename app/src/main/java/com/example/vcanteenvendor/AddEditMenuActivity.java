@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
@@ -277,7 +278,19 @@ public class AddEditMenuActivity extends AppCompatActivity {
             }
         });
 
+
+       /////////////////// For hiding ant error message after tapping input box ////////////////
+
        nameInput.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               nameInput.setBackgroundResource(R.drawable.bg_input);
+               nameInputLayout.setError(null);
+               nameInputLayout.setErrorEnabled(false);
+           }
+       });
+
+       nameInputLayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                nameInput.setBackgroundResource(R.drawable.bg_input);
@@ -295,7 +308,25 @@ public class AddEditMenuActivity extends AppCompatActivity {
            }
        });
 
+       priceInputLayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               priceInput.setBackgroundResource(R.drawable.bg_input);
+               priceInputLayout.setError(null);
+               priceInputLayout.setErrorEnabled(false);
+           }
+       });
+
        durationInput.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               durationInput.setBackgroundResource(R.drawable.bg_input);
+               durationInputLayout.setError(null);
+               durationInputLayout.setErrorEnabled(false);
+           }
+       });
+
+       durationInputLayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                durationInput.setBackgroundResource(R.drawable.bg_input);
@@ -1000,6 +1031,16 @@ public class AddEditMenuActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             enableSave();
+
+            nameInput.setBackgroundResource(R.drawable.bg_input);
+            nameInputLayout.setError(null);
+            nameInputLayout.setErrorEnabled(false);
+            priceInput.setBackgroundResource(R.drawable.bg_input);
+            priceInputLayout.setError(null);
+            priceInputLayout.setErrorEnabled(false);
+            durationInput.setBackgroundResource(R.drawable.bg_input);
+            durationInputLayout.setError(null);
+            durationInputLayout.setErrorEnabled(false);
         }
 
         @Override
