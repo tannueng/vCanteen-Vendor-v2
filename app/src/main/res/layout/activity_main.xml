@@ -117,7 +117,8 @@
         android:layout_height="85dp"
         android:background="#FAFAFA"
         android:gravity="center|right"
-        android:paddingRight="30dp">
+        android:paddingRight="30dp"
+        android:clipToPadding="false">
 
         <Button
             android:id="@+id/refreshBtn"

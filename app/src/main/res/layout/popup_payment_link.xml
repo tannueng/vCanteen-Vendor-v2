@@ -104,7 +104,7 @@
                 android:fontFamily="@font/sfprotext_bold"
                 android:text="LINK"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/close_x"
