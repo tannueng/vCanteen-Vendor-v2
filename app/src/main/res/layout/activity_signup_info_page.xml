@@ -51,7 +51,8 @@
             android:layout_marginTop="50dp"
             android:layout_marginLeft="50dp"
             android:text="Restaurant Name"
-            android:layout_below="@id/pleaseEnterinfoTitle"/>
+            android:layout_below="@id/pleaseEnterinfoTitle"
+            android:imeOptions="actionNext"/>
 
         <EditText
             android:id="@+id/restaurantBox"
@@ -105,7 +106,8 @@
             android:textColor="#333333"
             android:hint="Enter your phone number"
             android:maxLength="10"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/phoneNumberError"

@@ -67,7 +67,8 @@
                 android:textColorHint="#E0E0E0"
                 android:focusableInTouchMode="true"
                 android:maxLength="40"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:nextFocusForward="@id/password_field"/>
         </LinearLayout>
 
         <LinearLayout
@@ -104,6 +105,7 @@
                     android:focusableInTouchMode="true"
                     android:maxLength="40"
                     android:singleLine="true"
+                    android:imeOptions="actionDone"
                     />
 
                 <Button

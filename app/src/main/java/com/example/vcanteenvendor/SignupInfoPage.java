@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.regex.Pattern;
 
@@ -53,6 +58,7 @@ public class SignupInfoPage extends AppCompatActivity {
 
         System.out.println(" ==================== In SignupInfoPage From intent - Email:: "+email+"====Acc::"+acccountType+"====Pass:: "+password+" ==================== ");
 
+        phoneNumberBox.setOnEditorActionListener(editorListener);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +114,60 @@ public class SignupInfoPage extends AppCompatActivity {
         });
 
     }
+
+
+    // Do the same things as OnClick of Next Button, but with hitting enter on soft keyboard
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                if(restaurantBox.getText().toString().trim().isEmpty()){
+                    restaurantError.setText("Please enter your restaurant name.");
+                    restaurantError.setVisibility(View.VISIBLE);
+                    phoneNumberError.setVisibility(View.INVISIBLE);
+
+                } else if(!(VENDOR_NAME_PATTERN.matcher(restaurantBox.getText().toString().trim()).matches())){
+                    restaurantError.setText("Name must contain only a-z or A-Z.");
+                    restaurantError.setVisibility(View.VISIBLE);
+                    phoneNumberError.setVisibility(View.INVISIBLE);
+
+                } else if(phoneNumberBox.getText().toString().trim().isEmpty()){
+                    phoneNumberError.setText("Please enter your phone number.");
+                    phoneNumberError.setVisibility(View.VISIBLE);
+                    restaurantError.setVisibility(View.INVISIBLE);
+
+                }else if (!(NUMBER_PATTERN.matcher(phoneNumberBox.getText().toString().trim()).matches())){
+                    phoneNumberError.setText("Phone number can only contain 0-9.");
+                    phoneNumberError.setVisibility(View.VISIBLE);
+                    restaurantError.setVisibility(View.INVISIBLE);
+
+                } else if( phoneNumberBox.length() <9){
+                    phoneNumberError.setText("Phone number is too short.");
+                    phoneNumberError.setVisibility(View.VISIBLE);
+                    restaurantError.setVisibility(View.INVISIBLE);
+
+                } else {
+                    vendorName = restaurantBox.getText().toString().trim();
+                    vendorPhoneNumber = phoneNumberBox.getText().toString().trim();
+
+                    Intent i = new Intent(SignupInfoPage.this,FirstTimeLinkPayment.class);
+                    i.putExtra("input_name",vendorName);
+                    i.putExtra("input_phone",vendorPhoneNumber);
+                    System.out.println(" ==================== Put Extra - Name:: "+email+"====Phone::"+acccountType+" ==================== ");
+
+                    i.putExtra("input_password",password);
+                    i.putExtra("input_email",email);
+                    i.putExtra("accountType",acccountType);
+                    i.putExtra("input_firebase_token",firebaseToken);
+                    startActivity(i);
+
+                }
+            }
+
+            return false;
+        }
+    };
 
     public void hideKb(View view){ //For hiding soft keyboard when tap outside
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

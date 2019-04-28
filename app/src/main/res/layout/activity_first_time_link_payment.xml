@@ -71,11 +71,12 @@
             <Spinner
                 android:id="@+id/paymentSpinner"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="6"
                 android:gravity="center"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:nextFocusForward="@id/accountNumberBox"/>
 
 
             <ImageView
@@ -115,6 +116,7 @@
             android:singleLine="true"
             android:inputType="number"
             android:paddingHorizontal="12dp"
+            android:imeOptions="actionDone"
             />
 
         <TextView

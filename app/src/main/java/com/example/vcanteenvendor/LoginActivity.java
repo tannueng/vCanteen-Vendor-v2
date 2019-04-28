@@ -18,9 +18,11 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -157,6 +159,8 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
             emailField.setText(emailFromSignUpPage);
         }
 
+
+        passField.setOnEditorActionListener(editorListener);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -865,71 +869,99 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
         }
 
         backPressedTime = System.currentTimeMillis();
-        /*new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Activity")
-                .setMessage("Are you sure you want to close this activity?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();*/
     }
 
-    /*@Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-    }
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        System.out.println("single tap detected");
-        closeKeyboard();
-        return true;
-    }
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                System.out.println("================== login button pressed! ==================");
+                if (emailField.getText().toString().trim().equals("") && passField.getText().toString().trim().equals("")) {
+                    errorMessage.setText("Please fill both Email and Password.");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    return false;
+                } else if (!(EMAIL_PATTERN.matcher(emailField.getText().toString().trim()).matches())){
+                    errorMessage.setText("Invalid E-mail. Please try again.");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    return false;
 
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
+                } else if(!emailField.getText().toString().trim().toLowerCase().contains("@gmail.com")){
+                    errorMessage.setText("Must be Gmail account only");
+                    errorMessage.setVisibility(View.VISIBLE);
+                    return false;
+                }
 
-    @Override
-    public void onLongPress(MotionEvent e) {
+                email = emailField.getText().toString();
+                passwd = passField.getText().toString();
 
-    }
+                System.out.println("==================Login Email :::: "+email+" ==================");
+                System.out.println("==================Login Plain Pass :::: "+passwd+" ==================");
 
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
+//                passwd = DigestUtils.sha256Hex(passwd);
+                passwd = new String(Hex.encodeHex(DigestUtils.sha256(passwd)));
+                account_type = "NORMAL";
 
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent e) {
-        System.out.println("single tap confirmed detected");
-        closeKeyboard();
-        return true;
-    }
 
-    @Override
-    public boolean onDoubleTap(MotionEvent e) {
-        System.out.println("double tap detected");
-        closeKeyboard();
-        return true;
-    }
+                System.out.println("==================Login Hash Pass :::: "+passwd+" ==================");
 
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent e) {
-        System.out.println("double tap detected");
-        closeKeyboard();
-        return true;
-    }*/
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog = ProgressDialog.show(LoginActivity.this, "",
+                        "Loading. Please wait...", true);
+
+
+                System.out.println("================== mAuth Start -- signInWithEmailAndPassword(email, passwd) ==================");
+
+                mAuth.signInWithEmailAndPassword(email, passwd)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    System.out.println("================== mAuth SUCCESS! ==================");
+                                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    dbUsers = FirebaseDatabase.getInstance().getReference("users").child(uid);
+
+                                    dbUsers.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for(DataSnapshot dsUser: dataSnapshot.getChildren())
+                                                firebaseToken = dsUser.getValue(String.class);
+                                            System.out.println("================== FireBase Token From datasnapshot: "+firebaseToken+" ==================");
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            System.out.println("================== mAuth CANCELLED! ==================");
+                                        }
+                                    });
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            System.out.println("================== FIREBASE TOKEN to sharepref : "+firebaseToken+" ==================");
+                                            sharedPref.edit().putString("firebaseToken", firebaseToken).commit();
+                                            System.out.println("================== Begin sendJSON by NORMAL LOGIN ==================");
+                                            sendJSON(email, passwd, firebaseToken);
+
+                                        }
+                                    }, 3500);
+
+
+                                } else {
+                                    errorMessage.setText("Email or Password is Incorrect");
+                                    errorMessage.setVisibility(View.VISIBLE);
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        });
+
+            }
+
+            return false;
+        }
+    };
+
+
 }

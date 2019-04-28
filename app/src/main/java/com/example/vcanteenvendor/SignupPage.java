@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +42,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -101,6 +105,7 @@ public class SignupPage extends AppCompatActivity {
             }
         });
 
+        emailBox.setOnEditorActionListener(editorListener);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -547,6 +552,37 @@ public class SignupPage extends AppCompatActivity {
         });
 
     }
+
+
+    // Do the same things as OnClick of Next Button, but with hitting enter on soft keyboard
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                email = emailBox.getText().toString().trim();
+                System.out.println(" ==================== email EditText:: "+email+" ==================== ");
+                if (email.isEmpty()){
+                    emailError.setText("Please enter your E-mail.");
+                    emailError.setVisibility(View.VISIBLE);
+
+                } else if (!(EMAIL_CHARACTER_PATTERN.matcher(email).matches())){
+                    emailError.setText("Invalid E-mail. Please try again.");
+                    emailError.setVisibility(View.VISIBLE);
+
+                } else if(!email.trim().toLowerCase().contains("@gmail.com")){
+                    emailError.setText("Must be Gmail account only");
+                    emailError.setVisibility(View.VISIBLE);
+
+                } else {
+                    sendEmailToCheck(email);
+
+                }
+            }
+
+            return false;
+        }
+    };
 
     public void hideKb(View view){ //For hiding soft keyboard when tap outside
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

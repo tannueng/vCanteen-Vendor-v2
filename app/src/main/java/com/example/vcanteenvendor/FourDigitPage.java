@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -124,6 +126,8 @@ public class FourDigitPage extends AppCompatActivity {
                 confirmPinError.setVisibility(View.INVISIBLE);  //Hide Error
             }
         });
+
+        confirmPinBox.setOnEditorActionListener(editorListener);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -350,6 +354,54 @@ public class FourDigitPage extends AppCompatActivity {
                 });
 
     }
+
+
+    // Do the same things as OnClick of Next Button, but with hitting enter on soft keyboard
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                fourDigitPin = fourDigitBox.getText().toString().trim();
+                confirmPin = confirmPinBox.getText().toString().trim();
+                System.out.println(" ==================== Pin EditText:: "+fourDigitPin+" ==================== ");
+                System.out.println(" ==================== Confirm EditText:: "+confirmPin+" ==================== ");
+
+                if(fourDigitPin.isEmpty()){
+                    pinError.setText("Please enter your 4-digit pin.");
+                    pinError.setVisibility(View.VISIBLE);
+
+                } else if(confirmPin.isEmpty()){
+                    confirmPinError.setText("Please confirm your 4-digit pin.");
+                    confirmPinError.setVisibility(View.VISIBLE);
+
+                } else if(!(NUMBER_PATTERN.matcher(fourDigitPin).matches())){
+                    pinError.setText("Pin can only contains 0-9.");
+                    pinError.setVisibility(View.VISIBLE);
+
+                } else if(!fourDigitPin.equals(confirmPin)){
+                    confirmPinError.setText("The pin did not match. Please try again.");
+                    confirmPinError.setVisibility(View.VISIBLE);
+
+                } else if(fourDigitPin.length() != 4){
+                    pinError.setText("Pin must have 4 digits");
+                    pinError.setVisibility(View.VISIBLE);
+                } else{
+                    pinError.setVisibility(View.INVISIBLE);
+                    confirmPinError.setVisibility(View.INVISIBLE);
+
+                    System.out.println(" ==================== Plain Pin :: "+fourDigitPin+" ==================== ");
+                    fourDigitPin = new String(Hex.encodeHex(DigestUtils.sha256(fourDigitPin)));
+                    System.out.println(" ==================== Hashed Pin :: "+fourDigitPin+" ==================== ");
+
+                    registerFireBase();
+
+                }
+            }
+
+            return false;
+        }
+    };
 
     public void hideKb(View view){ //For hiding soft keyboard when tap outside
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.regex.Pattern;
 
@@ -68,6 +73,8 @@ public class FirstTimeLinkPayment extends AppCompatActivity {
             }
         });
 
+        linkButton.setOnEditorActionListener(editorListener);
+
         linkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +130,65 @@ public class FirstTimeLinkPayment extends AppCompatActivity {
         });
 
     }
+
+
+    // Do the same things as OnClick of Next Button, but with hitting enter on soft keyboard
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                accountNumber = accountNumberBox.getText().toString().trim();
+                System.out.println(" ==================== AccNo EditText:: "+accountNumber+" ==================== ");
+                if (accountNumber.isEmpty()){
+                    accountNumberError.setText("This field cannot be blank.");
+                    accountNumberError.setVisibility(View.VISIBLE);
+                    return false;
+                } else if (!(NUMBER_PATTERN.matcher(accountNumber).matches())){
+                    accountNumberError.setText("Only 0-9 is allowed.");
+                    accountNumberError.setVisibility(View.VISIBLE);
+                    return false;
+                }
+
+                accountNumberError.setVisibility(View.INVISIBLE);
+
+                String fromSpinner = paymentSpinner.getSelectedItem().toString().trim();
+                System.out.println(" ==================== From Spinner:: "+fromSpinner+" ==================== ");
+
+                if (fromSpinner.equals("SCB EASY")){
+                    serviceProvider = "SCB_EASY";
+
+                }else if(fromSpinner.equals("CU NEX")){
+                    serviceProvider = "CU_NEX";
+
+                }else if (fromSpinner.equals("K PLUS")){
+                    serviceProvider = "K_PLUS";
+
+                }else if (fromSpinner.equals("TRUEMONEY WALLET")){
+                    serviceProvider = "TRUEMONEY_WALLET";
+
+                }
+
+                System.out.println(" ==================== Service Provider:: "+serviceProvider+" ==================== ");
+
+                Intent i = new Intent(FirstTimeLinkPayment.this, FourDigitPage.class);
+
+                i.putExtra("input_service", serviceProvider);
+                i.putExtra("input_account_no",accountNumber);
+                System.out.println(" ==================== Put Extra - Service :: "+serviceProvider+"==== AccNo ::"+accountNumber+" ==================== ");
+
+                i.putExtra("input_name",vendorName);
+                i.putExtra("input_phone",vendorPhoneNumber);
+                i.putExtra("input_password",password);
+                i.putExtra("input_email",email);
+                i.putExtra("accountType",acccountType);
+                i.putExtra("input_firebase_token",firebaseToken);
+                startActivity(i);
+            }
+
+            return false;
+        }
+    };
 
     public void hideKb(View view){ //For hiding soft keyboard when tap outside
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

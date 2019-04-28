@@ -68,7 +68,8 @@
             android:textColor="#333333"
             android:hint="Enter your email"
             android:maxLength="40"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
         <TextView
             android:id="@+id/emailError"
             android:layout_width="wrap_content"
@@ -111,12 +112,12 @@
 
         <ImageView
             android:id="@+id/facebook_login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/fblogin"
+            android:layout_width="204dp"
+            android:layout_height="33dp"
+            app:srcCompat="@drawable/ic_fb"
             android:layout_toRightOf="@id/or"
             android:layout_below="@id/emailError"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="26dp"
             android:layout_marginBottom="30dp"
             android:clickable="true"
             />

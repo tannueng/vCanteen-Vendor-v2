@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,6 +65,8 @@ public class SignupPasswordPage extends AppCompatActivity {
             }
         });
 
+        confirmPasswordBox.setOnEditorActionListener(editorListener);
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +110,56 @@ public class SignupPasswordPage extends AppCompatActivity {
             }
         });
     }
+
+
+    // Do the same things as OnClick of Next Button, but with hitting enter on soft keyboard
+    private TextView.OnEditorActionListener editorListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                password = passwordBox.getText().toString().trim();
+                confirmPassword = confirmPasswordBox.getText().toString().trim();
+
+                System.out.println(" ==================== Password EditText:: "+password+" ==================== ");
+                System.out.println(" ==================== Confirm EditText:: "+confirmPassword+" ==================== ");
+
+                if(password.isEmpty()){
+                    passwordError.setText("Please enter your password.");
+                    passwordError.setVisibility(View.VISIBLE);
+
+                } else if(confirmPassword.isEmpty()){
+                    confirmPasswordError.setText("Please confirm your password.");
+                    confirmPasswordError.setVisibility(View.VISIBLE);
+
+                } else if(!(PASSWORD_PATTERN.matcher(password).matches())){
+                    passwordError.setText("Password must be at least 8 characters and \ncan only contain a-z A-Z 0-9 _ - * ‘ “ # & () @.");
+                    passwordError.setVisibility(View.VISIBLE);
+
+                } else if(!password.equals(confirmPassword)){
+                    confirmPasswordError.setText("Password did not match. Please try again.");
+                    confirmPasswordError.setVisibility(View.VISIBLE);
+
+                } else{
+                    passwordError.setVisibility(View.INVISIBLE);
+                    confirmPasswordError.setVisibility(View.INVISIBLE);
+
+                    System.out.println(" ==================== Plain Password :: "+password+" ==================== ");
+                    password = new String(Hex.encodeHex(DigestUtils.sha256(password)));
+                    System.out.println(" ==================== Hashed Password :: "+password+" ==================== ");
+
+                    Intent i = new Intent(SignupPasswordPage.this, SignupInfoPage.class);
+                    i.putExtra("input_password",password);
+                    i.putExtra("input_email",email);
+                    i.putExtra("accountType",acccountType);
+                    startActivity(i);
+
+                }
+            }
+
+            return false;
+        }
+    };
 
     public void hideKb(View view){ //For hiding soft keyboard when tap outside
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

@@ -8,6 +8,7 @@
     android:onClick="hideKb"
     android:clipChildren="false"
     android:clipToPadding="false">
+
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,7 +68,8 @@
             android:textColor="#333333"
             android:hint="Enter your 4-digit pin"
             android:maxLength="4"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:id="@+id/pinError"
@@ -106,7 +108,8 @@
             android:textColor="#333333"
             android:hint="Confirm your 4-digit pin"
             android:maxLength="4"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/confirmPinError"
