@@ -387,9 +387,11 @@ public class LoginActivity extends AppCompatActivity /*implements GestureDetecto
             @Override
             public void onClick(View v) {
                 if (isHidden) {
+                    showPass.setText("HIDE");
                     passField.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     isHidden = false;
                 } else {
+                    showPass.setText("SHOW");
                     passField.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     isHidden = true;
                 }
